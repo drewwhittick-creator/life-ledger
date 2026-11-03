@@ -25,7 +25,7 @@
   --accent:#0E0F14; --accent-fg:#FFFFFF;
   --glass:rgba(255,255,255,.72); --shadow:0 1px 2px rgba(15,15,30,.04),0 8px 24px rgba(15,15,30,.06);
   --move:#FF7A1A; --connect:#2E7BFF; --learn:#9B5CFF; --recover:#12B886;
-  --ok:#12B886; --care:#F0458A; --bad:#E5484D;
+  --ok:#12B886; --care:#F0458A; --bad:#E5484D; --fun:#E0A100;
   --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --round:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
@@ -35,12 +35,12 @@
   --bg:#000000; --surface:#15161B; --surface-2:#1C1D23; --sunken:#24252D; --line:rgba(255,255,255,.07);
   --fg:#F4F5F8; --muted:#8E909C; --faint:#5C5E69; --accent:#F4F5F8; --accent-fg:#000000;
   --glass:rgba(28,29,35,.72); --shadow:0 0 0 1px rgba(255,255,255,.04);
-  --move:#FF8A33; --connect:#4C8DFF; --learn:#AE7BFF; --recover:#2FD39E; --ok:#2FD39E; --care:#FF6BA6; --bad:#FF6369; color-scheme:dark}}
+  --move:#FF8A33; --connect:#4C8DFF; --learn:#AE7BFF; --recover:#2FD39E; --ok:#2FD39E; --care:#FF6BA6; --bad:#FF6369; --fun:#FFC93C; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#000000; --surface:#15161B; --surface-2:#1C1D23; --sunken:#24252D; --line:rgba(255,255,255,.07);
   --fg:#F4F5F8; --muted:#8E909C; --faint:#5C5E69; --accent:#F4F5F8; --accent-fg:#000000;
   --glass:rgba(28,29,35,.72); --shadow:0 0 0 1px rgba(255,255,255,.04);
-  --move:#FF8A33; --connect:#4C8DFF; --learn:#AE7BFF; --recover:#2FD39E; --ok:#2FD39E; --care:#FF6BA6; --bad:#FF6369; color-scheme:dark}
+  --move:#FF8A33; --connect:#4C8DFF; --learn:#AE7BFF; --recover:#2FD39E; --ok:#2FD39E; --care:#FF6BA6; --bad:#FF6369; --fun:#FFC93C; color-scheme:dark}
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
@@ -268,6 +268,19 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
 .coming{display:flex;align-items:center;gap:10px;font-size:.9rem;padding-top:10px;border-top:.5px solid var(--line)}
 .coming .pdate{width:44px;flex-shrink:0}
 .reveal{animation:rise .35s var(--ease) both}
+.subtabs{position:relative;display:grid;grid-template-columns:1fr 1fr;background:var(--sunken);border-radius:14px;padding:4px}
+.subtabs .thumb2{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:11px;background:var(--surface);box-shadow:0 2px 6px rgba(0,0,0,.12);transition:transform .4s var(--spring)}
+.subtabs button{position:relative;z-index:1;border:0;background:none;font:600 .92rem var(--font);padding:9px 6px;cursor:pointer;color:var(--muted);transition:color .25s}
+.subtabs button[aria-selected="true"]{color:var(--fg)}
+.sub{display:flex;flex-direction:column;gap:14px}
+.sub.in-r{animation:inR .38s var(--ease) both}.sub.in-l{animation:inL .38s var(--ease) both}
+.nlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.nlist li{display:grid;grid-template-columns:50px minmax(0,1fr) 32px;gap:12px;align-items:center;padding:10px 0;border-top:.5px solid var(--line)}
+.nlist li:first-child{border-top:0}
+.nlist .pdate{background:color-mix(in srgb,var(--fun) 16%,transparent);color:var(--fun)}
+.goalbar{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted)}
+.goalbar .bar{flex:1;--areac:var(--fun)}
+.qline{font-size:1.1rem}
 .improws{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;background:var(--surface);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
 .improws label{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:.5px solid var(--line);cursor:pointer;font-size:.97rem}
 .improws li:first-child label{border-top:0}
@@ -388,6 +401,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
 
   <!-- CHECK-IN -->
   <section id="view-checkin" class="view" hidden>
+    <div class="banner reveal" id="earlyNote" hidden style="justify-content:space-between"><span id="earlyTxt"></span><button type="button" class="skip" id="earlyBtn" style="flex-shrink:0">Start now</button></div>
     <div class="daynav">
       <button type="button" class="icon-btn" id="prevDay" aria-label="Previous day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="daylabel"><span id="dayLabel"></span></div>
@@ -432,11 +446,15 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       </div>
 
       <div class="card" style="--areac:var(--recover)">
-        <div class="sec"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><h2>Work &amp; recovery</h2></div>
+        <div class="sec"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><h2>Health &amp; work</h2></div>
         <div class="rows">
-          <div class="field"><span class="lab" id="stressLab">Work stress<small>1 calm · 5 overwhelmed</small></span>
+          <div class="field"><span class="lab" id="stressLab">Overall stress<small>1 calm · 5 overwhelmed</small></span>
             <div class="seg" id="f-stress" role="group" aria-labelledby="stressLab"><span class="thumb"></span></div></div>
-          <div id="f-causeWrap" class="reveal" hidden style="padding-bottom:12px;--qc:var(--recover)"><span class="flabel">What made it stressful?</span><div class="chips left" id="f-causes"></div></div>
+          <div id="f-causeWrap" class="reveal" hidden style="padding-bottom:12px;--qc:var(--recover)"><span class="flabel">What made it stressful?</span><div id="f-causes" style="display:grid;gap:6px"></div></div>
+          <div class="field"><span class="lab" id="wdLab">Day at work<small>1 awful · 5 great · blank = day off</small></span>
+            <div class="seg" id="f-wd" role="group" aria-labelledby="wdLab"><span class="thumb"></span></div></div>
+          <div class="field"><span class="lab" id="eatLab">Eating<small>1 poor · 5 great</small></span>
+            <div class="seg" id="f-eat" role="group" aria-labelledby="eatLab"><span class="thumb"></span></div></div>
           <div class="field"><label for="f-work">Hours worked</label>
             <div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-work" inputmode="decimal" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
           <div class="field"><label for="f-sleep">Hours slept</label>
@@ -466,6 +484,8 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
   </section>
 
   <section id="view-care" class="view" hidden>
+    <div class="subtabs rise" role="tablist" aria-label="Care sections"><span class="thumb2" id="subThumb"></span><button type="button" role="tab" data-sub="selfcare" aria-selected="true">Self-care</button><button type="button" role="tab" data-sub="hobbies" aria-selected="false">Hobbies</button></div>
+    <div class="sub" id="sub-selfcare">
     <div class="card rise" style="--i:0;--areac:var(--care);--qc:var(--care)">
       <div class="caresum" id="careSum"></div>
       <ul class="clist" id="clist"></ul>
@@ -477,6 +497,32 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       </div>
     </div>
     <p class="tip rise" style="--i:1;padding-inline:4px">Tap the check when you do something. Tap an item to change how often it's due or when you last did it.</p>
+    </div>
+    <div class="sub" id="sub-hobbies" hidden>
+      <div class="card rise" style="--i:0;--areac:var(--fun);--qc:var(--fun)">
+        <h2>Hobbies</h2>
+        <div class="caresum" id="hobbySum"></div>
+        <ul class="clist" id="hlist"></ul>
+        <button type="button" class="btn ghost" id="hAddBtn">Add a hobby</button>
+        <div class="planform reveal" id="hAdd" hidden>
+          <div><label class="flabel" for="ha-name">Hobby</label><input class="inp" id="ha-name" maxlength="40" placeholder="Guitar, photography, hiking…"></div>
+          <div><span class="flabel">Make time for it</span><div class="chips left" id="ha-every"></div></div>
+          <div class="btnrow"><button type="button" class="btn ghost" id="ha-cancel">Cancel</button><button type="button" class="btn" id="ha-save">Add</button></div>
+        </div>
+      </div>
+      <div class="card rise" style="--i:1;--areac:var(--fun);--qc:var(--fun)">
+        <div class="calhead"><h2>New things</h2><span class="streak" id="newCount" style="color:var(--fun);background:color-mix(in srgb,var(--fun) 16%,transparent)"></span></div>
+        <div class="goalbar"><div class="bar"><i id="newBar"></i></div><span id="newGoalTxt"></span></div>
+        <ul class="nlist" id="nlist"></ul>
+        <button type="button" class="btn ghost" id="nAddBtn">Log something new</button>
+        <div class="planform reveal" id="nAdd" hidden>
+          <div><label class="flabel" for="na-what">What did you try?</label><input class="inp" id="na-what" maxlength="80" placeholder="Cooked Thai green curry"></div>
+          <div><label class="flabel" for="na-date">When</label><input class="inp" type="date" id="na-date"></div>
+          <div class="btnrow"><button type="button" class="btn ghost" id="na-cancel">Cancel</button><button type="button" class="btn" id="na-save">Add</button></div>
+        </div>
+      </div>
+      <p class="tip rise" style="--i:2;padding-inline:4px">Your daily check-in asks about hobbies and anything new you tried, and logs them here for you.</p>
+    </div>
   </section>
 
   <section id="view-week" class="view" hidden>
@@ -528,6 +574,11 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       <p class="tip">Always open the app from its Home Screen icon. Safari keeps a separate copy of your data.</p>
     </div>
     <div class="card rise" style="--i:5">
+      <h2>Settings</h2>
+      <div class="field" style="border-top:0"><label for="set-time">Daily check-in time<small>The check-in opens on its own after this time</small></label><input class="inp" type="time" id="set-time" style="width:auto;min-width:130px;flex-shrink:0"></div>
+      <p class="tip">Set your Reminders alert for the same time so you get a nudge on your lock screen.</p>
+    </div>
+    <div class="card rise" style="--i:5">
       <h2>Goals</h2>
       <div class="rows" style="--areac:var(--fg)">
         <div class="field"><label for="g-steps">Daily steps</label><div class="stepper" data-step="500"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-steps" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
@@ -535,6 +586,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
         <div class="field"><label for="g-study">Study min / week</label><div class="stepper" data-step="30"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-study" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
         <div class="field"><label for="g-outs">Times out / week</label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-outs" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
         <div class="field"><label for="g-plans">Plans / week</label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-plans" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
+        <div class="field"><label for="g-newpm">New things / month</label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-newpm" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
         <div class="field"><label for="g-sleep">Sleep / night</label><div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-sleep" inputmode="decimal"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
       </div>
       <button class="btn ghost" type="button" id="saveGoals">Save goals</button>
@@ -555,7 +607,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
         <div class="btnrow"><button type="button" class="btn ghost" id="resetCancel">Cancel</button><button type="button" class="btn warn-solid" id="resetGo">Erase everything</button></div>
       </div>
     </div>
-    <p class="tip" style="text-align:center;padding-block:4px">Life Ledger · version 1.5 (Nov 2)</p>
+    <p class="tip" style="text-align:center;padding-block:4px">Life Ledger · version 1.7</p>
   </section>
 </main>
 
@@ -626,15 +678,17 @@ const ICONS={
   move:'<circle cx="13" cy="4" r="2"/><path d="M7 21l3-6 3 2v5M10 15l1-5 4 3h4M11 10l-4 1-2 4"/>',
   connect:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
   learn:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 5v16"/>',
-  recover:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'};
+  recover:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
+  fun:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',
+  care:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>'};
 const AREAS=[
   {k:"move",name:"Movement",c:"var(--move)"},
   {k:"connect",name:"Connection",c:"var(--connect)"},
   {k:"learn",name:"Learning",c:"var(--learn)"},
-  {k:"recover",name:"Recovery",c:"var(--recover)"}];
+  {k:"recover",name:"Health",c:"var(--recover)"}];
 const VIEWS=["focus","checkin","people","care","week"];
-const TITLES={focus:"Focus",checkin:"Check in",people:"People",care:"Self-care",week:"Week"};
-const DEFAULT_GOALS={steps:8000,exDays:3,study:180,plans:1,outs:1,sleep:7.5};
+const TITLES={focus:"Focus",checkin:"Check in",people:"People",care:"Care",week:"Week"};
+const DEFAULT_GOALS={steps:8000,exDays:3,study:180,plans:1,outs:1,sleep:7.5,newPerMonth:2,checkinTime:"20:00"};
 let plans={},people=[],reviews={};
 const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let goals={...DEFAULT_GOALS},entries={},isExample=false,store=null,cur=todayStr(),view="focus";
@@ -656,7 +710,7 @@ function dayScores(e){
     move:clamp(.6*clamp(n(e.steps)/goals.steps)+(n(e.ex)>=20?.4:n(e.ex)/50)),
     connect:clamp((e.plans?.25:0)+(e.replied?.25:0)+(e.out?.25:0)+.25*clamp(1-(n(e.unread)+n(e.missed))/10)),
     learn:n(e.study)>0?clamp(n(e.study)/(goals.study/4)):0,
-    recover:clamp(.5*clamp(n(e.sleep)/goals.sleep)+.5*((5-n(e.stress||3))/4))};
+    recover:clamp(n(e.eat)?.4*clamp(n(e.sleep)/goals.sleep)+.3*((5-n(e.stress||3))/4)+.3*((n(e.eat)-1)/4):.5*clamp(n(e.sleep)/goals.sleep)+.5*((5-n(e.stress||3))/4))};
 }
 function windowDays(off){const t=todayStr(),a=[];for(let i=6;i>=0;i--)a.push(addDays(t,-i-7*off));return a}
 function weekSummary(off=0){
@@ -666,14 +720,15 @@ function weekSummary(off=0){
   const s={logged:logged.length,avgSteps:avg(e=>e.steps),exDays:logged.filter(e=>n(e.ex)>=20).length,studyMin:sum(e=>e.study),
     plans:logged.filter(e=>e.plans).length,outDays:logged.filter(e=>e.out).length,replyDays:logged.filter(e=>e.replied).length,avgBacklog:avg(e=>n(e.unread)+n(e.missed)),
     avgUnread:avg(e=>e.unread),latest:logged[logged.length-1],avgSleep:avg(e=>e.sleep),avgStress:avg(e=>e.stress||3),avgWork:avg(e=>e.work)};
+  const ate=logged.filter(e=>n(e.eat));s.avgEat=ate.length?ate.reduce((a,e)=>a+n(e.eat),0)/ate.length:null;
   s.scores={move:.5*clamp(s.avgSteps/goals.steps)+.5*clamp(s.exDays/goals.exDays),
     connect:.25*clamp(s.plans/goals.plans)+.25*(s.replyDays/s.logged)+.25*clamp(s.outDays/goals.outs)+.25*clamp(1-s.avgBacklog/10),
-    learn:clamp(s.studyMin/goals.study),recover:.5*clamp(s.avgSleep/goals.sleep)+.5*((5-s.avgStress)/4)};
+    learn:clamp(s.studyMin/goals.study),recover:s.avgEat!=null?.4*clamp(s.avgSleep/goals.sleep)+.3*((5-s.avgStress)/4)+.3*((s.avgEat-1)/4):.5*clamp(s.avgSleep/goals.sleep)+.5*((5-s.avgStress)/4)};
   return s;
 }
 function daysSince(pred){const t=todayStr();for(let i=0;i<60;i++){const d=addDays(t,-i);if(entries[d]&&pred(entries[d]))return i}return null}
 function buildNudges(s){
-  const list=[];const add=(area,title,body,w)=>list.push({area,title,body,w:w+(1-s.scores[area])});
+  const list=[];const add=(area,title,body,w)=>list.push({area,title,body,w:w+(1-(s.scores[area]??.5))});
   const lu=s.latest;
   if(n(lu.unread)>=5||s.avgUnread>=6)add("connect",`${n(lu.unread)} unread texts`,`You've averaged ${s.avgUnread.toFixed(0)} unread this week. Reply to two people before bed tonight.`,1.2);
   if(n(lu.missed)>0)add("connect",`${n(lu.missed)} missed call${n(lu.missed)>1?"s":""} still showing`,"Call back whoever matters most, or text them when you're free.",1.1);
@@ -689,7 +744,12 @@ function buildNudges(s){
   if(s.avgSteps<goals.steps*.75)add("move",`Steps averaging ${Math.round(s.avgSteps).toLocaleString()}`,`That's under your ${goals.steps.toLocaleString()} goal. A 20-minute walk at lunch adds about 2,000.`,.8);
   const sp=stressPattern(30);
   if(sp.days>=3&&sp.rows[0]&&sp.rows[0].n/sp.days>=.5)add("recover",`${sp.rows[0].c} caused ${sp.rows[0].n} of your last ${sp.days} stressful days`,CAUSE_TIPS[sp.rows[0].c]||"That's the pattern to work on.",1.2);
-  if(s.avgStress>=3.5)add("recover",`Work stress averaging ${s.avgStress.toFixed(1)} / 5`,s.avgWork>9?`You're also averaging ${s.avgWork.toFixed(1)} work hours a day. Pick an end time and protect it at least three days this week.`:"Note what caused the worst days. If it's the same thing each time, that's the conversation to have with your manager.",1.15);
+  {const wd=windowDays(0).map(d=>entries[d]).filter(e=>e&&n(e.workday)>0);if(wd.length>=3){const a=wd.reduce((x,e)=>x+n(e.workday),0)/wd.length;if(a<=2.5)add("recover",`Work days averaging ${a.toFixed(1)} / 5`,"Several rough days in a row is worth noticing. Write down what made them hard; if it's the same thing each time, that's the conversation to have with your manager.",1.1)}}
+  if(s.avgEat!=null&&s.avgEat<=2.75)add("recover",`Eating averaging ${s.avgEat.toFixed(1)} / 5`,"Plan two easy meals ahead this week, and keep a few good snacks at work so you're not running on takeout.",1.05);
+  const hod=hobbiesSorted().filter(h=>hobbyStatus(h).st==="overdue")[0];
+  if(hod){const hs=hobbyStatus(hod);add("fun",`${hod.name}: ${hs.since} days since last time`,"Put an hour for it on your calendar this week. Time off is part of handling stress.",1)}
+  const nt=newStatus();if(nt.nudge)add("fun",nt.title,"Pick one small thing: a new recipe, route, café, class or game. It doesn't have to be big.",.95);
+  if(s.avgStress>=3.5)add("recover",`Stress averaging ${s.avgStress.toFixed(1)} / 5`,s.avgWork>9?`You're also averaging ${s.avgWork.toFixed(1)} work hours a day. Pick an end time and protect it at least three days this week.`:"Check Stress patterns in the Week tab to see what's behind your hardest days, and start there.",1.15);
   else if(s.avgWork>9.5)add("recover",`${s.avgWork.toFixed(1)} work hours a day`,"Long hours squeeze out everything else. Set a hard stop on two days this week.",1);
   if(s.avgSleep<goals.sleep-.5)add("recover",`Sleeping ${s.avgSleep.toFixed(1)} hours`,`You're under your ${goals.sleep}-hour goal, which makes stress harder to handle. Set a fixed bedtime this week.`,.95);
   return list.sort((a,b)=>b.w-a.w);
@@ -858,7 +918,7 @@ function renderFocus(){
   areas.querySelectorAll(".score").forEach(el=>countUp(el,+el.dataset.to));
   requestAnimationFrame(()=>requestAnimationFrame(()=>areas.querySelectorAll(".bar i").forEach(b=>b.style.width=b.dataset.w+"%")));
   const list=buildNudges(s).slice(0,3);nud.innerHTML="";
-  list.forEach((x,i)=>{const a=AREAS.find(a=>a.k===x.area);const li=document.createElement("li");li.className="nudge rise";li.style.setProperty("--areac",a.c);li.style.setProperty("--i",i+6);
+  list.forEach((x,i)=>{const a=AREA_C[x.area];const li=document.createElement("li");li.className="nudge rise";li.style.setProperty("--areac",a.c);li.style.setProperty("--i",i+6);
     li.innerHTML=`<span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${ICONS[x.area]}</svg></span><div><b></b><p></p></div>`;
     li.querySelector("b").textContent=x.title;li.querySelector("p").textContent=x.body;nud.append(li)});
   if(!list.length)nud.innerHTML=`<li class="tip">Nothing is slipping right now.</li>`;
@@ -877,25 +937,31 @@ function renderWeek(){
       const v=sc[a.k];html+=`<span class="cell" style="--i:${i};background:color-mix(in srgb, ${a.c} ${Math.round(12+v*88)}%, var(--sunken))" title="${a.name} ${Math.round(v*100)}"></span>`})});
   $("#grid").innerHTML=html;
   const s=weekSummary(),st=$("#stats");
-  st.innerHTML=s?[[Math.round(s.avgSteps).toLocaleString(),"avg steps"],[`${s.exDays}/${goals.exDays}`,"workouts"],[`${s.studyMin}/${goals.study}`,"study min"],[`${s.outDays}/${goals.outs}`,"times out"],[`${s.plans}/${goals.plans}`,"plans made"],[s.avgUnread.toFixed(1),"avg unread"]]
+  st.innerHTML=s?[[Math.round(s.avgSteps).toLocaleString(),"avg steps"],[`${s.exDays}/${goals.exDays}`,"workouts"],[`${s.studyMin}/${goals.study}`,"study min"],[`${s.outDays}/${goals.outs}`,"times out"],[s.avgEat!=null?s.avgEat.toFixed(1)+"/5":"–","avg eating"],[s.avgUnread.toFixed(1),"avg unread"]]
     .map(([v,k],j)=>`<div class="stat rise" style="--i:${j%3}"><div class="v">${v}</div><div class="k">${k}</div></div>`).join(""):"";
-  const map={steps:"steps",exdays:"exDays",study:"study",plans:"plans",outs:"outs",sleep:"sleep"};
+  const map={steps:"steps",exdays:"exDays",study:"study",plans:"plans",outs:"outs",sleep:"sleep",newpm:"newPerMonth"};
   Object.keys(map).forEach(k=>{const el=$("#g-"+k);if(document.activeElement!==el)el.value=goals[map[k]]});
 }
 
 /* ---------- check-in form ---------- */
 const seg=$("#f-stress"),thumb=seg.querySelector(".thumb");let stressVal=3;
+const wseg=$("#f-wd"),wthumb=wseg.querySelector(".thumb");let wdVal=0;
+for(let i=1;i<=5;i++){const b=document.createElement("button");b.type="button";b.textContent=i;b.setAttribute("aria-pressed","false");b.setAttribute("aria-label","Work day "+i);b.onclick=()=>{wdVal=wdVal===i?0:i;syncWd()};wseg.append(b)}
+function syncWd(){wthumb.style.opacity=wdVal?1:0;wthumb.style.transform=`translateX(${Math.max(0,wdVal-1)*36}px)`;wseg.querySelectorAll("button").forEach((b,i)=>b.setAttribute("aria-pressed",String(i+1===wdVal)))}
+const eseg=$("#f-eat"),ethumb=eseg.querySelector(".thumb");let eatVal=0;
+for(let i=1;i<=5;i++){const b=document.createElement("button");b.type="button";b.textContent=i;b.setAttribute("aria-pressed","false");b.setAttribute("aria-label","Eating "+i);b.onclick=()=>{eatVal=i;syncEat()};eseg.append(b)}
+function syncEat(){ethumb.style.opacity=eatVal?1:0;ethumb.style.transform=`translateX(${Math.max(0,eatVal-1)*36}px)`;eseg.querySelectorAll("button").forEach((b,i)=>b.setAttribute("aria-pressed",String(i+1===eatVal)))}
 for(let i=1;i<=5;i++){const b=document.createElement("button");b.type="button";b.textContent=i;b.setAttribute("aria-pressed","false");b.setAttribute("aria-label","Stress "+i);b.onclick=()=>{stressVal=i;syncStress()};seg.append(b)}
 function syncStress(){thumb.style.transform=`translateX(${(stressVal-1)*36}px)`;seg.querySelectorAll("button").forEach((b,i)=>b.setAttribute("aria-pressed",String(i+1===stressVal)));renderFormCauses()}
 let formCauses=[];
-function renderFormCauses(){const w=$("#f-causeWrap");if(!w)return;const on=stressVal>=4;if(w.hidden===on)w.hidden=!on;const box=$("#f-causes");box.innerHTML=CAUSES.map(c=>`<button type="button" data-v="${c}" aria-pressed="${formCauses.includes(c)}">${c}</button>`).join("");box.querySelectorAll("button").forEach(b=>b.onclick=()=>{const c=b.dataset.v;formCauses=formCauses.includes(c)?formCauses.filter(x=>x!==c):[...formCauses,c];b.setAttribute("aria-pressed",String(formCauses.includes(c)))})}
+function renderFormCauses(){const w=$("#f-causeWrap");if(!w)return;const on=stressVal>=4;if(w.hidden===on)w.hidden=!on;const box=$("#f-causes");box.innerHTML=causeChips(formCauses);box.querySelectorAll("button").forEach(b=>b.onclick=()=>{const c=b.dataset.v;formCauses=formCauses.includes(c)?formCauses.filter(x=>x!==c):[...formCauses,c];b.setAttribute("aria-pressed",String(formCauses.includes(c)))})}
 function loadForm(animate){
   const e=(!isExample&&entries[cur])||{};
   $("#f-unread").value=n(e.unread);$("#f-missed").value=n(e.missed);
   $("#f-replied").checked=!!e.replied;$("#f-plans").checked=!!e.plans;$("#f-out").checked=!!e.out;$("#formPlan").hidden=true;
   $("#f-steps").value=n(e.steps);$("#f-ex").value=n(e.ex);$("#f-study").value=n(e.study);
   $("#f-work").value=n(e.work);$("#f-sleep").value=e.sleep!=null?n(e.sleep):goals.sleep;
-  formCauses=Array.isArray(e.causes)?[...e.causes]:[];stressVal=n(e.stress)||3;syncStress();$("#f-note").value=e.note||"";
+  formCauses=Array.isArray(e.causes)?[...e.causes]:[];stressVal=n(e.stress)||3;syncStress();eatVal=n(e.eat);syncEat();wdVal=n(e.workday);syncWd();$("#f-note").value=e.note||"";
   const lab=$("#dayLabel");lab.textContent=cur===todayStr()?"Today":fmtDay(cur);
   if(animate){lab.classList.remove("swap");void lab.offsetWidth;lab.classList.add("swap")}
   const btn=$("#saveBtn");btn.classList.remove("done");btn.textContent=(!isExample&&entries[cur])?"Update check-in":"Save check-in";
@@ -912,8 +978,8 @@ $("#prevDay").onclick=()=>{cur=addDays(cur,-1);loadForm(true)};
 $("#nextDay").onclick=()=>{if(cur<todayStr()){cur=addDays(cur,1);loadForm(true)}};
 $("#form").addEventListener("submit",async ev=>{
   ev.preventDefault();
-  const e={date:cur,quiz:!!(!isExample&&entries[cur]&&entries[cur].quiz),unread:n($("#f-unread").value),missed:n($("#f-missed").value),replied:$("#f-replied").checked,plans:$("#f-plans").checked,out:$("#f-out").checked,
-    steps:n($("#f-steps").value),ex:n($("#f-ex").value),study:n($("#f-study").value),stress:stressVal,causes:stressVal>=4?formCauses:[],work:n($("#f-work").value),sleep:n($("#f-sleep").value),
+  const e={...((!isExample&&entries[cur])||{}),date:cur,eat:eatVal||null,quiz:!!(!isExample&&entries[cur]&&entries[cur].quiz),unread:n($("#f-unread").value),missed:n($("#f-missed").value),replied:$("#f-replied").checked,plans:$("#f-plans").checked,out:$("#f-out").checked,
+    steps:n($("#f-steps").value),ex:n($("#f-ex").value),study:n($("#f-study").value),workday:wdVal||0,stress:stressVal,causes:stressVal>=4?formCauses:[],work:n($("#f-work").value),sleep:n($("#f-sleep").value),
     note:$("#f-note").value.slice(0,500),updatedAt:Date.now()};
   const btn=$("#saveBtn");btn.disabled=true;
   if(isExample){entries={};isExample=false}
@@ -925,7 +991,7 @@ $("#form").addEventListener("submit",async ev=>{
   setTimeout(()=>{renderAll();show("focus")},reduce?200:750);
 });
 $("#saveGoals").onclick=async()=>{
-  goals={setup:true,steps:n($("#g-steps").value)||DEFAULT_GOALS.steps,exDays:n($("#g-exdays").value)||1,study:n($("#g-study").value)||30,plans:n($("#g-plans").value)||1,outs:n($("#g-outs").value)||1,sleep:n($("#g-sleep").value)||7};
+  goals={setup:true,steps:n($("#g-steps").value)||DEFAULT_GOALS.steps,exDays:n($("#g-exdays").value)||1,study:n($("#g-study").value)||30,plans:n($("#g-plans").value)||1,checkinTime:goals.checkinTime||DEFAULT_GOALS.checkinTime,outs:n($("#g-outs").value)||1,newPerMonth:n($("#g-newpm").value)||1,sleep:n($("#g-sleep").value)||7};
   try{await store.saveGoals(goals);toast("Goals saved")}catch(e){toast("Couldn't save goals")}
   renderAll();
 };
@@ -946,22 +1012,27 @@ const QS=[
   {k:"steps",area:"move",type:"count",step:500,title:"How many steps today?",hint:"Open the Health app and check Steps.",unit:"steps",chips:[3000,5000,8000,10000,12000]},
   {k:"ex",area:"move",type:"count",step:5,title:"How long did you exercise?",unit:"minutes",chips:[0,15,30,45,60,90]},
   {k:"study",area:"learn",type:"count",step:15,title:"Time on your course or certification?",unit:"minutes",chips:[0,15,30,45,60,90]},
-  {k:"stress",area:"recover",type:"scale",title:"How stressful was work today?",opts:[["1","Calm","Barely thought about it"],["2","Fine","Normal day"],["3","Busy","Some pressure"],["4","Stressful","Hard to switch off"],["5","Overwhelmed","Too much"]]},
-  {k:"causes",area:"recover",type:"multi",src:"causes",none:"Skip",cond:()=>qa.stress>=4,title:"What made it stressful?",hint:"Pick everything that applies. Over time you'll see what drives your hardest days."},
+  {k:"workday",area:"recover",type:"scale",title:"How was your day at work?",opts:[["5","Great","Got things done, felt good"],["4","Good","More good than bad"],["3","Fine","An ordinary day"],["2","Rough","Frustrating or draining"],["1","Awful","One to forget"],["0","Day off","Didn't work today"]]},
+  {k:"stress",area:"recover",type:"scale",title:"How stressful was your day overall?",hint:"Everything counts: work, money, family, all of it.",opts:[["1","Calm","Barely thought about it"],["2","Fine","Normal day"],["3","Busy","Some pressure"],["4","Stressful","Hard to switch off"],["5","Overwhelmed","Too much"]]},
+  {k:"causes",area:"recover",type:"multi",src:"causes",none:"Skip",cond:()=>qa.stress>=4,title:"What made today stressful?",hint:"Pick everything that applies. Over time you'll see what drives your hardest days."},
   {k:"work",area:"recover",type:"count",step:.5,title:"How many hours did you work?",unit:"hours",chips:[0,6,7,8,9,10]},
   {k:"sleep",area:"recover",type:"count",step:.5,title:"How much did you sleep last night?",unit:"hours",chips:[5,6,7,7.5,8,9]},
+  {k:"eat",area:"recover",type:"scale",title:"How was your eating today?",opts:[["1","Poor","Junk food or skipped meals"],["2","Not great","More takeout or snacks than I'd like"],["3","Okay","A mix of good and not so good"],["4","Good","Mostly balanced meals"],["5","Great","Balanced meals and enough water"]]},
   {k:"care",area:"care",type:"multi",src:"care",none:"None today",cond:()=>care.length>0,title:"Any self-care today?",hint:"Tap everything you did. Items with a red dot are due."},
+  {k:"hobby",area:"fun",type:"multi",src:"hobbies",none:"Not today",cond:()=>hobbies.length>0,title:"Any time on your hobbies today?",hint:"Tap everything you made time for."},
+  {k:"tried",area:"fun",type:"yesno",title:"Did you try anything new today?",yes:"Yes",no:"No"},
+  {k:"triedWhat",area:"fun",type:"line",cond:()=>qa.tried===true,title:"What did you try?",hint:"A new recipe, place, activity, anything. It'll go in your Hobbies log.",ph:"Bouldering gym on Queen St"},
   {k:"note",area:"recover",type:"text",title:"Anything on your mind?",hint:"Optional. A deadline, a win, why you skipped the gym."},
   {k:"_review",type:"review",title:"Look right?"}
 ];
-const AREA_C=Object.fromEntries(AREAS.map(a=>[a.k,a]));AREA_C.care={k:"care",name:"Self-care",c:"var(--care)"};
+const AREA_C=Object.fromEntries(AREAS.map(a=>[a.k,a]));AREA_C.care={k:"care",name:"Self-care",c:"var(--care)"};AREA_C.fun={k:"fun",name:"Hobbies",c:"var(--fun)"};
 let qi=0,qa={},qBusy=false;
 const AQ=()=>QS.filter(q=>!q.cond||q.cond());
-function fmtVal(q,v){if(q.type==="multi"){if(!v||!v.length)return"None";if(q.src==="causes")return esc(v[0])+(v.length>1?" +"+(v.length-1):"");if(q.src==="people")return v.length+(v.length===1?" person":" people");return v.length+" done"}if(q.type==="plan")return esc(fmtWhen({date:qa.planDate,time:qa.planTime}));if(q.type==="yesno")return v?"Yes":"No";if(q.type==="scale")return v+" · "+q.opts[v-1][1];if(q.type==="text")return v?"Added":"None";if(q.k==="steps")return n(v).toLocaleString();return v+(q.unit==="hours"?" h":q.unit==="minutes"?" min":"")}
+function fmtVal(q,v){if(q.type==="line")return v?esc(v.length>18?v.slice(0,17)+"…":v):"Not noted";if(q.type==="multi"){if(!v||!v.length)return"None";if(q.src==="causes")return esc(v[0])+(v.length>1?" +"+(v.length-1):"");if(q.src==="people")return v.length+(v.length===1?" person":" people");if(q.src==="hobbies")return v.length+(v.length===1?" hobby":" hobbies");return v.length+" done"}if(q.type==="plan")return esc(fmtWhen({date:qa.planDate,time:qa.planTime}));if(q.type==="yesno")return v?"Yes":"No";if(q.type==="scale"){const o=q.opts.find(o=>+o[0]===v);return o?(v?v+" · ":"")+o[1]:""}if(q.type==="text")return v?"Added":"None";if(q.k==="steps")return n(v).toLocaleString();return v+(q.unit==="hours"?" h":q.unit==="minutes"?" min":"")}
 function openQuiz(){
   const t=todayStr();cur=t;
   const e=(!isExample&&entries[t])||{};
-  qa={unread:n(e.unread),missed:n(e.missed),replied:e.replied??null,plans:e.plans??null,out:e.out??null,planDate:addDays(t,1),planTime:"",planWhat:"",care:[],talked:[],causes:Array.isArray(e.causes)?[...e.causes]:[],steps:n(e.steps),ex:n(e.ex),study:n(e.study),
+  qa={unread:n(e.unread),missed:n(e.missed),replied:e.replied??null,plans:e.plans??null,out:e.out??null,planDate:addDays(t,1),planTime:"",planWhat:"",care:[],talked:[],hobby:[],workday:e.workday??null,tried:e.tried??null,triedWhat:"",eat:n(e.eat)||null,causes:Array.isArray(e.causes)?[...e.causes]:[],steps:n(e.steps),ex:n(e.ex),study:n(e.study),
       stress:n(e.stress)||null,work:n(e.work),sleep:e.sleep!=null?n(e.sleep):goals.sleep,note:e.note||""};
   qi=0;const qz=$("#quiz");qz.hidden=false;qz.classList.remove("closing");qz.classList.add("open");
   document.body.style.overflow="hidden";renderQ(0);
@@ -987,11 +1058,13 @@ function renderQ(dir){
   }else if(q.type==="yesno"){
     h+=`<div class="choices">${[[true,q.yes,"✓"],[false,q.no,"–"]].map(([v,l,k])=>`<button type="button" class="choice" data-v="${v}" aria-pressed="${qa[q.k]===v}"><span class="k">${k}</span><span>${l}</span></button>`).join("")}</div>`;
   }else if(q.type==="scale"){
-    h+=`<div class="choices">${q.opts.map(([v,l,s])=>`<button type="button" class="choice" data-v="${v}" aria-pressed="${qa.stress===+v}"><span class="k">${v}</span><span>${l}<small>${s}</small></span></button>`).join("")}</div>`;
+    h+=`<div class="choices">${q.opts.map(([v,l,s])=>`<button type="button" class="choice" data-v="${v}" aria-pressed="${qa[q.k]===+v}"><span class="k">${v==="0"?"–":v}</span><span>${l}<small>${s}</small></span></button>`).join("")}</div>`;
   }else if(q.type==="plan"){
     h+=`<div class="planform"><div class="row2"><div><label class="flabel" for="qp-date">Date</label><input class="inp" type="date" id="qp-date"></div><div><label class="flabel" for="qp-time">Time (optional)</label><input class="inp" type="time" id="qp-time"></div></div><div><label class="flabel" for="qp-what">What and who</label><input class="inp" id="qp-what" maxlength="80" placeholder="Dinner with Sam"></div></div>`;
   }else if(q.type==="multi"){
-    h+=`<div class="chips">${multiOpts(q).map(o=>`<button type="button" data-id="${esc(o.id)}" class="${o.due?"due":""}" aria-pressed="${qa[q.k].includes(o.id)}">${esc(o.label)}</button>`).join("")}</div>`;
+    if(q.src==="causes")h+=`<div style="display:grid;gap:8px">${causeChips(qa.causes)}</div>`;else h+=`<div class="chips">${multiOpts(q).map(o=>`<button type="button" data-id="${esc(o.id)}" class="${o.due?"due":""}" aria-pressed="${qa[q.k].includes(o.id)}">${esc(o.label)}</button>`).join("")}</div>`;
+  }else if(q.type==="line"){
+    h+=`<input class="inp qline" id="qin" maxlength="80" placeholder="${esc(q.ph||"")}" aria-label="${esc(q.title)}">`;
   }else if(q.type==="text"){
     h+=`<textarea id="qin" aria-label="Note" placeholder="Type here…"></textarea>`;
   }else{
@@ -1019,6 +1092,8 @@ function renderQ(dir){
     d.oninput=()=>qa.planDate=d.value;tm.oninput=()=>qa.planTime=tm.value;w.oninput=()=>qa.planWhat=w.value.slice(0,80);
   }else if(q.type==="multi"){
     body.querySelectorAll(".chips button").forEach(b=>b.onclick=()=>{const id=b.dataset.id,k=q.k;qa[k]=qa[k].includes(id)?qa[k].filter(x=>x!==id):[...qa[k],id];b.setAttribute("aria-pressed",String(qa[k].includes(id)));nx.textContent=qa[k].length?"Next":(q.none||"None today")});
+  }else if(q.type==="line"){
+    inp.value=qa[q.k]||"";inp.oninput=()=>{qa[q.k]=inp.value.slice(0,80)};
   }else if(q.type==="text"){
     inp.value=qa.note;inp.oninput=()=>{qa.note=inp.value.slice(0,500);nx.textContent=qa.note?"Next":"Skip"};
   }else{
@@ -1036,7 +1111,7 @@ async function finishQuiz(){
   const firstMissing=AQ().findIndex(x=>(x.type==="yesno"||x.type==="scale")&&qa[x.k]==null);
   if(firstMissing>=0){qi=firstMissing;renderQ(-1);toast("One question still needs an answer");return}
   const e={date:todayStr(),quiz:true,unread:n(qa.unread),missed:n(qa.missed),replied:!!qa.replied,plans:!!qa.plans,out:!!qa.out,steps:n(qa.steps),ex:n(qa.ex),
-    study:n(qa.study),stress:qa.stress,causes:qa.stress>=4?qa.causes:[],work:n(qa.work),sleep:n(qa.sleep),note:qa.note||"",updatedAt:Date.now()};
+    study:n(qa.study),workday:qa.workday,stress:qa.stress,causes:qa.stress>=4?qa.causes:[],eat:qa.eat,hobby:qa.hobby||[],tried:!!qa.tried,work:n(qa.work),sleep:n(qa.sleep),note:qa.note||"",updatedAt:Date.now()};
   const nx=$("#qnext");nx.disabled=true;
   if(isExample){entries={};isExample=false}
   entries[e.date]=e;
@@ -1044,6 +1119,8 @@ async function finishQuiz(){
   if(!ok){nx.disabled=false;toast("Couldn't save. Check your connection and try again.");return}
   for(const id of qa.care||[])await markCare(id,true);
   for(const id of qa.talked||[])await markPerson(id,true);
+  for(const id of qa.hobby||[])await markHobby(id,true);
+  if(qa.tried&&!Object.values(newThings).some(x=>x.date===todayStr()&&x.fromQuiz))await addNew({date:todayStr(),what:(qa.triedWhat||"").trim()||"Something new",fromQuiz:true});
   if(qa.plans&&qa.planDate)await addPlan({date:qa.planDate,time:qa.planTime||"",what:(qa.planWhat||"").trim()});
   $("#qprog").style.width="100%";
   nx.classList.add("done");nx.innerHTML=`<svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Saved`;
@@ -1064,6 +1141,7 @@ const SETUP=[
   {k:"plans",area:"connect",title:"How many plans do you want to make each week?",hint:"Calls, dinners, anything you set up with someone.",step:1,max:14,unit:"plans a week",chips:[1,2,3]},
   {k:"outs",area:"connect",title:"How often do you want to go out with friends?",step:1,max:7,unit:"times a week",chips:[1,2,3]},
   {k:"sleep",area:"recover",title:"How much sleep do you need?",hint:"Most adults do best with 7 to 9 hours.",step:.5,max:12,unit:"hours a night",chips:[6.5,7,7.5,8,8.5]},
+  {k:"checkinTime",type:"time",title:"When should your daily check-in open?",hint:"Pick a time near the end of your day. It opens on its own after this, and you can change it in Settings."},
   {type:"care",area:"care",title:"Which self-care do you want to track?",hint:"You can change how often each one is due, or add your own, in the Care tab."},
   {type:"done",title:"You're all set"}
 ];
@@ -1083,12 +1161,14 @@ function renderS(dir){
   let h=a?`<div class="qarea"><i></i>${a.name}</div>`:"";
   h+=`<h2 class="qtitle" id="stitle">${q.title}</h2>`;
   if(q.type==="intro"){
-    h+=`<p class="qhint">Life Ledger keeps an eye on five parts of your life. Set a target for each so it knows what “on track” means for you.</p>`;
-    h+=`<ul class="alist">${[["Movement","Steps and workouts","var(--move)"],["Connection","Texts, calls, plans and time out","var(--connect)"],["Learning","Course and certification time","var(--learn)"],["Recovery","Sleep, work hours and stress","var(--recover)"],["Self-care","Haircuts, nails, appointments","var(--care)"]].map(([n,d,c],i)=>`<li class="rise" style="--c:${c};--i:${i+1}"><i></i><div><b>${n}</b><span>${d}</span></div></li>`).join("")}</ul>`;
+    h+=`<p class="qhint">Life Ledger keeps an eye on six parts of your life. Set a target for each so it knows what “on track” means for you.</p>`;
+    h+=`<ul class="alist">${[["Movement","Steps and workouts","var(--move)"],["Connection","Texts, calls, plans and time out","var(--connect)"],["Learning","Course and certification time","var(--learn)"],["Health","Sleep, eating, stress and work hours","var(--recover)"],["Self-care","Haircuts, nails, appointments","var(--care)"],["Hobbies","Making time for fun and new things","var(--fun)"]].map(([n,d,c],i)=>`<li class="rise" style="--c:${c};--i:${i+1}"><i></i><div><b>${n}</b><span>${d}</span></div></li>`).join("")}</ul>`;
+  }else if(q.type==="time"){
+    h+=`<input class="inp" type="time" id="stime" value="${sg.checkinTime||"20:00"}" style="font-size:1.6rem;text-align:center;min-height:64px;background:var(--surface);box-shadow:var(--shadow)"><div class="chips">${["18:00","19:00","20:00","21:00"].map(t=>`<button type="button" data-v="${t}" aria-pressed="${(sg.checkinTime||"20:00")===t}">${fmtTime(t)}</button>`).join("")}</div>`;
   }else if(q.type==="care"){
     h+=`<div class="chips">${care.map(t=>`<button type="button" data-id="${esc(t.id)}" aria-pressed="${sCare.has(t.id)}">${esc(t.name)}</button>`).join("")}</div>`;
   }else if(q.type==="done"){
-    const sum=[["Steps",Number(sg.steps).toLocaleString()+" a day","move"],["Workouts",sg.exDays+" a week","move"],["Study",sg.study+" min a week","learn"],["Plans",sg.plans+" a week","connect"],["Time out",sg.outs+" a week","connect"],["Sleep",sg.sleep+" h a night","recover"],["Self-care",sCare.size+" item"+(sCare.size===1?"":"s"),"care"]];
+    const sum=[["Steps",Number(sg.steps).toLocaleString()+" a day","move"],["Workouts",sg.exDays+" a week","move"],["Study",sg.study+" min a week","learn"],["Plans",sg.plans+" a week","connect"],["Time out",sg.outs+" a week","connect"],["Sleep",sg.sleep+" h a night","recover"],["Check-in",fmtTime(sg.checkinTime||"20:00"),"recover"],["Self-care",sCare.size+" item"+(sCare.size===1?"":"s"),"care"]];
     h+=`<p class="qhint">Change these anytime under Goals in the Week tab.</p><div class="review">${sum.map(([k,v,ar])=>`<button type="button" tabindex="-1" style="--rc:${AREA_C[ar].c};cursor:default"><span>${k}</span><span class="rv">${v}</span></button>`).join("")}</div>`;
   }else{
     const v=sg[q.k];
@@ -1106,11 +1186,13 @@ function renderS(dir){
     body.querySelectorAll(".chips button").forEach(b=>b.onclick=()=>{inp.value=b.dataset.v;sg[q.k]=+b.dataset.v;bump();sync()});
     inp.oninput=()=>{sg[q.k]=n(inp.value);sync()};inp.onfocus=()=>inp.select();
   }
+  if(q.type==="time"){const ti=body.querySelector("#stime");ti.oninput=()=>{sg.checkinTime=ti.value;body.querySelectorAll(".chips button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===ti.value)))};
+    body.querySelectorAll(".chips button").forEach(b=>b.onclick=()=>{sg.checkinTime=ti.value=b.dataset.v;body.querySelectorAll(".chips button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))})}
   if(q.type==="care")body.querySelectorAll(".chips button").forEach(b=>b.onclick=()=>{const id=b.dataset.id;sCare.has(id)?sCare.delete(id):sCare.add(id);b.setAttribute("aria-pressed",String(sCare.has(id)))});
 }
 function goS(d){
   const q=SETUP[si];
-  if(d>0&&q.k){const v=n(sg[q.k]);if(v<=0){toast("Enter a number above 0");return}sg[q.k]=Math.min(q.max||1e9,v)}
+  if(d>0&&q.k&&q.type!=="time"){const v=n(sg[q.k]);if(v<=0){toast("Enter a number above 0");return}sg[q.k]=Math.min(q.max||1e9,v)}
   if(d>0&&q.type==="done"){finishSetup(true);return}
   si=Math.max(0,Math.min(SETUP.length-1,si+d));renderS(d);
 }
@@ -1133,15 +1215,17 @@ $("#resetCancel").onclick=()=>{$("#resetConfirm").hidden=true;$("#resetBtn").hid
 $("#resetGo").onclick=async()=>{
   const go=$("#resetGo");go.disabled=true;
   try{await store.resetAll()}catch(e){go.disabled=false;toast("Couldn't erase everything. Try again.");return}
-  entries={};plans={};people=[];reviews={};goals={...DEFAULT_GOALS};care=CARE_DEFAULTS.map(([name,every],i)=>({id:"def"+i,name,every,last:null,order:i}));careSaved=false;
+  entries={};plans={};people=[];reviews={};hobbies=[];newThings={};goals={...DEFAULT_GOALS};care=CARE_DEFAULTS.map(([name,every],i)=>({id:"def"+i,name,every,last:null,order:i}));careSaved=false;
   try{localStorage.removeItem(QKEY)}catch(e){}
   go.disabled=false;$("#resetConfirm").hidden=true;$("#resetBtn").hidden=false;
   setupShown=false;renderAll();show("focus");toast("All data erased");maybeSetup();
 };
 
 /* ---------- stress patterns ---------- */
-const CAUSES=["Meetings","Deadlines","Workload","A person","Long hours","Unclear priorities","Interruptions","Outside work"];
-const CAUSE_TIPS={"Meetings":"Try blocking focus time in your calendar, or asking which meetings you can skip.","Deadlines":"Try flagging risks earlier, or asking for more lead time on the next one.","Workload":"Worth a conversation with your manager about priorities and what can wait.","A person":"Think about whether a direct conversation, or your manager's help, could change things.","Long hours":"Set a hard stop time and protect it at least three days this week.","Unclear priorities":"Ask your manager to rank your top three priorities for the week.","Interruptions":"Try a do-not-disturb block for your most important work each day.","Outside work":"Work may not be the main issue. Go easy on yourself and look after the basics."};
+const CAUSE_GROUPS=[["Work",["Meetings","Deadlines","Workload","A person at work","Long hours","Unclear priorities","Interruptions"]],["Life",["Money","Family","Relationships","Health","Too much on","Poor sleep","Something else"]]];
+const CAUSES=CAUSE_GROUPS.flatMap(g=>g[1]);const WORK_CAUSES=new Set([...CAUSE_GROUPS[0][1],"A person"]);
+function causeChips(sel){return CAUSE_GROUPS.map(([g,l])=>`<span class="flabel" style="margin-top:4px">${g}</span><div class="chips left">${l.map(c=>`<button type="button" data-v="${c}" data-id="${c}" aria-pressed="${sel.includes(c)}">${c}</button>`).join("")}</div>`).join("")}
+const CAUSE_TIPS={"Meetings":"Try blocking focus time in your calendar, or asking which meetings you can skip.","Deadlines":"Try flagging risks earlier, or asking for more lead time on the next one.","Workload":"Worth a conversation with your manager about priorities and what can wait.","A person":"Think about whether a direct conversation, or your manager's help, could change things.","Long hours":"Set a hard stop time and protect it at least three days this week.","Unclear priorities":"Ask your manager to rank your top three priorities for the week.","Interruptions":"Try a do-not-disturb block for your most important work each day.","Outside work":"Work may not be the main issue. Go easy on yourself and look after the basics.","A person at work":"Think about whether a direct conversation, or your manager's help, could change things.","Money":"Write down the one money worry that's loudest, and one small step you can take on it this week.","Family":"Family stress is real. Make sure you're also getting time that's just for you.","Relationships":"If something needs saying, a calm conversation usually beats carrying it around.","Health":"Don't sit on it. Book the appointment or make the call this week.","Too much on":"Look at the week ahead and drop or postpone one thing. Saying no counts.","Poor sleep":"Sleep feeds everything else. Try a fixed bedtime and no screens for the last 30 minutes.","Something else":"Try writing down what's on your mind for five minutes. Naming it often takes the edge off."};
 function stressPattern(daysBack){
   const from=addDays(todayStr(),-daysBack+1),hard=Object.values(entries).filter(e=>e&&e.date>=from&&n(e.stress)>=4);
   const cnt={};hard.forEach(e=>(e.causes||[]).forEach(c=>cnt[c]=(cnt[c]||0)+1));
@@ -1151,7 +1235,9 @@ function renderStress(){
   const box=$("#causeList");if(!box)return;const sp=stressPattern(30);
   $("#stressCount").textContent=sp.days?`${sp.days} stressful day${sp.days===1?"":"s"} · last 30 days`:"";
   if(!sp.tagged){box.innerHTML=`<p class="tip">When you rate a day 4 or 5, you'll pick what caused it. The patterns show up here.</p>`;return}
-  box.innerHTML=sp.rows.slice(0,6).map(r=>`<div class="cause"><span class="cl">${esc(r.c)}</span><span class="cv">${Math.round(r.n/sp.days*100)}%</span><div class="cb"><i data-w="${Math.round(r.n/sp.days*100)}"></i></div></div>`).join("")+(sp.rows[0]?`<p class="tip" style="margin-top:2px">${esc(CAUSE_TIPS[sp.rows[0].c]||"")}</p>`:"");
+  const wN=sp.rows.filter(r=>WORK_CAUSES.has(r.c)||r.c==="Outside work"&&false).reduce((a,r)=>a+r.n,0),lN=sp.rows.filter(r=>!WORK_CAUSES.has(r.c)).reduce((a,r)=>a+r.n,0),tot=wN+lN;
+  const split=tot?`<div class="goalbar" style="margin-bottom:2px"><span style="color:var(--fg);font-weight:600">Work ${Math.round(wN/tot*100)}%</span><div class="bar" style="--areac:var(--recover)"><i style="width:${Math.round(wN/tot*100)}%"></i></div><span style="color:var(--fg);font-weight:600">Life ${Math.round(lN/tot*100)}%</span></div>`:"";
+  box.innerHTML=split+sp.rows.slice(0,6).map(r=>`<div class="cause"><span class="cl">${esc(r.c)}</span><span class="cv">${Math.round(r.n/sp.days*100)}%</span><div class="cb"><i data-w="${Math.round(r.n/sp.days*100)}"></i></div></div>`).join("")+(sp.rows[0]?`<p class="tip" style="margin-top:2px">${esc(CAUSE_TIPS[sp.rows[0].c]||"")}</p>`:"");
   requestAnimationFrame(()=>requestAnimationFrame(()=>box.querySelectorAll(".cb i").forEach(b=>b.style.width=b.dataset.w+"%")));
 }
 
@@ -1163,14 +1249,24 @@ function insights(){
   const cmp=(A,B,f)=>A.length>=3&&B.length>=3?[avg(A.map(f)),avg(B.map(f))]:null;
   const st=e=>n(e.stress)||3;let r;
   r=cmp(days.filter(e=>n(e.ex)>=20),days.filter(e=>n(e.ex)<20),st);
-  if(r&&Math.abs(r[0]-r[1])>=.4)out.push({w:Math.abs(r[0]-r[1])/2,area:"move",t:r[0]<r[1]?`Your work stress is ${(r[1]-r[0]).toFixed(1)} points lower on days you exercise.`:`Your stress runs ${(r[0]-r[1]).toFixed(1)} points higher on days you exercise. Workouts may be falling on your hardest days.`});
+  if(r&&Math.abs(r[0]-r[1])>=.4)out.push({w:Math.abs(r[0]-r[1])/2,area:"move",t:r[0]<r[1]?`Your stress is ${(r[1]-r[0]).toFixed(1)} points lower on days you exercise.`:`Your stress runs ${(r[0]-r[1]).toFixed(1)} points higher on days you exercise. Workouts may be falling on your hardest days.`});
   const pairs=days.map(e=>({e,nx:entries[addDays(e.date,1)]})).filter(x=>x.nx&&n(x.e.work)>0&&n(x.nx.sleep)>0);
   const lg=pairs.filter(x=>n(x.e.work)>=9.5),nm=pairs.filter(x=>n(x.e.work)<9.5);
   if(lg.length>=3&&nm.length>=3){const d=Math.round((avg(nm.map(x=>n(x.nx.sleep)))-avg(lg.map(x=>n(x.nx.sleep))))*60);if(d>=20)out.push({w:d/60,area:"recover",t:`You sleep ${fmtMins(d)} less after workdays of 9.5 hours or more.`})}
   r=cmp(days.filter(e=>n(e.sleep)>0&&n(e.sleep)<7),days.filter(e=>n(e.sleep)>=7),st);
-  if(r&&r[0]-r[1]>=.4)out.push({w:(r[0]-r[1])/2,area:"recover",t:`Work feels more stressful after short nights: ${r[0].toFixed(1)} out of 5 under 7 hours of sleep, ${r[1].toFixed(1)} with 7 or more.`});
+  if(r&&r[0]-r[1]>=.4)out.push({w:(r[0]-r[1])/2,area:"recover",t:`Days feel more stressful after short nights: ${r[0].toFixed(1)} out of 5 under 7 hours of sleep, ${r[1].toFixed(1)} with 7 or more.`});
   r=cmp(days.filter(e=>n(e.stress)>=4),days.filter(e=>n(e.stress)>0&&n(e.stress)<=2),e=>n(e.study));
   if(r&&r[1]-r[0]>=10)out.push({w:(r[1]-r[0])/40,area:"learn",t:`You study about ${Math.round(r[1]-r[0])} more minutes on calm days than on stressful ones. Plan study for your easier days.`});
+  r=cmp(days.filter(e=>n(e.eat)>=4),days.filter(e=>n(e.eat)&&n(e.eat)<=2),st);
+  if(r&&r[1]-r[0]>=.4)out.push({w:(r[1]-r[0])/2,area:"recover",t:`Your stress is ${(r[1]-r[0]).toFixed(1)} points lower on days you eat well.`});
+  r=cmp(days.filter(e=>n(e.sleep)>=7&&n(e.eat)),days.filter(e=>n(e.sleep)>0&&n(e.sleep)<7&&n(e.eat)),e=>n(e.eat));
+  if(r&&r[0]-r[1]>=.5)out.push({w:(r[0]-r[1])/2,area:"recover",t:`You eat better after a good night's sleep: ${r[0].toFixed(1)} out of 5, compared with ${r[1].toFixed(1)} after short nights.`});
+  r=cmp(days.filter(e=>(e.hobby||[]).length),days.filter(e=>!(e.hobby||[]).length),st);
+  if(r&&r[1]-r[0]>=.4)out.push({w:(r[1]-r[0])/2,area:"fun",t:`Your stress is ${(r[1]-r[0]).toFixed(1)} points lower on days you make time for a hobby.`});
+  {const wk=days.filter(e=>n(e.workday)>0);r=cmp(wk.filter(e=>n(e.workday)<=2),wk.filter(e=>n(e.workday)>=4),st);
+  if(r&&r[0]-r[1]>=.6)out.push({w:(r[0]-r[1])/2,area:"recover",t:`A rough day at work carries over: your overall stress is ${r[0].toFixed(1)} on bad work days and ${r[1].toFixed(1)} on good ones.`});
+  r=cmp(wk.filter(e=>n(e.sleep)>=7),wk.filter(e=>n(e.sleep)>0&&n(e.sleep)<7),e=>n(e.workday));
+  if(r&&r[0]-r[1]>=.5)out.push({w:(r[0]-r[1])/2,area:"recover",t:`Your work days go better after a good night's sleep: ${r[0].toFixed(1)} out of 5, compared with ${r[1].toFixed(1)}.`});}
   r=cmp(days.filter(e=>e.out),days.filter(e=>!e.out),st);
   if(r&&r[1]-r[0]>=.4)out.push({w:(r[1]-r[0])/2,area:"connect",t:`Your stress averages ${(r[1]-r[0]).toFixed(1)} points lower on days you see friends.`});
   r=cmp(days.filter(e=>n(e.work)>=9.5),days.filter(e=>n(e.work)>0&&n(e.work)<9.5),e=>n(e.steps));
@@ -1198,6 +1294,7 @@ function personStatus(p){
 const peopleSorted=()=>[...people].sort((a,b)=>personStatus(a).sort-personStatus(b).sort||a.name.localeCompare(b.name));
 function multiOpts(q){
   if(q.src==="care")return careSorted().map(t=>({id:t.id,label:t.name,due:isDue(t)}));
+  if(q.src==="hobbies")return hobbiesSorted().map(h=>({id:h.id,label:h.name,due:hobbyStatus(h).st==="overdue"}));
   if(q.src==="people")return peopleSorted().map(p=>({id:p.id,label:p.name,due:["overdue","soon"].includes(personStatus(p).st)}));
   return CAUSES.map(c=>({id:c,label:c,due:false}));
 }
@@ -1241,6 +1338,88 @@ $("#pa-cancel").onclick=()=>{$("#pAdd").hidden=true;$("#pAddBtn").parentElement.
 $("#pa-save").onclick=async()=>{const name=$("#pa-name").value.trim().slice(0,40);if(!name){toast("Add a name first");return}
   const p={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name,every:paVal,last:null};
   people.push(p);$("#pAdd").hidden=true;$("#pAddBtn").parentElement.hidden=false;renderPeople();await savePerson(p);toast(`Added ${name}`)};
+
+/* ---------- hobbies & new things ---------- */
+let hobbies=[],newThings={},careSub="selfcare";
+const HOBBY_EVERY=[[3,"Twice a week"],[7,"Weekly"],[14,"Every 2 weeks"],[30,"Monthly"]];
+function hobbyStatus(h){
+  if(!h.last)return{st:"new",txt:"Not tracked yet",frac:0,sort:1e6,since:null};
+  const since=daysBetween(h.last,todayStr()),left=h.every-since,frac=clamp(since/h.every);
+  const ago=since===0?"Did it today":since===1?"Did it yesterday":`Last time ${since} days ago`;
+  if(left<0)return{st:"overdue",txt:`${ago} · make time soon`,frac:1,sort:left,since};
+  if(left<=1)return{st:"soon",txt:ago,frac,sort:left,since};
+  return{st:"ok",txt:ago,frac,sort:left,since};
+}
+const hobbiesSorted=()=>[...hobbies].sort((a,b)=>hobbyStatus(a).sort-hobbyStatus(b).sort||a.name.localeCompare(b.name));
+async function saveHobby(h){try{await store.saveHobby(h)}catch(e){toast("Couldn't save that change")}}
+async function markHobby(id,quiet){const h=hobbies.find(x=>x.id===id);if(!h)return;h.last=todayStr();renderHobbies();await saveHobby(h);if(!quiet)toast(`${h.name}: logged`)}
+function hobbyItem(h,i){
+  const s=hobbyStatus(h),C=2*Math.PI*16,li=document.createElement("li");li.className="citem rise";li.style.setProperty("--i",i);
+  const col=s.st==="overdue"?"var(--bad)":s.st==="new"?"var(--faint)":"var(--fun)";
+  li.innerHTML=`<button type="button" class="crow" aria-expanded="false"><svg class="cring" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="var(--sunken)"/><circle class="arc" cx="20" cy="20" r="16" stroke="${col}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><div style="min-width:0"><div class="cn"></div><div class="cs ${s.st==="soon"?"":s.st}"></div></div></button><button type="button" class="cdone" style="background:color-mix(in srgb,var(--fun) 16%,transparent);color:var(--fun)" aria-label="Did it today">${CHECK}</button>`;
+  li.querySelector(".cn").textContent=h.name;li.querySelector(".cs").textContent=s.txt;
+  const arc=li.querySelector(".arc");requestAnimationFrame(()=>requestAnimationFrame(()=>arc.setAttribute("stroke-dashoffset",String(C*(1-Math.max(.001,s.frac))))));
+  li.querySelector(".cdone").onclick=e=>{const b=e.currentTarget;b.style.background="var(--fun)";b.style.color="#fff";b.classList.add("hit");arc.setAttribute("stroke-dashoffset",String(C*.999));setTimeout(()=>markHobby(h.id),reduce?0:420)};
+  const row=li.querySelector(".crow");
+  row.onclick=()=>{
+    const open=li.querySelector(".cedit");if(open){open.remove();row.setAttribute("aria-expanded","false");return}
+    document.querySelectorAll("#hlist .cedit").forEach(x=>x.remove());row.setAttribute("aria-expanded","true");
+    const ed=document.createElement("div");ed.className="cedit reveal";const sid="he-"+h.id;let ev=h.every;
+    ed.innerHTML=`<div><span class="flabel">Make time for it</span><div class="chips left">${HOBBY_EVERY.map(([d,l])=>`<button type="button" data-v="${d}" aria-pressed="${d===h.every}">${l}</button>`).join("")}</div></div>
+      <div><label class="flabel" for="${sid}-l">Last time</label><input class="inp" type="date" id="${sid}-l" max="${todayStr()}" value="${h.last||""}"></div>
+      <div class="btnrow"><button type="button" class="btn ghost danger">Remove</button><button type="button" class="btn">Save</button></div>`;
+    ed.querySelectorAll(".chips button").forEach(b=>b.onclick=()=>{ev=+b.dataset.v;ed.querySelectorAll(".chips button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+    const [rm,sv]=ed.querySelectorAll(".btnrow .btn");
+    sv.onclick=async()=>{h.every=ev;h.last=ed.querySelector(`#${sid}-l`).value||null;renderHobbies();await saveHobby(h);toast("Saved")};
+    rm.onclick=async()=>{hobbies=hobbies.filter(x=>x.id!==h.id);renderHobbies();try{await store.deleteHobby(h.id)}catch(e){};toast(`Removed ${h.name}`)};
+    li.append(ed);
+  };
+  return li;
+}
+function newStatus(){
+  const all=Object.values(newThings).sort((a,b)=>a.date<b.date?1:-1),from=addDays(todayStr(),-29),month=all.filter(x=>x.date>=from).length,goal=goals.newPerMonth||2;
+  const lastDays=all[0]?daysBetween(all[0].date,todayStr()):null,used=Object.keys(entries).length>=7;
+  let title="";if(month<goal&&used){title=lastDays===null?"You haven't logged anything new yet":lastDays>=21?`Nothing new in ${Math.floor(lastDays/7)} weeks`:""}
+  return{all,month,goal,nudge:!!title,title};
+}
+async function addNew(x){x.id=x.id||Date.now().toString(36)+Math.random().toString(36).slice(2,5);newThings[x.id]=x;renderHobbies();try{await store.saveNew(x)}catch(e){toast("Couldn't save that")}}
+function renderHobbies(){
+  const list=$("#hlist");if(!list)return;list.innerHTML="";
+  const sorted=hobbiesSorted();sorted.forEach((h,i)=>list.append(hobbyItem(h,i)));
+  if(!sorted.length){const li=document.createElement("li");li.className="tip";li.style.padding="6px 0";li.textContent="Add the hobbies you want to make time for, like guitar, reading, the gym, gaming or photography.";list.append(li)}
+  const st=sorted.map(h=>hobbyStatus(h).st),od=st.filter(x=>x==="overdue").length,ok=st.filter(x=>x==="ok"||x==="soon").length;
+  $("#hobbySum").innerHTML=(od?`<span class="b">${od} need time</span>`:"")+(ok?`<span style="background:color-mix(in srgb,var(--fun) 16%,transparent);color:var(--fun)">${ok} on track</span>`:"");
+  $("#hobbySum").hidden=!sorted.length;
+  const ns=newStatus();$("#newCount").textContent=`${ns.month} in the last 30 days`;
+  requestAnimationFrame(()=>{$("#newBar").style.width=Math.round(clamp(ns.month/ns.goal)*100)+"%"});
+  $("#newGoalTxt").textContent=`Goal: ${ns.goal} a month`;
+  const nl=$("#nlist");nl.innerHTML="";
+  if(!ns.all.length){nl.innerHTML=`<li style="display:block" class="tip">Nothing logged yet. Trying new things, even small ones, keeps life from feeling like work on repeat.</li>`}
+  ns.all.slice(0,6).forEach(x=>{const dt=toDate(x.date),li=document.createElement("li");
+    li.innerHTML=`<div class="pdate"><span>${dt.toLocaleDateString(undefined,{month:"short"})}</span><b>${dt.getDate()}</b></div><div class="pw"></div><button type="button" class="del" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
+    li.querySelector(".pw").textContent=x.what;li.querySelector(".del").onclick=async()=>{delete newThings[x.id];renderHobbies();try{await store.deleteNew(x.id)}catch(e){}};nl.append(li)});
+}
+function showSub(sub){
+  const prev=careSub;careSub=sub;
+  document.querySelectorAll(".subtabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.sub===sub)));
+  $("#subThumb").style.transform=sub==="hobbies"?"translateX(100%)":"none";
+  ["selfcare","hobbies"].forEach(k=>{const el=$("#sub-"+k),on=k===sub;el.hidden=!on;el.classList.remove("in-r","in-l");if(on&&prev!==sub){void el.offsetWidth;el.classList.add(sub==="hobbies"?"in-r":"in-l")}});
+  $("#viewTitle").textContent=sub==="hobbies"?"Hobbies":"Self-care";
+  if(sub==="hobbies")renderHobbies();else renderCare();
+}
+document.querySelectorAll(".subtabs button").forEach(b=>b.onclick=()=>{if(b.dataset.sub!==careSub)showSub(b.dataset.sub)});
+const haEvery=$("#ha-every");let haVal=7;
+haEvery.innerHTML=HOBBY_EVERY.map(([d,l])=>`<button type="button" data-v="${d}" aria-pressed="${d===haVal}">${l}</button>`).join("");
+haEvery.querySelectorAll("button").forEach(b=>b.onclick=()=>{haVal=+b.dataset.v;haEvery.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+$("#hAddBtn").onclick=()=>{$("#hAdd").hidden=false;$("#hAddBtn").hidden=true;$("#ha-name").value="";$("#ha-name").focus()};
+$("#ha-cancel").onclick=()=>{$("#hAdd").hidden=true;$("#hAddBtn").hidden=false};
+$("#ha-save").onclick=async()=>{const name=$("#ha-name").value.trim().slice(0,40);if(!name){toast("Name the hobby first");return}
+  const h={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name,every:haVal,last:null};hobbies.push(h);
+  $("#hAdd").hidden=true;$("#hAddBtn").hidden=false;renderHobbies();await saveHobby(h);toast(`Added ${name}`)};
+$("#nAddBtn").onclick=()=>{$("#nAdd").hidden=false;$("#nAddBtn").hidden=true;$("#na-what").value="";$("#na-date").value=todayStr();$("#na-date").max=todayStr();$("#na-what").focus()};
+$("#na-cancel").onclick=()=>{$("#nAdd").hidden=true;$("#nAddBtn").hidden=false};
+$("#na-save").onclick=async()=>{const what=$("#na-what").value.trim().slice(0,80);if(!what){toast("Say what you tried first");return}
+  $("#nAdd").hidden=true;$("#nAddBtn").hidden=false;await addNew({date:$("#na-date").value||todayStr(),what});toast("Logged")};
 
 /* ---------- import contacts ---------- */
 function parseVcf(text){
@@ -1345,6 +1524,21 @@ function renderReviewBits(){
 }
 document.addEventListener("keydown",ev=>{if($("#rv").hidden)return;if(ev.key==="Escape")$("#rvclose").click()});
 
+/* ---------- check-in time ---------- */
+function checkinMins(){const [h,m]=(goals.checkinTime||"20:00").split(":").map(Number);return h*60+(m||0)}
+function afterCheckinTime(){const d=new Date();return d.getHours()*60+d.getMinutes()>=checkinMins()}
+function fmtCheckinTime(){return fmtTime(goals.checkinTime||"20:00")}
+let autoQuizDay=null;
+function anyOverlayOpen(){return ["#quiz","#setup","#rv","#imp"].some(id=>{const el=$(id);return el&&!el.hidden})}
+function maybeAutoQuiz(){const t=todayStr();if(autoQuizDay===t||anyOverlayOpen()||!goals.setup)return;if(afterCheckinTime()&&shouldQuiz()){autoQuizDay=t;openQuiz()}}
+function renderEarly(){const el=$("#earlyNote");const early=shouldQuiz()&&!afterCheckinTime()&&cur===todayStr();el.hidden=!early;if(early)$("#earlyTxt").textContent=`Your check-in opens at ${fmtCheckinTime()}.`}
+$("#earlyBtn").onclick=()=>openQuiz();
+$("#set-time").addEventListener("change",async e=>{const v=e.target.value;if(!v)return;goals={...goals,checkinTime:v};try{await store.saveGoals(goals);toast(`Check-in time set to ${fmtCheckinTime()}`)}catch(err){toast("Couldn't save that")}renderAll()});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="visible")return;
+  $("#todayLine").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+  if(view!=="checkin")cur=todayStr();renderAll();maybeAutoQuiz()});
+setInterval(()=>{if(document.visibilityState==="visible")maybeAutoQuiz()},60000);
+
 /* ---------- tabs ---------- */
 function movePill(){const idx=VIEWS.indexOf(view);$("#pill").style.transform=`translateX(${idx*100}%)`}
 function show(v){
@@ -1356,19 +1550,19 @@ function show(v){
   });
   document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.view===v)));
   $("#viewTitle").textContent=TITLES[v];movePill();
-  if(v==="checkin")loadForm(false);
+  if(v==="checkin"){loadForm(false);renderEarly()}
   if(v==="focus")renderFocus();
   if(v==="week"){renderWeek();renderProgress();renderInsights();renderStress();renderReviewBits()}
   if(v==="people")renderPeople();
-  if(v==="care")renderCare();
+  if(v==="care")showSub(careSub);
   if(v==="focus")renderCareFocus();
   document.querySelectorAll("#view-"+v+" .rise").forEach(replay);
   window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});
 }
-document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{if(b.dataset.view==="checkin"&&shouldQuiz()){openQuiz();return}if(b.dataset.view!==view)show(b.dataset.view)});
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{if(b.dataset.view==="checkin"&&shouldQuiz()&&afterCheckinTime()){openQuiz();return}if(b.dataset.view!==view)show(b.dataset.view)});
 
 let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200)}
-function renderAll(){renderPeople();renderInsights();renderStress();renderReviewBits();$("#todayCta").hidden=!isExample&&!!entries[todayStr()];renderProgress();renderFocus();renderCare();renderCareFocus();renderWeek();renderCalendar();if(view==="checkin"&&!$("#saveBtn").classList.contains("done"))loadForm(false)}
+function renderAll(){renderHobbies();renderPeople();renderInsights();renderStress();renderReviewBits();$("#todayCta").hidden=!!entries[todayStr()]||!afterCheckinTime();{const st=$("#set-time");if(st&&document.activeElement!==st)st.value=goals.checkinTime||"20:00"}renderEarly();renderProgress();renderFocus();renderCare();renderCareFocus();renderWeek();renderCalendar();if(view==="checkin"&&!$("#saveBtn").classList.contains("done"))loadForm(false)}
 
 /* ---------- Claude read ---------- */
 async function setupAI(){
@@ -1397,11 +1591,11 @@ Write exactly three short suggestions, numbered 1-3, each 1-2 sentences. Lead wi
 function localStore(){
   const K="life-ledger-v1";
   entries={};
-  try{const raw=localStorage.getItem(K);if(raw){const j=JSON.parse(raw);entries=j.entries||{};plans=j.plans||{};people=Array.isArray(j.people)?j.people:[];reviews=j.reviews||{};if(Array.isArray(j.care)){care=j.care;careSaved=true}goals={...DEFAULT_GOALS,...(j.goals||{})}}}catch(e){}
-  const persist=()=>{try{localStorage.setItem(K,JSON.stringify({entries:isExample?{}:entries,goals,plans,people,reviews,care:careSaved?care:undefined}))}catch(e){}};
-  return {saveDay:async()=>persist(),saveGoals:async()=>persist(),savePlan:async()=>persist(),deletePlan:async()=>persist(),saveCare:async()=>persist(),deleteCare:async()=>persist(),savePerson:async()=>persist(),deletePerson:async()=>persist(),saveReview:async()=>persist(),resetAll:async()=>{try{localStorage.removeItem(K)}catch(e){}}};
+  try{const raw=localStorage.getItem(K);if(raw){const j=JSON.parse(raw);entries=j.entries||{};plans=j.plans||{};people=Array.isArray(j.people)?j.people:[];reviews=j.reviews||{};hobbies=Array.isArray(j.hobbies)?j.hobbies:[];newThings=j.newThings||{};if(Array.isArray(j.care)){care=j.care;careSaved=true}goals={...DEFAULT_GOALS,...(j.goals||{})}}}catch(e){}
+  const persist=()=>{try{localStorage.setItem(K,JSON.stringify({entries:isExample?{}:entries,goals,plans,people,reviews,hobbies,newThings,care:careSaved?care:undefined}))}catch(e){}};
+  return {saveDay:async()=>persist(),saveGoals:async()=>persist(),savePlan:async()=>persist(),deletePlan:async()=>persist(),saveCare:async()=>persist(),deleteCare:async()=>persist(),savePerson:async()=>persist(),deletePerson:async()=>persist(),saveReview:async()=>persist(),saveHobby:async()=>persist(),deleteHobby:async()=>persist(),saveNew:async()=>persist(),deleteNew:async()=>persist(),resetAll:async()=>{try{localStorage.removeItem(K)}catch(e){}}};
 }
-function applyLoaded(){isExample=false;renderAll();maybeSetup()}
+function applyLoaded(){isExample=false;renderAll();maybeSetup();maybeAutoQuiz()}
 function setStatus(t,on){$("#status").textContent=t;$("#sync").classList.toggle("on",!!on)}
 async function init(){
   isExample=false;entries={};renderAll();movePill();
@@ -1412,19 +1606,20 @@ async function init(){
     setStatus("Syncing");
     const timer=setTimeout(()=>setStatus("Still connecting"),10000);
     col.onSnapshot(snap=>{
-      clearTimeout(timer);const ent={},pl={},cr=[],pp=[],rv={};let g=null;
-      snap.docs.forEach(d=>{const v=d.data();if(!v)return;if(d.id==="goals")g=v;else if(d.id.startsWith("d-"))ent[v.date]=v;else if(d.id.startsWith("p-"))pl[v.id]=v;else if(d.id.startsWith("c-"))cr.push(v);else if(d.id.startsWith("f-"))pp.push(v);else if(d.id.startsWith("r-"))rv[v.id]=v});
+      clearTimeout(timer);const ent={},pl={},cr=[],pp=[],rv={},hb=[],nw={};let g=null;
+      snap.docs.forEach(d=>{const v=d.data();if(!v)return;if(d.id==="goals")g=v;else if(d.id.startsWith("d-"))ent[v.date]=v;else if(d.id.startsWith("p-"))pl[v.id]=v;else if(d.id.startsWith("c-"))cr.push(v);else if(d.id.startsWith("f-"))pp.push(v);else if(d.id.startsWith("r-"))rv[v.id]=v;else if(d.id.startsWith("h-"))hb.push(v);else if(d.id.startsWith("n-"))nw[v.id]=v});
+      hobbies=hb;newThings=nw;
       people=pp;reviews=rv;
       plans=pl;if(cr.length||careSaved){care=cr;careSaved=true}
       if(g)goals={...DEFAULT_GOALS,...g};
       entries=ent;applyLoaded();setStatus("Synced",true);
     },()=>{clearTimeout(timer);setStatus("Offline")});
-    store={saveDay:e=>col.doc("d-"+e.date).set(e),saveGoals:g=>col.doc("goals").set(g),savePlan:p=>col.doc("p-"+p.id).set(p),deletePlan:id=>col.doc("p-"+id).delete(),saveCare:t=>col.doc("c-"+t.id).set(t),deleteCare:id=>col.doc("c-"+id).delete(),savePerson:p=>col.doc("f-"+p.id).set(p),deletePerson:id=>col.doc("f-"+id).delete(),saveReview:r=>col.doc("r-"+r.id).set(r),resetAll:async()=>{const snap=await col.get();for(const d of snap.docs)await col.doc(d.id).delete()}};
+    store={saveDay:e=>col.doc("d-"+e.date).set(e),saveGoals:g=>col.doc("goals").set(g),savePlan:p=>col.doc("p-"+p.id).set(p),deletePlan:id=>col.doc("p-"+id).delete(),saveCare:t=>col.doc("c-"+t.id).set(t),deleteCare:id=>col.doc("c-"+id).delete(),savePerson:p=>col.doc("f-"+p.id).set(p),deletePerson:id=>col.doc("f-"+id).delete(),saveReview:r=>col.doc("r-"+r.id).set(r),saveHobby:h=>col.doc("h-"+h.id).set(h),deleteHobby:id=>col.doc("h-"+id).delete(),saveNew:x=>col.doc("n-"+x.id).set(x),deleteNew:id=>col.doc("n-"+id).delete(),resetAll:async()=>{const snap=await col.get();for(const d of snap.docs)await col.doc(d.id).delete()}};
   }else{store=localStore();applyLoaded();setStatus("Saved on this phone",true)}
 }
 /* ---------- backup ---------- */
 $("#exportBtn").onclick=async()=>{
-  const data={app:"life-ledger",version:1,exported:new Date().toISOString(),entries:isExample?{}:entries,goals,plans,care,people,reviews};
+  const data={app:"life-ledger",version:1,exported:new Date().toISOString(),entries:isExample?{}:entries,goals,plans,care,people,reviews,hobbies,newThings};
   const name=`life-ledger-backup-${todayStr()}.json`,blob=new Blob([JSON.stringify(data,null,1)],{type:"application/json"});
   try{const file=new File([blob],name,{type:"application/json"});
     if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:"Life Ledger backup"});return}}catch(e){if(e&&e.name==="AbortError")return}
@@ -1437,7 +1632,7 @@ $("#importFile").onchange=async ev=>{const f=ev.target.files[0];ev.target.value=
     $("#importMsg").textContent=`This backup from ${new Date(j.exported).toLocaleDateString()} has ${Object.keys(j.entries||{}).length} check-ins. Restoring replaces everything on this phone.`;
     $("#importConfirm").hidden=false}catch(e){toast("That file isn't a Life Ledger backup")}};
 $("#importCancel").onclick=()=>{pending=null;$("#importConfirm").hidden=true};
-$("#importGo").onclick=async()=>{if(!pending)return;entries=pending.entries||{};goals={...DEFAULT_GOALS,...(pending.goals||{}),setup:true};plans=pending.plans||{};people=Array.isArray(pending.people)?pending.people:[];reviews=pending.reviews||{};
+$("#importGo").onclick=async()=>{if(!pending)return;entries=pending.entries||{};goals={...DEFAULT_GOALS,...(pending.goals||{}),setup:true};plans=pending.plans||{};people=Array.isArray(pending.people)?pending.people:[];reviews=pending.reviews||{};hobbies=Array.isArray(pending.hobbies)?pending.hobbies:[];newThings=pending.newThings||{};
   if(Array.isArray(pending.care)){care=pending.care;careSaved=true}
   isExample=false;await store.saveGoals(goals);pending=null;$("#importConfirm").hidden=true;applyLoaded();toast("Backup restored")};
 
