@@ -170,8 +170,8 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
 /* Tab bar */
 .tabbar{position:fixed;left:0;right:0;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;justify-content:center;pointer-events:none;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.tabbar nav{pointer-events:auto;position:relative;display:grid;grid-template-columns:repeat(5,1fr);width:100%;max-width:440px;padding:6px;border-radius:26px;background:var(--glass);-webkit-backdrop-filter:saturate(1.8) blur(24px);backdrop-filter:saturate(1.8) blur(24px);box-shadow:0 10px 30px rgba(0,0,0,.14),0 0 0 .5px var(--line)}
-.tabbar .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/5);border-radius:20px;background:var(--surface);box-shadow:0 2px 8px rgba(0,0,0,.1);transition:transform .45s var(--spring)}
+.tabbar nav{pointer-events:auto;position:relative;display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-width:400px;padding:6px;border-radius:26px;background:var(--glass);-webkit-backdrop-filter:saturate(1.8) blur(24px);backdrop-filter:saturate(1.8) blur(24px);box-shadow:0 10px 30px rgba(0,0,0,.14),0 0 0 .5px var(--line)}
+.tabbar .pill{position:absolute;top:6px;bottom:6px;left:6px;width:calc((100% - 12px)/4);border-radius:20px;background:var(--surface);box-shadow:0 2px 8px rgba(0,0,0,.1);transition:transform .45s var(--spring)}
 .tabbar button{position:relative;z-index:1;border:0;background:none;color:var(--muted);font:600 .72rem var(--font);padding:8px 4px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color .25s}
 .tabbar button svg{width:22px;height:22px;transition:transform .35s var(--spring)}
 .tabbar button[aria-selected="true"]{color:var(--fg)}
@@ -268,6 +268,34 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
 .coming{display:flex;align-items:center;gap:10px;font-size:.9rem;padding-top:10px;border-top:.5px solid var(--line)}
 .coming .pdate{width:44px;flex-shrink:0}
 .reveal{animation:rise .35s var(--ease) both}
+.secnav{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px;-webkit-overflow-scrolling:touch}
+.secnav::-webkit-scrollbar{display:none}
+.secnav button{flex-shrink:0;border:0;border-radius:18px;padding:9px 14px;background:var(--surface);box-shadow:var(--shadow);font:600 .9rem var(--font);display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);transition:background .25s,color .25s,transform .2s var(--spring)}
+.secnav button i{width:8px;height:8px;border-radius:50%;background:var(--c);transition:background .25s}
+.secnav button[aria-selected="true"]{background:var(--c);color:#fff}
+.secnav button[aria-selected="true"] i{background:#fff}
+.secnav button:active{transform:scale(.94)}
+.sechead .row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.sechead .num2{font:700 2.8rem var(--round);color:var(--areac);letter-spacing:-.03em;line-height:1}
+.sechead .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sechead .stat{background:var(--surface-2);box-shadow:none}
+.pane{display:flex;flex-direction:column;gap:14px}
+.pane.in-r{animation:inR .38s var(--ease) both}.pane.in-l{animation:inL .38s var(--ease) both}
+.lbars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;height:120px}
+.lbars .col{display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.lbars i{display:block;width:100%;max-width:34px;border-radius:7px;background:var(--learn);height:0;transition:height .8s var(--ease)}
+.lbars i.zero{background:var(--sunken);height:4px!important}
+.lbars span{font-size:.7rem;color:var(--muted);font-weight:600}
+.lbars b{font:700 .72rem var(--round);color:var(--fg)}
+.areas .area{cursor:pointer;transition:transform .2s var(--spring)}
+.areas .area:active{transform:scale(.97)}
+.areas .area:last-child:nth-child(odd),.glance .area:last-child:nth-child(odd){grid-column:1/-1}
+.grat{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.grat li{display:grid;grid-template-columns:50px minmax(0,1fr);gap:12px;align-items:center;padding:9px 0;border-top:.5px solid var(--line);font-size:.93rem}
+.grat li:first-child{border-top:0}
+.grat .pdate{background:color-mix(in srgb,var(--recover) 14%,transparent);color:var(--recover)}
+.addrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.addrow .btn{width:auto;padding:12px 16px}
 .subtabs{position:relative;display:grid;grid-template-columns:1fr 1fr;background:var(--sunken);border-radius:14px;padding:4px}
 .subtabs .thumb2{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:11px;background:var(--surface);box-shadow:0 2px 6px rgba(0,0,0,.12);transition:transform .4s var(--spring)}
 .subtabs button{position:relative;z-index:1;border:0;background:none;font:600 .92rem var(--font);padding:9px 6px;cursor:pointer;color:var(--muted);transition:color .25s}
@@ -384,7 +412,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
     </div>
     <div class="areas" id="areas"></div>
     <div class="card rise" id="careFocus" style="--i:4;--areac:var(--care)" hidden>
-      <h2>Self-care due</h2>
+      <h2>Due soon</h2>
       <ul class="clist" id="careDue"></ul>
     </div>
     <div class="card rise" id="insightFocus" style="--i:5" hidden>
@@ -408,98 +436,95 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       <button type="button" class="icon-btn" id="nextDay" aria-label="Next day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
     </div>
     <form id="form" class="view" style="gap:14px">
+      <div class="card" style="--areac:var(--move)">
+        <div class="sec"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span><h2>Health</h2></div>
+        <div class="rows">
+          <div class="field"><label for="f-steps">Steps<small>From the Health app</small></label><div class="stepper" data-step="500"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-steps" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
+          <div class="field"><label for="f-ex">Exercise<small>Minutes</small></label><div class="stepper" data-step="5"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-ex" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
+          <div class="field" id="row-food"><label for="f-food">Logged all my food</label><span class="toggle"><input type="checkbox" id="f-food"><span></span></span></div>
+          <div class="field"><span class="lab" id="eatLab">Eating<small>1 lots of snacking · 5 great</small></span>
+            <div class="seg" id="f-eat" role="group" aria-labelledby="eatLab"><span class="thumb"></span></div></div>
+          <div class="field" id="row-meds"><label for="f-meds">Took my medication</label><span class="toggle"><input type="checkbox" id="f-meds"><span></span></span></div>
+          <div class="field"><label for="f-sleep">Hours slept</label><div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-sleep" inputmode="decimal" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
+        </div>
+      </div>
+
+      <div class="card" style="--areac:var(--recover)">
+        <div class="sec"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.3 1.8 3.5 1.8 3.5-1.8 3.5-1.8M9 9.5h.01M15 9.5h.01"/></svg></span><h2>Mental health</h2></div>
+        <div class="rows">
+          <div class="field"><label for="f-screen">Screen time<small>Hours · Settings → Screen Time</small></label><div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-screen" inputmode="decimal" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
+          <div class="field"><label for="f-work">Hours worked</label><div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-work" inputmode="decimal" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
+          <div class="field"><span class="lab" id="wdLab">Day at work<small>1 awful · 5 great · blank = day off</small></span>
+            <div class="seg" id="f-wd" role="group" aria-labelledby="wdLab"><span class="thumb"></span></div></div>
+          <div class="field"><span class="lab" id="stressLab">Stress<small>1 calm · 5 overwhelmed</small></span>
+            <div class="seg" id="f-stress" role="group" aria-labelledby="stressLab"><span class="thumb"></span></div></div>
+          <div id="f-causeWrap" class="reveal" hidden style="padding-bottom:12px;--qc:var(--recover)"><span class="flabel">What made it stressful?</span><div id="f-causes" style="display:grid;gap:6px"></div><div class="addrow" style="margin-top:8px"><input class="inp" id="f-causeNew" maxlength="30" placeholder="Add your own" aria-label="Add your own stressor"><button type="button" class="btn ghost" id="f-causeAdd">Add</button></div></div>
+        </div>
+        <div><label class="flabel" for="f-grat">Grateful for</label><input class="inp" id="f-grat" maxlength="120" placeholder="One thing, big or small"></div>
+        <textarea id="f-note" aria-label="Note" placeholder="Anything else on your mind? (optional)"></textarea>
+      </div>
+
       <div class="card" style="--areac:var(--connect)">
         <div class="sec"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><h2>Connection</h2></div>
-        <p class="tip">Use the red badges on your Messages and Phone icons.</p>
         <div class="rows">
-          <div class="field"><label for="f-unread">Unread texts<small>Messages badge</small></label>
-            <div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-unread" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
-          <div class="field"><label for="f-missed">Missed calls<small>Phone badge</small></label>
-            <div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-missed" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
-          <div class="field"><label for="f-replied">Replied to friends</label><span class="toggle"><input type="checkbox" id="f-replied"><span></span></span></div>
+          <div class="field"><label for="f-out">Talked to or saw friends</label><span class="toggle"><input type="checkbox" id="f-out"><span></span></span></div>
           <div class="field"><label for="f-plans">Made or confirmed plans</label><span class="toggle"><input type="checkbox" id="f-plans"><span></span></span></div>
           <div class="planform reveal" id="formPlan" hidden style="padding-block:2px 12px">
             <div class="row2"><div><label class="flabel" for="fp-date">When</label><input class="inp" type="date" id="fp-date"></div><div><label class="flabel" for="fp-time">Time (optional)</label><input class="inp" type="time" id="fp-time"></div></div>
             <div><label class="flabel" for="fp-what">What and who</label><input class="inp" id="fp-what" maxlength="80" placeholder="Dinner with Sam"></div>
             <button type="button" class="btn ghost" id="fp-add">Add to calendar</button>
           </div>
-          <div class="field"><label for="f-out">Went out with friends</label><span class="toggle"><input type="checkbox" id="f-out"><span></span></span></div>
-        </div>
-      </div>
-
-      <div class="card" style="--areac:var(--move)">
-        <div class="sec"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M7 21l3-6 3 2v5M10 15l1-5 4 3h4M11 10l-4 1-2 4"/></svg></span><h2>Movement</h2></div>
-        <div class="rows">
-          <div class="field"><label for="f-steps">Steps<small>From the Health app</small></label>
-            <div class="stepper" data-step="500"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-steps" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
-          <div class="field"><label for="f-ex">Exercise<small>Minutes</small></label>
-            <div class="stepper" data-step="5"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-ex" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
+          <div class="field"><label for="f-unread">Unread texts<small>Optional · Messages badge</small></label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-unread" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
+          <div class="field"><label for="f-missed">Missed calls<small>Optional · Phone badge</small></label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-missed" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
         </div>
       </div>
 
       <div class="card" style="--areac:var(--learn)">
         <div class="sec"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 5v16"/></svg></span><h2>Learning</h2></div>
         <div class="rows">
-          <div class="field"><label for="f-study">Course time<small>Minutes</small></label>
-            <div class="stepper" data-step="15"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-study" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
+          <div class="field"><label for="f-study">Learning outside work<small>Minutes · courses, reading</small></label><div class="stepper" data-step="15"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-study" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
         </div>
       </div>
-
-      <div class="card" style="--areac:var(--recover)">
-        <div class="sec"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></span><h2>Health &amp; work</h2></div>
-        <div class="rows">
-          <div class="field"><span class="lab" id="stressLab">Overall stress<small>1 calm · 5 overwhelmed</small></span>
-            <div class="seg" id="f-stress" role="group" aria-labelledby="stressLab"><span class="thumb"></span></div></div>
-          <div id="f-causeWrap" class="reveal" hidden style="padding-bottom:12px;--qc:var(--recover)"><span class="flabel">What made it stressful?</span><div id="f-causes" style="display:grid;gap:6px"></div></div>
-          <div class="field"><span class="lab" id="wdLab">Day at work<small>1 awful · 5 great · blank = day off</small></span>
-            <div class="seg" id="f-wd" role="group" aria-labelledby="wdLab"><span class="thumb"></span></div></div>
-          <div class="field"><span class="lab" id="eatLab">Eating<small>1 poor · 5 great</small></span>
-            <div class="seg" id="f-eat" role="group" aria-labelledby="eatLab"><span class="thumb"></span></div></div>
-          <div class="field"><label for="f-work">Hours worked</label>
-            <div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-work" inputmode="decimal" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
-          <div class="field"><label for="f-sleep">Hours slept</label>
-            <div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-sleep" inputmode="decimal" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
-        </div>
-        <textarea id="f-note" aria-label="Note" placeholder="Anything on your mind? (optional)"></textarea>
-      </div>
+      <p class="tip" style="padding-inline:4px">Self-care, appointments and refills are tracked in the Life tab. Your check-in only asks about them when they're due.</p>
       <button class="btn" type="submit" id="saveBtn">Save check-in</button>
     </form>
   </section>
 
-  <!-- WEEK -->
-  <section id="view-people" class="view" hidden>
-    <div class="card rise" style="--i:0;--areac:var(--connect);--qc:var(--connect)">
-      <div class="caresum" id="peopleSum"></div>
-      <ul class="clist" id="plistPeople"></ul>
-      <div class="btnrow"><button type="button" class="btn ghost" id="pAddBtn">Add someone</button><button type="button" class="btn ghost" id="pImportBtn">Import contacts</button></div>
-      <input type="file" id="vcfFile" accept=".vcf,text/vcard,text/x-vcard" hidden>
-      <div class="planform reveal" id="pAdd" hidden>
-        <div><label class="flabel" for="pa-name">Name</label><input class="inp" id="pa-name" maxlength="40" placeholder="Sam"></div>
-        <div><span class="flabel">Stay in touch every</span><div class="chips left" id="pa-every"></div></div>
-        <div class="btnrow"><button type="button" class="btn ghost" id="pa-cancel">Cancel</button><button type="button" class="btn" id="pa-save">Add</button></div>
-      </div>
+  <section id="view-life" class="view" hidden>
+    <div class="secnav rise" role="tablist" id="secnav" aria-label="Areas of life">
+      <button type="button" role="tab" data-sec="move" style="--c:var(--move)"><i></i>Health</button>
+      <button type="button" role="tab" data-sec="recover" style="--c:var(--recover)"><i></i>Mental health</button>
+      <button type="button" role="tab" data-sec="connect" style="--c:var(--connect)"><i></i>Connection</button>
+      <button type="button" role="tab" data-sec="learn" style="--c:var(--learn)"><i></i>Learning</button>
+      <button type="button" role="tab" data-sec="care" style="--c:var(--care)"><i></i>Self-care</button>
     </div>
-    <p class="tip rise" style="--i:1;padding-inline:4px"><b>Import contacts:</b> in the Contacts app, put the people you want in a list (Lists, top left), then touch and hold the list, tap Export and save it to Files. Tap Import contacts here and pick that file.</p>
-    <p class="tip rise" style="--i:2;padding-inline:4px">Tap the check after you talk to or see someone. Naming them in a plan, or picking them in your daily check-in, also counts.</p>
-  </section>
+    <div class="card sechead rise" id="secHead"></div>
 
-  <section id="view-care" class="view" hidden>
-    <div class="subtabs rise" role="tablist" aria-label="Care sections"><span class="thumb2" id="subThumb"></span><button type="button" role="tab" data-sub="selfcare" aria-selected="true">Self-care</button><button type="button" role="tab" data-sub="hobbies" aria-selected="false">Hobbies</button></div>
-    <div class="sub" id="sub-selfcare">
-    <div class="card rise" style="--i:0;--areac:var(--care);--qc:var(--care)">
-      <div class="caresum" id="careSum"></div>
-      <ul class="clist" id="clist"></ul>
-      <button type="button" class="btn ghost" id="careAddBtn">Add self-care item</button>
-      <div class="planform reveal" id="careAdd" hidden>
-        <div><label class="flabel" for="ca-name">What</label><input class="inp" id="ca-name" maxlength="40" placeholder="Get a massage"></div>
-        <div><span class="flabel">How often</span><div class="chips left" id="ca-every"></div></div>
-        <div class="btnrow"><button type="button" class="btn ghost" id="ca-cancel">Cancel</button><button type="button" class="btn" id="ca-save">Add</button></div>
+    <div class="pane" id="pane-move">
+      <div class="card rise" style="--i:1;--areac:var(--move);--qc:var(--move)">
+        <h2>Appointments &amp; refills</h2>
+        <div class="caresum" id="apptSum" style="--care:var(--move)"></div>
+        <ul class="clist" id="alistCare"></ul>
+        <button type="button" class="btn ghost" id="apAddBtn">Add an appointment or refill</button>
+        <div class="planform reveal" id="apAdd" hidden>
+          <div><label class="flabel" for="ap-name">What</label><input class="inp" id="ap-name" maxlength="40" placeholder="Eye exam, physio, blood work…"></div>
+          <div><span class="flabel">How often</span><div class="chips left" id="ap-every"></div></div>
+          <div class="btnrow"><button type="button" class="btn ghost" id="ap-cancel">Cancel</button><button type="button" class="btn" id="ap-save">Add</button></div>
+        </div>
       </div>
+      <p class="tip rise" style="--i:2;padding-inline:4px">Tap the check after an appointment or refill. You'll get a reminder on Focus when the next one is coming up. Tap an item to change how often or when it was last done.</p>
     </div>
-    <p class="tip rise" style="--i:1;padding-inline:4px">Tap the check when you do something. Tap an item to change how often it's due or when you last did it.</p>
-    </div>
-    <div class="sub" id="sub-hobbies" hidden>
-      <div class="card rise" style="--i:0;--areac:var(--fun);--qc:var(--fun)">
+
+    <div class="pane" id="pane-recover" hidden>
+      <div class="card rise" style="--i:1">
+        <div class="calhead"><h2>Stress patterns</h2><span class="tip" id="stressCount"></span></div>
+        <div class="causes" id="causeList"></div>
+      </div>
+      <div class="card rise" style="--i:2;--areac:var(--recover)">
+        <h2>Grateful for</h2>
+        <ul class="grat" id="gratList"></ul>
+      </div>
+      <div class="card rise" style="--i:3;--areac:var(--fun);--qc:var(--fun)">
         <h2>Hobbies</h2>
         <div class="caresum" id="hobbySum"></div>
         <ul class="clist" id="hlist"></ul>
@@ -510,7 +535,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
           <div class="btnrow"><button type="button" class="btn ghost" id="ha-cancel">Cancel</button><button type="button" class="btn" id="ha-save">Add</button></div>
         </div>
       </div>
-      <div class="card rise" style="--i:1;--areac:var(--fun);--qc:var(--fun)">
+      <div class="card rise" style="--i:4;--areac:var(--fun);--qc:var(--fun)">
         <div class="calhead"><h2>New things</h2><span class="streak" id="newCount" style="color:var(--fun);background:color-mix(in srgb,var(--fun) 16%,transparent)"></span></div>
         <div class="goalbar"><div class="bar"><i id="newBar"></i></div><span id="newGoalTxt"></span></div>
         <ul class="nlist" id="nlist"></ul>
@@ -521,12 +546,62 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
           <div class="btnrow"><button type="button" class="btn ghost" id="na-cancel">Cancel</button><button type="button" class="btn" id="na-save">Add</button></div>
         </div>
       </div>
-      <p class="tip rise" style="--i:2;padding-inline:4px">Your daily check-in asks about hobbies and anything new you tried, and logs them here for you.</p>
+    </div>
+
+    <div class="pane" id="pane-connect" hidden>
+      <div class="card rise" style="--i:1;--areac:var(--connect);--qc:var(--connect)">
+        <h2>People</h2>
+        <div class="caresum" id="peopleSum"></div>
+        <ul class="clist" id="plistPeople"></ul>
+        <div class="btnrow"><button type="button" class="btn ghost" id="pAddBtn">Add someone</button><button type="button" class="btn ghost" id="pImportBtn">Import contacts</button></div>
+        <input type="file" id="vcfFile" accept=".vcf,text/vcard,text/x-vcard" hidden>
+        <div class="planform reveal" id="pAdd" hidden>
+          <div><label class="flabel" for="pa-name">Name</label><input class="inp" id="pa-name" maxlength="40" placeholder="Sam"></div>
+          <div><span class="flabel">Stay in touch every</span><div class="chips left" id="pa-every"></div></div>
+          <div class="btnrow"><button type="button" class="btn ghost" id="pa-cancel">Cancel</button><button type="button" class="btn" id="pa-save">Add</button></div>
+        </div>
+      </div>
+      <div class="card rise" style="--i:2;--areac:var(--connect)" id="calCard">
+        <div class="calhead"><h2 id="calTitle"></h2><div style="display:flex;gap:6px"><button type="button" class="icon-btn" id="calPrev" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="icon-btn" id="calNext" aria-label="Next month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
+        <div class="cal" id="cal"></div>
+        <div class="legend2"><span><i class="dt"></i>Plans</span><span><i class="rg"></i>Saw friends</span></div>
+        <div class="label" style="margin-top:4px">Upcoming plans</div>
+        <ul class="plist" id="plist"></ul>
+        <button type="button" class="btn ghost" id="calAddBtn">Add a plan</button>
+        <div class="planform reveal" id="calPlan" hidden>
+          <div class="row2"><div><label class="flabel" for="cp-date">When</label><input class="inp" type="date" id="cp-date"></div><div><label class="flabel" for="cp-time">Time (optional)</label><input class="inp" type="time" id="cp-time"></div></div>
+          <div><label class="flabel" for="cp-what">What and who</label><input class="inp" id="cp-what" maxlength="80" placeholder="Climbing with Alex"></div>
+          <div class="btnrow"><button type="button" class="btn ghost" id="cp-cancel">Cancel</button><button type="button" class="btn" id="cp-save">Add plan</button></div>
+        </div>
+      </div>
+      <p class="tip rise" style="--i:3;padding-inline:4px"><b>Import contacts:</b> in the Contacts app, put the people you want in a list (Lists, top left), then touch and hold the list, tap Export and save it to Files. Tap Import contacts here and pick that file.</p>
+    </div>
+
+    <div class="pane" id="pane-learn" hidden>
+      <div class="card rise" style="--i:1;--areac:var(--learn)">
+        <div class="calhead"><h2>Last 7 days</h2><span class="tip" id="learnTotal"></span></div>
+        <div class="lbars" id="lbars"></div>
+      </div>
+      <p class="tip rise" style="--i:2;padding-inline:4px">Anything you learn outside work counts: courses, your certification, books, tutorials, podcasts you take notes on.</p>
+    </div>
+
+    <div class="pane" id="pane-care" hidden>
+      <div class="card rise" style="--i:1;--areac:var(--care);--qc:var(--care)">
+        <h2>Self-care</h2>
+        <div class="caresum" id="careSum"></div>
+        <ul class="clist" id="clist"></ul>
+        <button type="button" class="btn ghost" id="careAddBtn">Add self-care item</button>
+        <div class="planform reveal" id="careAdd" hidden>
+          <div><label class="flabel" for="ca-name">What</label><input class="inp" id="ca-name" maxlength="40" placeholder="Do laundry, skincare, trim beard…"></div>
+          <div><span class="flabel">How often</span><div class="chips left" id="ca-every"></div></div>
+          <div class="btnrow"><button type="button" class="btn ghost" id="ca-cancel">Cancel</button><button type="button" class="btn" id="ca-save">Add</button></div>
+        </div>
+      </div>
+      <p class="tip rise" style="--i:2;padding-inline:4px">Tap the check when you do something. Your daily check-in only asks about items that are due. Tap an item to change how often or when you last did it.</p>
     </div>
   </section>
 
   <section id="view-week" class="view" hidden>
-    <div class="stats" id="stats"></div>
     <div class="card rise" style="--i:1">
       <div class="calhead"><h2>Weekly review</h2></div>
       <div id="reviewLatest" class="rvlist"></div>
@@ -537,27 +612,10 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       <ul class="ins" id="insightList"></ul>
     </div>
     <div class="card rise" style="--i:1">
-      <div class="calhead"><h2>Stress patterns</h2><span class="tip" id="stressCount"></span></div>
-      <div class="causes" id="causeList"></div>
-    </div>
-    <div class="card rise" style="--i:1">
       <div class="calhead"><h2>Progress</h2><span class="streak" id="streak" hidden></span></div>
       <p class="tip" id="progSummary"></p>
       <div class="prog" id="prog"></div>
       <div class="pcap"><span></span><span><span>3 wks ago</span><span>This week</span></span><span style="text-align:right">vs last</span></div>
-    </div>
-    <div class="card rise" style="--i:2;--areac:var(--connect)" id="calCard">
-      <div class="calhead"><h2 id="calTitle"></h2><div style="display:flex;gap:6px"><button type="button" class="icon-btn" id="calPrev" aria-label="Previous month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="icon-btn" id="calNext" aria-label="Next month"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
-      <div class="cal" id="cal"></div>
-      <div class="legend2"><span><i class="dt"></i>Plans</span><span><i class="rg"></i>Went out</span></div>
-      <div class="label" style="margin-top:4px">Upcoming plans</div>
-      <ul class="plist" id="plist"></ul>
-      <button type="button" class="btn ghost" id="calAddBtn">Add a plan</button>
-      <div class="planform reveal" id="calPlan" hidden>
-        <div class="row2"><div><label class="flabel" for="cp-date">When</label><input class="inp" type="date" id="cp-date"></div><div><label class="flabel" for="cp-time">Time (optional)</label><input class="inp" type="time" id="cp-time"></div></div>
-        <div><label class="flabel" for="cp-what">What and who</label><input class="inp" id="cp-what" maxlength="80" placeholder="Climbing with Alex"></div>
-        <div class="btnrow"><button type="button" class="btn ghost" id="cp-cancel">Cancel</button><button type="button" class="btn" id="cp-save">Add plan</button></div>
-      </div>
     </div>
     <div class="card rise" style="--i:3">
       <div class="label">Daily balance</div>
@@ -577,16 +635,19 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       <h2>Settings</h2>
       <div class="field" style="border-top:0"><label for="set-time">Daily check-in time<small>The check-in opens on its own after this time</small></label><input class="inp" type="time" id="set-time" style="width:auto;min-width:130px;flex-shrink:0"></div>
       <p class="tip">Set your Reminders alert for the same time so you get a nudge on your lock screen.</p>
+      <div class="field"><label for="set-meds">Ask about medication<small>Daily "Did you take your medication?"</small></label><span class="toggle"><input type="checkbox" id="set-meds"><span></span></span></div>
+      <div class="field"><label for="set-food">Ask about food logging<small>Daily "Did you log all your food?"</small></label><span class="toggle"><input type="checkbox" id="set-food"><span></span></span></div>
     </div>
     <div class="card rise" style="--i:5">
       <h2>Goals</h2>
       <div class="rows" style="--areac:var(--fg)">
         <div class="field"><label for="g-steps">Daily steps</label><div class="stepper" data-step="500"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-steps" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
         <div class="field"><label for="g-exdays">Workouts / week</label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-exdays" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
-        <div class="field"><label for="g-study">Study min / week</label><div class="stepper" data-step="30"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-study" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
-        <div class="field"><label for="g-outs">Times out / week</label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-outs" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
+        <div class="field"><label for="g-study">Learning min / week</label><div class="stepper" data-step="30"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-study" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
         <div class="field"><label for="g-plans">Plans / week</label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-plans" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
         <div class="field"><label for="g-newpm">New things / month</label><div class="stepper" data-step="1"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-newpm" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
+        <div class="field"><label for="g-screen">Screen time / day<small>Hours</small></label><div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-screen" inputmode="decimal" value=""><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
+        <div class="field"><label for="g-workmax">Max work hours / day</label><div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-workmax" inputmode="decimal" value=""><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
         <div class="field"><label for="g-sleep">Sleep / night</label><div class="stepper" data-step="0.5"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-sleep" inputmode="decimal"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
       </div>
       <button class="btn ghost" type="button" id="saveGoals">Save goals</button>
@@ -607,7 +668,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
         <div class="btnrow"><button type="button" class="btn ghost" id="resetCancel">Cancel</button><button type="button" class="btn warn-solid" id="resetGo">Erase everything</button></div>
       </div>
     </div>
-    <p class="tip" style="text-align:center;padding-block:4px">Life Ledger · version 1.7</p>
+    <p class="tip" style="text-align:center;padding-block:4px">Life Ledger · version 1.8</p>
   </section>
 </main>
 
@@ -615,8 +676,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
   <span class="pill" id="pill"></span>
   <button role="tab" data-view="focus" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>Focus</button>
   <button role="tab" data-view="checkin" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Check in</button>
-  <button role="tab" data-view="people" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.5A6.5 6.5 0 0 1 21.5 20"/></svg>People</button>
-  <button role="tab" data-view="care" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Care</button>
+  <button role="tab" data-view="life" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4"/></svg>Life</button>
   <button role="tab" data-view="week" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Week</button>
 </nav></div>
 <div class="toast" id="toast" role="status"></div>
@@ -675,20 +735,21 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
 const $=s=>document.querySelector(s);
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const ICONS={
-  move:'<circle cx="13" cy="4" r="2"/><path d="M7 21l3-6 3 2v5M10 15l1-5 4 3h4M11 10l-4 1-2 4"/>',
+  move:'<path d="M3 12h4l2-5 4 10 2-5h6"/>',
   connect:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
   learn:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 5v16"/>',
-  recover:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
+  recover:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5s1.3 1.8 3.5 1.8 3.5-1.8 3.5-1.8M9 9.5h.01M15 9.5h.01"/>',
   fun:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/>',
   care:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>'};
 const AREAS=[
-  {k:"move",name:"Movement",c:"var(--move)"},
-  {k:"connect",name:"Connection",c:"var(--connect)"},
-  {k:"learn",name:"Learning",c:"var(--learn)"},
-  {k:"recover",name:"Health",c:"var(--recover)"}];
-const VIEWS=["focus","checkin","people","care","week"];
-const TITLES={focus:"Focus",checkin:"Check in",people:"People",care:"Care",week:"Week"};
-const DEFAULT_GOALS={steps:8000,exDays:3,study:180,plans:1,outs:1,sleep:7.5,newPerMonth:2,checkinTime:"20:00"};
+  {k:"move",name:"Health",short:"Health",c:"var(--move)"},
+  {k:"recover",name:"Mental health",short:"Mind",c:"var(--recover)"},
+  {k:"connect",name:"Connection",short:"Connect",c:"var(--connect)"},
+  {k:"learn",name:"Learning",short:"Learning",c:"var(--learn)"},
+  {k:"care",name:"Self-care",short:"Self-care",c:"var(--care)"}];
+const VIEWS=["focus","checkin","life","week"];
+const TITLES={focus:"Focus",checkin:"Check in",life:"Life",week:"Week"};
+const DEFAULT_GOALS={steps:8000,exDays:3,study:180,plans:1,outs:1,sleep:7.5,newPerMonth:2,checkinTime:"20:00",screen:3,workMax:9,meds:true,food:true,customCauses:[]};
 let plans={},people=[],reviews={};
 const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let goals={...DEFAULT_GOALS},entries={},isExample=false,store=null,cur=todayStr(),view="focus";
@@ -704,54 +765,75 @@ $("#todayLine").textContent=new Date().toLocaleDateString(undefined,{weekday:"lo
 
 
 /* ---------- scoring ---------- */
-function dayScores(e){
+const avgOf=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+function partsAvg(p){const v=p.filter(x=>x!=null&&!isNaN(x));return v.length?clamp(v.reduce((a,b)=>a+b,0)/v.length):0}
+const contactDay=e=>!!(e.out||e.replied||(e.talked&&e.talked.length));
+const hasVal=v=>v!=null&&v!=="";
+function screenScore(h){const g=goals.screen||3;return h<=g?1:clamp(1-(h-g)/g)}
+function workScore(h){const g=goals.workMax||9;return h<=g?1:clamp(1-(h-g)/4)}
+function dayScores(e,date){
   if(!e)return null;
   return {
-    move:clamp(.6*clamp(n(e.steps)/goals.steps)+(n(e.ex)>=20?.4:n(e.ex)/50)),
-    connect:clamp((e.plans?.25:0)+(e.replied?.25:0)+(e.out?.25:0)+.25*clamp(1-(n(e.unread)+n(e.missed))/10)),
+    move:partsAvg([clamp(n(e.steps)/goals.steps),n(e.ex)>=20?1:n(e.ex)/20,goals.food!==false&&hasVal(e.food)?(e.food?1:0):null,n(e.eat)?(n(e.eat)-1)/4:null,goals.meds!==false&&hasVal(e.meds)?(e.meds?1:0):null,n(e.sleep)?clamp(n(e.sleep)/goals.sleep):null]),
+    recover:partsAvg([n(e.stress)?(5-n(e.stress))/4:null,hasVal(e.screen)?screenScore(n(e.screen)):null,n(e.work)>0?workScore(n(e.work)):null,hasVal(e.grateful)?(e.grateful?1:0):null]),
+    connect:partsAvg([e.plans?1:0,contactDay(e)?1:0]),
     learn:n(e.study)>0?clamp(n(e.study)/(goals.study/4)):0,
-    recover:clamp(n(e.eat)?.4*clamp(n(e.sleep)/goals.sleep)+.3*((5-n(e.stress||3))/4)+.3*((n(e.eat)-1)/4):.5*clamp(n(e.sleep)/goals.sleep)+.5*((5-n(e.stress||3))/4))};
+    care:careScoreAt(date||e.date,"self")};
 }
 function windowDays(off){const t=todayStr(),a=[];for(let i=6;i>=0;i--)a.push(addDays(t,-i-7*off));return a}
 function weekSummary(off=0){
-  const logged=windowDays(off).map(d=>entries[d]).filter(Boolean);
+  const win=windowDays(off),logged=win.map(d=>entries[d]).filter(Boolean),end=win[6];
   if(!logged.length)return null;
-  const sum=f=>logged.reduce((a,e)=>a+n(f(e)),0),avg=f=>sum(f)/logged.length;
-  const s={logged:logged.length,avgSteps:avg(e=>e.steps),exDays:logged.filter(e=>n(e.ex)>=20).length,studyMin:sum(e=>e.study),
-    plans:logged.filter(e=>e.plans).length,outDays:logged.filter(e=>e.out).length,replyDays:logged.filter(e=>e.replied).length,avgBacklog:avg(e=>n(e.unread)+n(e.missed)),
-    avgUnread:avg(e=>e.unread),latest:logged[logged.length-1],avgSleep:avg(e=>e.sleep),avgStress:avg(e=>e.stress||3),avgWork:avg(e=>e.work)};
-  const ate=logged.filter(e=>n(e.eat));s.avgEat=ate.length?ate.reduce((a,e)=>a+n(e.eat),0)/ate.length:null;
-  s.scores={move:.5*clamp(s.avgSteps/goals.steps)+.5*clamp(s.exDays/goals.exDays),
-    connect:.25*clamp(s.plans/goals.plans)+.25*(s.replyDays/s.logged)+.25*clamp(s.outDays/goals.outs)+.25*clamp(1-s.avgBacklog/10),
-    learn:clamp(s.studyMin/goals.study),recover:s.avgEat!=null?.4*clamp(s.avgSleep/goals.sleep)+.3*((5-s.avgStress)/4)+.3*((s.avgEat-1)/4):.5*clamp(s.avgSleep/goals.sleep)+.5*((5-s.avgStress)/4)};
+  const cnt=f=>logged.filter(f).length,vals=f=>logged.map(f).filter(v=>v!=null);
+  const s={logged:logged.length,latest:logged[logged.length-1],
+    avgSteps:avgOf(vals(e=>n(e.steps)))||0,exDays:cnt(e=>n(e.ex)>=20),studyMin:logged.reduce((a,e)=>a+n(e.study),0),studyDays:cnt(e=>n(e.study)>0),
+    plans:cnt(e=>e.plans),contactDays:cnt(contactDay),outDays:cnt(e=>e.out),replyDays:cnt(e=>e.replied),
+    avgUnread:avgOf(vals(e=>n(e.unread)))||0,avgBacklog:avgOf(vals(e=>n(e.unread)+n(e.missed)))||0,
+    avgSleep:avgOf(vals(e=>n(e.sleep)||null)),avgStress:avgOf(vals(e=>n(e.stress)||null))??3,avgWork:avgOf(vals(e=>n(e.work)>0?n(e.work):null)),
+    avgEat:avgOf(vals(e=>n(e.eat)||null)),foodDays:cnt(e=>e.food===true),foodAsked:cnt(e=>hasVal(e.food)),medsDays:cnt(e=>e.meds===true),medsAsked:cnt(e=>hasVal(e.meds)),
+    avgScreen:avgOf(vals(e=>hasVal(e.screen)?n(e.screen):null)),gratDays:cnt(e=>!!e.grateful),gratAsked:cnt(e=>hasVal(e.grateful))};
+  s.scores={
+    move:partsAvg([clamp(s.avgSteps/goals.steps),clamp(s.exDays/goals.exDays),goals.food!==false&&s.foodAsked?s.foodDays/s.foodAsked:null,s.avgEat!=null?(s.avgEat-1)/4:null,goals.meds!==false&&s.medsAsked?s.medsDays/s.medsAsked:null,s.avgSleep!=null?clamp(s.avgSleep/goals.sleep):null,careScoreAt(end,"health")]),
+    recover:partsAvg([(5-s.avgStress)/4,s.avgScreen!=null?screenScore(s.avgScreen):null,s.avgWork!=null?workScore(s.avgWork):null,s.gratAsked?s.gratDays/s.gratAsked:null,off===0?hobbiesOnTrack():null]),
+    connect:partsAvg([clamp(s.plans/goals.plans),s.contactDays/s.logged,off===0?peopleOnTrack():null]),
+    learn:clamp(s.studyMin/goals.study),
+    care:careScoreAt(end,"self")};
   return s;
 }
 function daysSince(pred){const t=todayStr();for(let i=0;i<60;i++){const d=addDays(t,-i);if(entries[d]&&pred(entries[d]))return i}return null}
 function buildNudges(s){
   const list=[];const add=(area,title,body,w)=>list.push({area,title,body,w:w+(1-(s.scores[area]??.5))});
-  const lu=s.latest;
-  if(n(lu.unread)>=5||s.avgUnread>=6)add("connect",`${n(lu.unread)} unread texts`,`You've averaged ${s.avgUnread.toFixed(0)} unread this week. Reply to two people before bed tonight.`,1.2);
-  if(n(lu.missed)>0)add("connect",`${n(lu.missed)} missed call${n(lu.missed)>1?"s":""} still showing`,"Call back whoever matters most, or text them when you're free.",1.1);
   const np=nextPlan();
+  // Connection
   const od=peopleSorted().filter(x=>personStatus(x).st==="overdue")[0];
   if(od){const ps=personStatus(od);add("connect",`${od.name}: ${ps.since} days since you last talked`,"Send a quick text or set up a call this week.",1.15)}
-  if(s.outDays<goals.outs){const ds=daysSince(e=>e.out);add("connect",ds===null?"No time out with friends logged":`No time out with friends in ${ds} days`,np?`You have ${np.what||"plans"} coming up ${/^(Today|Tomorrow)/.test(fmtWhen(np))?fmtWhen(np).replace(/^T/,"t"):"on "+fmtWhen(np)}. Keep them.`:"Even a quick coffee or a walk counts. Ask someone today.",1.05)}
+  if(s.logged>=3&&s.contactDays===0)add("connect","No time with friends this week",np?`You have ${np.what||"plans"} coming up. Keep them, and send one text today.`:"Even a quick call or coffee counts. Reach out to someone today.",1.1);
   if(s.plans<goals.plans&&!np){const ds=daysSince(e=>e.plans);add("connect","No plans made this week",ds===null?"Text one friend now and suggest a specific day and time.":`Last plans were ${ds} days ago. Suggest a specific day and time to one friend.`,1)}
+  if(s.avgUnread>=6)add("connect",`Averaging ${s.avgUnread.toFixed(0)} unread texts`,"Reply to two people before bed tonight.",.9);
+  // Learning
   const dsStudy=daysSince(e=>n(e.study)>0);
   if(s.studyMin<goals.study){const gap=goals.study-s.studyMin;
-    add("learn",dsStudy===null?"No course time logged yet":dsStudy>=2?`No course work in ${dsStudy} days`:`${s.studyMin} of ${goals.study} study minutes`,`You're ${gap} minutes short this week. Book two ${gap>=90?"45":"30"}-minute blocks right after work.`,dsStudy!==null&&dsStudy>=3?1.3:1)}
+    add("learn",dsStudy===null?"No learning time logged yet":dsStudy>=2?`No learning in ${dsStudy} days`:`${s.studyMin} of ${goals.study} learning minutes`,`You're ${gap} minutes short this week. Book two ${gap>=90?"45":"30"}-minute blocks, or read for 20 minutes before bed.`,dsStudy!==null&&dsStudy>=3?1.3:1)}
+  // Health
+  if(goals.meds!==false&&s.medsAsked&&s.medsDays<s.medsAsked){const m=s.medsAsked-s.medsDays;add("move",`Missed medication on ${m} day${m===1?"":"s"}`,"Tie it to something you already do every day, like brushing your teeth, or set a daily phone alarm.",1.3)}
+  for(const t of careSorted().filter(t=>catOf(t)==="health"&&t.last)){const cs=careStatus(t);if(cs.st==="overdue"){add("move",`${t.name}: overdue`,/refill|prescription/i.test(t.name)?"Request the refill today so you don't run out.":"Book it this week. It only takes a phone call or a few minutes online.",1.25);break}
+    if(cs.st==="soon"&&/refill|prescription/i.test(t.name)){add("move",`${t.name} ${cs.txt.toLowerCase()}`,"Request it now so you don't run out.",1.2);break}}
   if(s.exDays<goals.exDays)add("move",`${s.exDays} of ${goals.exDays} workouts`,"Put the next one on your calendar for a morning, before work can take the time.",1);
   if(s.avgSteps<goals.steps*.75)add("move",`Steps averaging ${Math.round(s.avgSteps).toLocaleString()}`,`That's under your ${goals.steps.toLocaleString()} goal. A 20-minute walk at lunch adds about 2,000.`,.8);
+  if(goals.food!==false&&s.foodAsked>=3&&s.foodDays/s.foodAsked<.6)add("move",`Food logged on ${s.foodDays} of ${s.foodAsked} days`,"Log right after each meal instead of at night. It takes seconds when it's fresh.",.95);
+  if(s.avgEat!=null&&s.avgEat<=2.75)add("move",`Eating averaging ${s.avgEat.toFixed(1)} / 5`,"Plan two easy meals ahead, and swap the snacks you keep within reach for something you'd be glad you ate.",1.05);
+  if(s.avgSleep!=null&&s.avgSleep<goals.sleep-.5)add("move",`Sleeping ${s.avgSleep.toFixed(1)} hours`,`You're under your ${goals.sleep}-hour goal, which makes stress harder to handle. Set a fixed bedtime this week.`,.95);
+  // Mental health
   const sp=stressPattern(30);
   if(sp.days>=3&&sp.rows[0]&&sp.rows[0].n/sp.days>=.5)add("recover",`${sp.rows[0].c} caused ${sp.rows[0].n} of your last ${sp.days} stressful days`,CAUSE_TIPS[sp.rows[0].c]||"That's the pattern to work on.",1.2);
-  {const wd=windowDays(0).map(d=>entries[d]).filter(e=>e&&n(e.workday)>0);if(wd.length>=3){const a=wd.reduce((x,e)=>x+n(e.workday),0)/wd.length;if(a<=2.5)add("recover",`Work days averaging ${a.toFixed(1)} / 5`,"Several rough days in a row is worth noticing. Write down what made them hard; if it's the same thing each time, that's the conversation to have with your manager.",1.1)}}
-  if(s.avgEat!=null&&s.avgEat<=2.75)add("recover",`Eating averaging ${s.avgEat.toFixed(1)} / 5`,"Plan two easy meals ahead this week, and keep a few good snacks at work so you're not running on takeout.",1.05);
+  {const wd=windowDays(0).map(d=>entries[d]).filter(e=>e&&n(e.workday)>0);if(wd.length>=3){const a=wd.reduce((x,e)=>x+n(e.workday),0)/wd.length;if(a<=2.5)add("recover",`Work days averaging ${a.toFixed(1)} / 5`,"Write down what made them hard. If it's the same thing each time, that's the conversation to have with your manager.",1.1)}}
+  if(s.avgStress>=3.5)add("recover",`Stress averaging ${s.avgStress.toFixed(1)} / 5`,"Check Stress patterns under Life → Mental health to see what's behind your hardest days, and start there.",1.15);
+  if(s.avgWork!=null&&s.avgWork>(goals.workMax||9))add("recover",`Working ${s.avgWork.toFixed(1)} hours a day`,`That's over your ${goals.workMax||9}-hour limit. Pick an end time and protect it at least three days this week.`,1.05);
+  if(s.avgScreen!=null&&s.avgScreen>(goals.screen||3)+.25)add("recover",`Screen time averaging ${s.avgScreen.toFixed(1)} hours`,`That's over your ${goals.screen||3}-hour goal. Try leaving your phone in another room for the first hour after work.`,1);
   const hod=hobbiesSorted().filter(h=>hobbyStatus(h).st==="overdue")[0];
   if(hod){const hs=hobbyStatus(hod);add("fun",`${hod.name}: ${hs.since} days since last time`,"Put an hour for it on your calendar this week. Time off is part of handling stress.",1)}
-  const nt=newStatus();if(nt.nudge)add("fun",nt.title,"Pick one small thing: a new recipe, route, café, class or game. It doesn't have to be big.",.95);
-  if(s.avgStress>=3.5)add("recover",`Stress averaging ${s.avgStress.toFixed(1)} / 5`,s.avgWork>9?`You're also averaging ${s.avgWork.toFixed(1)} work hours a day. Pick an end time and protect it at least three days this week.`:"Check Stress patterns in the Week tab to see what's behind your hardest days, and start there.",1.15);
-  else if(s.avgWork>9.5)add("recover",`${s.avgWork.toFixed(1)} work hours a day`,"Long hours squeeze out everything else. Set a hard stop on two days this week.",1);
-  if(s.avgSleep<goals.sleep-.5)add("recover",`Sleeping ${s.avgSleep.toFixed(1)} hours`,`You're under your ${goals.sleep}-hour goal, which makes stress harder to handle. Set a fixed bedtime this week.`,.95);
+  const nt=newStatus();if(nt.nudge)add("fun",nt.title,"Pick one small thing: a new recipe, route, café, class or game. It doesn't have to be big.",.85);
+  if(s.gratAsked>=4&&s.gratDays<s.gratAsked/2)add("recover","Gratitude skipped most days","One line is enough. It's one of the simplest ways to take the edge off a hard week.",.8);
   return list.sort((a,b)=>b.w-a.w);
 }
 
@@ -813,9 +895,18 @@ $("#fp-add").onclick=async()=>{const date=$("#fp-date").value;if(!date){toast("P
   await addPlan({date,time:$("#fp-time").value,what:$("#fp-what").value.trim().slice(0,80)});$("#formPlan").hidden=true;toast("Added to your calendar")};
 
 /* ---------- self-care ---------- */
-const CARE_DEFAULTS=[["Clip nails",10],["Get a haircut",28],["Change bed sheets",7],["Dentist cleaning",180],["Doctor check-up",365]];
-let care=CARE_DEFAULTS.map(([name,every],i)=>({id:"def"+i,name,every,last:null,order:i})),careSaved=false;
-const EVERY_OPTS=[[7,"Weekly"],[14,"2 weeks"],[30,"Monthly"],[90,"3 months"],[180,"6 months"],[365,"Yearly"]];
+const CARE_DEFAULTS=[["Change bed sheets",7,"self"],["Book a haircut",28,"self"],["Clip nails",10,"self"],["Shave",3,"self"],["Clean room",7,"self"],["Doctor check-up",365,"health"],["Dentist cleaning",180,"health"],["Prescription refill",30,"health"]];
+const careDefaults=()=>CARE_DEFAULTS.map(([name,every,cat],i)=>({id:"def"+i,name,every,cat,last:null,log:[],order:i}));
+let care=careDefaults(),careSaved=false;
+const HEALTH_RE=/doctor|dentist|refill|prescription|eye|optom|physio|check-?up|appointment|blood|therap|derma|vaccin|shot/i;
+const catOf=t=>t.cat||(HEALTH_RE.test(t.name)?"health":"self");
+function careScoreAt(date,cat){
+  const items=care.filter(t=>catOf(t)===cat);let tot=0,ok=0;
+  for(const t of items){const ds=[...(t.log||[]),...(t.last?[t.last]:[])].filter(d=>d<=date);if(!ds.length)continue;const last=ds.sort().pop();tot++;if(daysBetween(last,date)<=t.every)ok++}
+  return tot?ok/tot:null;
+}
+const EVERY_OPTS=[[3,"Every 3 days"],[7,"Weekly"],[14,"2 weeks"],[30,"Monthly"]];
+const APPT_OPTS=[[30,"Monthly"],[90,"3 months"],[180,"6 months"],[365,"Yearly"]];
 function daysBetween(a,b){return Math.round((toDate(b)-toDate(a))/864e5)}
 function careStatus(t){
   if(!t.last)return{st:"new",txt:"Not tracked yet",frac:0,sort:1e6};
@@ -829,20 +920,20 @@ const careSorted=()=>[...care].sort((a,b)=>careStatus(a).sort-careStatus(b).sort
 const isDue=t=>{const s=careStatus(t).st;return s==="overdue"||s==="soon"};
 async function ensureCareSaved(){if(careSaved)return;careSaved=true;try{await Promise.all(care.map(t=>store.saveCare(t)))}catch(e){}}
 async function saveCareItem(t){await ensureCareSaved();try{await store.saveCare(t)}catch(e){toast("Couldn't save that change")}}
-async function markCare(id,quiet){const t=care.find(x=>x.id===id);if(!t)return;t.last=todayStr();if(!quiet){renderCare();renderCareFocus()}await saveCareItem(t);if(!quiet)toast(`${t.name}: done`)}
+async function markCare(id,quiet){const t=care.find(x=>x.id===id);if(!t)return;t.last=todayStr();t.log=[...new Set([...(t.log||[]),t.last])].slice(-40);if(!quiet){renderCare();renderCareFocus()}await saveCareItem(t);if(!quiet)toast(`${t.name}: done`)}
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-function ringColor(st){return st==="overdue"?"var(--bad)":st==="soon"?"var(--move)":st==="new"?"var(--faint)":"var(--care)"}
+function ringColor(st,cat){return st==="overdue"?"var(--bad)":st==="soon"?"var(--fun)":st==="new"?"var(--faint)":cat==="health"?"var(--move)":"var(--care)"}
 function careItem(t,editable,i){
   const s=careStatus(t),C=2*Math.PI*16,li=document.createElement("li");li.className="citem rise";li.style.setProperty("--i",i);
-  li.innerHTML=`<button type="button" class="crow" aria-expanded="false"><svg class="cring" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="var(--sunken)"/><circle class="arc" cx="20" cy="20" r="16" stroke="${ringColor(s.st)}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><div style="min-width:0"><div class="cn"></div><div class="cs ${s.st}"></div></div></button><button type="button" class="cdone" aria-label="Mark done today">${CHECK}</button>`;
+  li.innerHTML=`<button type="button" class="crow" aria-expanded="false"><svg class="cring" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="var(--sunken)"/><circle class="arc" cx="20" cy="20" r="16" stroke="${ringColor(s.st,catOf(t))}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><div style="min-width:0"><div class="cn"></div><div class="cs ${s.st}"></div></div></button><button type="button" class="cdone" aria-label="Mark done today" ${catOf(t)==="health"?'style="background:color-mix(in srgb,var(--move) 14%,transparent);color:var(--move)"':""}>${CHECK}</button>`;
   li.querySelector(".cn").textContent=t.name;li.querySelector(".cs").textContent=s.txt;
   const arc=li.querySelector(".arc");requestAnimationFrame(()=>requestAnimationFrame(()=>arc.setAttribute("stroke-dashoffset",String(C*(1-Math.max(.001,s.frac))))));
   li.querySelector(".cdone").onclick=e=>{e.currentTarget.classList.add("hit");arc.setAttribute("stroke-dashoffset",String(C*.999));setTimeout(()=>markCare(t.id),reduce?0:420)};
   const row=li.querySelector(".crow");
-  if(!editable){row.onclick=()=>show("care");return li}
+  if(!editable){row.onclick=()=>{show("life");showSection(catOf(t)==="health"?"move":"care")};return li}
   row.onclick=()=>{
     const open=li.querySelector(".cedit");if(open){open.remove();row.setAttribute("aria-expanded","false");return}
-    document.querySelectorAll("#clist .cedit").forEach(x=>x.remove());row.setAttribute("aria-expanded","true");
+    li.parentElement.querySelectorAll(".cedit").forEach(x=>x.remove());row.setAttribute("aria-expanded","true");
     const ed=document.createElement("div");ed.className="cedit reveal";const sid="ce-"+t.id;
     ed.innerHTML=`<div class="field"><label for="${sid}-n">Every (days)</label><div class="stepper" data-step="1" style="--areac:var(--care)"><button type="button" data-d="-1" aria-label="Fewer days">−</button><input id="${sid}-n" inputmode="numeric" value="${t.every}"><button type="button" data-d="1" aria-label="More days">+</button></div></div>
       <div><label class="flabel" for="${sid}-l">Last done</label><input class="inp" type="date" id="${sid}-l" max="${todayStr()}" value="${t.last||""}"></div>
@@ -850,46 +941,103 @@ function careItem(t,editable,i){
     const inp=ed.querySelector(`#${sid}-n`);
     ed.querySelectorAll(".stepper button").forEach(b=>b.onclick=()=>{inp.value=Math.max(1,n(inp.value)+ +b.dataset.d);inp.classList.remove("bump");void inp.offsetWidth;inp.classList.add("bump")});
     const [rm,sv]=ed.querySelectorAll(".btnrow .btn");
-    sv.onclick=async()=>{t.every=Math.max(1,Math.round(n(inp.value)));t.last=ed.querySelector(`#${sid}-l`).value||null;renderCare();renderCareFocus();await saveCareItem(t);toast("Saved")};
+    sv.onclick=async()=>{t.every=Math.max(1,Math.round(n(inp.value)));t.last=ed.querySelector(`#${sid}-l`).value||null;if(t.last)t.log=[...new Set([...(t.log||[]),t.last])].slice(-40);renderCare();renderCareFocus();await saveCareItem(t);toast("Saved")};
     rm.onclick=async()=>{care=care.filter(x=>x.id!==t.id);renderCare();renderCareFocus();await ensureCareSaved();try{await store.deleteCare(t.id)}catch(e){};toast(`Removed ${t.name}`)};
     li.append(ed);
   };
   return li;
 }
 function renderCare(){
-  const list=$("#clist");if(!list)return;list.innerHTML="";
-  const sorted=careSorted();sorted.forEach((t,i)=>list.append(careItem(t,true,i)));
-  if(!sorted.length){const li=document.createElement("li");li.className="tip";li.style.padding="6px 0";li.textContent="Nothing here yet. Add the things you want to keep on top of.";list.append(li)}
-  const st=sorted.map(t=>careStatus(t).st),od=st.filter(x=>x==="overdue").length,sn=st.filter(x=>x==="soon").length,ok=st.filter(x=>x==="ok").length;
-  $("#careSum").innerHTML=(od?`<span class="b">${od} overdue</span>`:"")+(sn?`<span class="o">${sn} due soon</span>`:"")+(ok?`<span class="g">${ok} on track</span>`:"")+(st.includes("new")?`<span>${st.filter(x=>x==="new").length} not tracked</span>`:"");
+  [["self","#clist","#careSum","Nothing here yet. Add the things you want to keep on top of."],["health","#alistCare","#apptSum","Add your check-ups, dentist visits and prescription refills."]].forEach(([cat,lid,sid,empty])=>{
+    const list=$(lid);if(!list)return;list.innerHTML="";
+    const sorted=careSorted().filter(t=>catOf(t)===cat);sorted.forEach((t,i)=>list.append(careItem(t,true,i)));
+    if(!sorted.length){const li=document.createElement("li");li.className="tip";li.style.padding="6px 0";li.textContent=empty;list.append(li)}
+    const st=sorted.map(t=>careStatus(t).st),od=st.filter(x=>x==="overdue").length,sn=st.filter(x=>x==="soon").length,ok=st.filter(x=>x==="ok").length,nw=st.filter(x=>x==="new").length;
+    $(sid).innerHTML=(od?`<span class="b">${od} overdue</span>`:"")+(sn?`<span class="o">${sn} due soon</span>`:"")+(ok?`<span class="g">${ok} on track</span>`:"")+(nw?`<span>${nw} not tracked</span>`:"");
+  });
 }
 function renderCareFocus(){
-  const due=careSorted().filter(isDue).slice(0,4),box=$("#careFocus"),ul=$("#careDue");
+  const due=careSorted().filter(isDue).slice(0,5),box=$("#careFocus"),ul=$("#careDue");
   box.hidden=!due.length;ul.innerHTML="";due.forEach((t,i)=>ul.append(careItem(t,false,i)));
 }
-const caEvery=$("#ca-every");let caVal=14;
-caEvery.innerHTML=EVERY_OPTS.map(([d,l])=>`<button type="button" data-v="${d}" aria-pressed="${d===caVal}">${l}</button>`).join("");
-caEvery.querySelectorAll("button").forEach(b=>b.onclick=()=>{caVal=+b.dataset.v;caEvery.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
-$("#careAddBtn").onclick=()=>{$("#careAdd").hidden=false;$("#careAddBtn").hidden=true;$("#ca-name").value="";$("#ca-name").focus()};
-$("#ca-cancel").onclick=()=>{$("#careAdd").hidden=true;$("#careAddBtn").hidden=false};
-$("#ca-save").onclick=async()=>{const name=$("#ca-name").value.trim().slice(0,40);if(!name){toast("Give it a name first");return}
-  const t={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name,every:caVal,last:null,order:care.length};
-  care.push(t);$("#careAdd").hidden=true;$("#careAddBtn").hidden=false;renderCare();await saveCareItem(t);toast(`Added ${name}`)};
+function setupCareAdd(p,cat,opts,defVal){
+  const ev=$(`#${p}-every`);let val=defVal;
+  ev.innerHTML=opts.map(([d,l])=>`<button type="button" data-v="${d}" aria-pressed="${d===val}">${l}</button>`).join("");
+  ev.querySelectorAll("button").forEach(b=>b.onclick=()=>{val=+b.dataset.v;ev.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+  const btn=$(p==="ca"?"#careAddBtn":"#apAddBtn"),form=$(p==="ca"?"#careAdd":"#apAdd");
+  btn.onclick=()=>{form.hidden=false;btn.hidden=true;$(`#${p}-name`).value="";$(`#${p}-name`).focus()};
+  $(`#${p}-cancel`).onclick=()=>{form.hidden=true;btn.hidden=false};
+  $(`#${p}-save`).onclick=async()=>{const name=$(`#${p}-name`).value.trim().slice(0,40);if(!name){toast("Give it a name first");return}
+    const t={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name,every:val,cat,last:null,log:[],order:care.length};
+    care.push(t);form.hidden=true;btn.hidden=false;renderCare();await saveCareItem(t);toast(`Added ${name}`)};
+}
+setupCareAdd("ca","self",EVERY_OPTS,7);
+setupCareAdd("ap","health",APPT_OPTS,180);
+function hobbiesOnTrack(){const t=hobbies.filter(h=>h.last);return t.length?t.filter(h=>hobbyStatus(h).st!=="overdue").length/t.length:null}
+function peopleOnTrack(){const t=people.filter(p=>p.last);return t.length?t.filter(p=>personStatus(p).st!=="overdue").length/t.length:null}
+
+/* ---------- life sections ---------- */
+let curSec="move";
+const SEC_DESC={move:"Steps, exercise, food, medication, sleep and appointments.",recover:"Stress, screen time, work hours, gratitude and hobbies.",connect:"Staying in touch with friends and making plans.",learn:"Learning outside work: courses, reading, your certification.",care:"Keeping on top of the basics."};
+function secStats(k,s){
+  const lt=(a,b)=>`${a}/${b}`;
+  if(k==="care"){const it=care.filter(t=>catOf(t)==="self"),st=it.map(t=>careStatus(t).st);return[[st.filter(x=>x==="ok").length+" of "+it.length,"on track"],[st.filter(x=>x==="soon").length,"due soon"],[st.filter(x=>x==="overdue").length,"overdue"],[st.filter(x=>x==="new").length,"not tracked yet"]]}
+  if(!s)return[];
+  if(k==="move")return[[Math.round(s.avgSteps).toLocaleString(),"avg steps"],[lt(s.exDays,goals.exDays),"workouts"],[s.foodAsked?lt(s.foodDays,s.foodAsked):"–","days food logged"],[s.avgEat!=null?s.avgEat.toFixed(1)+"/5":"–","avg eating"],[s.medsAsked?lt(s.medsDays,s.medsAsked):"–","days meds taken"],[s.avgSleep!=null?s.avgSleep.toFixed(1)+" h":"–","avg sleep"]];
+  if(k==="recover")return[[s.avgStress.toFixed(1)+"/5","avg stress"],[s.avgScreen!=null?s.avgScreen.toFixed(1)+" h":"–",`screen time (goal ${goals.screen||3} h)`],[s.avgWork!=null?s.avgWork.toFixed(1)+" h":"–","avg work day"],[s.gratAsked?lt(s.gratDays,s.gratAsked):"–","days with gratitude"]];
+  if(k==="connect")return[[lt(s.plans,goals.plans),"plans made"],[lt(s.contactDays,s.logged),"days in touch"],[people.length?people.filter(p=>p.last&&personStatus(p).st!=="overdue").length+" of "+people.length:"–","people on track"],[upcomingPlans().length,"upcoming plans"]];
+  if(k==="learn")return[[lt(s.studyMin,goals.study),"minutes this week"],[s.studyDays,"days with learning"]];
+  return[];
+}
+function renderSection(){
+  const k=curSec,a=AREA_C[k],s=weekSummary(0),prev=weekSummary(1),v=s?s.scores[k]:(k==="care"?careScoreAt(todayStr(),"self"):null);
+  document.querySelectorAll("#secnav button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.sec===k)));
+  const head=$("#secHead");head.style.setProperty("--areac",a.c);
+  const stats=secStats(k,s);
+  head.innerHTML=`<div class="row"><div><div class="label">This week</div><h2 style="font-size:1.5rem">${a.name}</h2></div><div class="num2">${v==null?"–":Math.round(v*100)}</div></div>
+    <div class="bar"><i style="width:0" data-w="${v==null?0:Math.round(v*100)}"></i></div>${s&&v!=null?deltaHtml(s,prev,k):""}
+    <p class="tip">${v==null&&k==="care"?"Tap an item below and set when you last did it to start tracking.":SEC_DESC[k]}</p>
+    ${stats.length?`<div class="stats">${stats.map(([x,l])=>`<div class="stat"><div class="v">${x}</div><div class="k">${l}</div></div>`).join("")}</div>`:""}`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{const i=head.querySelector(".bar i");if(i)i.style.width=i.dataset.w+"%"}));
+  ["move","recover","connect","learn","care"].forEach(x=>{const el=$("#pane-"+x);if(el)el.hidden=x!==k});
+  if(k==="move"||k==="care")renderCare();
+  if(k==="recover"){renderStress();renderHobbies();renderGratitude()}
+  if(k==="connect"){renderPeople();renderCalendar()}
+  if(k==="learn")renderLearn();
+}
+function showSection(k){
+  const order=["move","recover","connect","learn","care"],prev=curSec;curSec=k;renderSection();
+  const el=$("#pane-"+k);if(el&&prev!==k){el.classList.remove("in-r","in-l");void el.offsetWidth;el.classList.add(order.indexOf(k)>order.indexOf(prev)?"in-r":"in-l")}
+  const b=document.querySelector(`#secnav button[data-sec="${k}"]`);if(b)b.scrollIntoView({block:"nearest",inline:"center",behavior:reduce?"auto":"smooth"});
+}
+document.querySelectorAll("#secnav button").forEach(b=>b.onclick=()=>{if(b.dataset.sec!==curSec)showSection(b.dataset.sec)});
+function renderGratitude(){
+  const ul=$("#gratList");if(!ul)return;ul.innerHTML="";
+  const list=Object.values(entries).filter(e=>e&&e.grateful).sort((a,b)=>a.date<b.date?1:-1).slice(0,8);
+  if(!list.length){ul.innerHTML=`<li style="display:block" class="tip">Your check-in asks for one thing you're grateful for. They'll collect here.</li>`;return}
+  list.forEach(e=>{const dt=toDate(e.date),li=document.createElement("li");li.innerHTML=`<div class="pdate"><span>${dt.toLocaleDateString(undefined,{month:"short"})}</span><b>${dt.getDate()}</b></div><div></div>`;li.lastChild.textContent=e.grateful;ul.append(li)});
+}
+function renderLearn(){
+  const box=$("#lbars");if(!box)return;const days=lastDays(7),mins=days.map(d=>n(entries[d]&&entries[d].study)),mx=Math.max(60,...mins);
+  box.innerHTML=days.map((d,i)=>`<div class="col"><b>${mins[i]||""}</b><i class="${mins[i]?"":"zero"}" data-h="${Math.round(mins[i]/mx*90)}"></i><span>${toDate(d).toLocaleDateString(undefined,{weekday:"narrow"})}</span></div>`).join("");
+  requestAnimationFrame(()=>requestAnimationFrame(()=>box.querySelectorAll("i[data-h]").forEach(i=>i.style.height=i.dataset.h+"px")));
+  $("#learnTotal").textContent=`${mins.reduce((a,b)=>a+b,0)} min · goal ${goals.study}/week`;
+}
 
 /* ---------- progress ---------- */
-function deltaHtml(s,prev,k){if(!prev)return `<div class="delta">No data last week</div>`;const d=Math.round((s.scores[k]-prev.scores[k])*100);
+function deltaHtml(s,prev,k){if(!prev||s.scores[k]==null||prev.scores[k]==null)return `<div class="delta">No data last week</div>`;const d=Math.round((s.scores[k]-prev.scores[k])*100);
   return d===0?`<div class="delta">Same as last week</div>`:`<div class="delta ${d>0?"up":"down"}">${d>0?"▲":"▼"} ${Math.abs(d)} vs last week</div>`}
 function streakInfo(){let cur=0,t=todayStr(),d=entries[t]?t:addDays(t,-1);if(isExample)return 0;while(entries[d]){cur++;d=addDays(d,-1)}return cur}
 function renderProgress(){
   const weeks=[3,2,1,0].map(o=>weekSummary(o)),s=weeks[3],prev=weeks[2],pg=$("#prog");if(!pg)return;
-  pg.innerHTML=AREAS.map(a=>{const bars=weeks.map((w,i)=>w?`<i class="${i===3?"cur":""}" data-h="${Math.max(8,Math.round(w.scores[a.k]*100))}"></i>`:`<i class="none"></i>`).join("");
-    let d="";if(s&&prev){const v=Math.round((s.scores[a.k]-prev.scores[a.k])*100);d=`<span class="delta ${v>0?"up":v<0?"down":""}">${v>0?"+":v<0?"−":""}${Math.abs(v)}</span>`}else d=`<span class="delta">–</span>`;
-    return `<div class="prow" style="--areac:${a.c}"><span class="pn">${a.name}</span><div class="pbars" role="img" aria-label="${a.name} weekly scores">${bars}</div>${d}</div>`}).join("");
+  pg.innerHTML=AREAS.map(a=>{const bars=weeks.map((w,i)=>w&&w.scores[a.k]!=null?`<i class="${i===3?"cur":""}" data-h="${Math.max(8,Math.round(w.scores[a.k]*100))}"></i>`:`<i class="none"></i>`).join("");
+    let d="";if(s&&prev&&s.scores[a.k]!=null&&prev.scores[a.k]!=null){const v=Math.round((s.scores[a.k]-prev.scores[a.k])*100);d=`<span class="delta ${v>0?"up":v<0?"down":""}">${v>0?"+":v<0?"−":""}${Math.abs(v)}</span>`}else d=`<span class="delta">–</span>`;
+    return `<div class="prow" style="--areac:${a.c}"><span class="pn">${a.short}</span><div class="pbars" role="img" aria-label="${a.name} weekly scores">${bars}</div>${d}</div>`}).join("");
   requestAnimationFrame(()=>requestAnimationFrame(()=>pg.querySelectorAll(".pbars i[data-h]").forEach(b=>b.style.height=(b.dataset.h*.38)+"px")));
   const sm=$("#progSummary");
   if(!s){sm.textContent="Check in this week to start tracking progress."}
   else if(!prev){sm.textContent="Keep checking in. Week-over-week progress shows up after your second week."}
-  else{const ds=AREAS.map(a=>({n:a.name,d:Math.round((s.scores[a.k]-prev.scores[a.k])*100)}));
+  else{const ds=AREAS.filter(a=>s.scores[a.k]!=null&&prev.scores[a.k]!=null).map(a=>({n:a.name,d:Math.round((s.scores[a.k]-prev.scores[a.k])*100)}));
     const up=ds.filter(x=>x.d>=5).sort((a,b)=>b.d-a.d),dn=ds.filter(x=>x.d<=-5).sort((a,b)=>a.d-b.d);
     sm.textContent=(up.length?`Improving: ${up.map(x=>`${x.n} (+${x.d})`).join(", ")}. `:"")+(dn.length?`Slipping: ${dn.map(x=>`${x.n} (−${-x.d})`).join(", ")}.`:"")||"Steady compared with last week."}
   const k=streakInfo(),st=$("#streak");st.hidden=k<2;st.textContent=`${k}-day check-in streak`;
@@ -897,10 +1045,10 @@ function renderProgress(){
 
 /* ---------- render: focus ---------- */
 function renderRings(s){
-  const svg=$("#rings");const radii=[86,66,46,26];const w=15;
+  const svg=$("#rings");const radii=[88,72,56,40,24];const w=12;
   svg.innerHTML=AREAS.map((a,i)=>{const r=radii[i],C=2*Math.PI*r;
     return `<circle cx="100" cy="100" r="${r}" stroke="${a.c}" stroke-opacity=".16" stroke-width="${w}"/>
-      <circle class="arc" data-v="${s?s.scores[a.k]:0}" data-c="${C}" cx="100" cy="100" r="${r}" stroke="${a.c}" stroke-width="${w}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/>`}).join("");
+      <circle class="arc" data-v="${s&&s.scores[a.k]!=null?s.scores[a.k]:0}" data-c="${C}" cx="100" cy="100" r="${r}" stroke="${a.c}" stroke-width="${w}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/>`}).join("");
   requestAnimationFrame(()=>requestAnimationFrame(()=>svg.querySelectorAll(".arc").forEach(c=>{const C=+c.dataset.c,v=Math.max(.001,+c.dataset.v);c.style.opacity=+c.dataset.v>0?1:0;c.setAttribute("stroke-dashoffset",String(C*(1-v)))})));
 }
 function renderFocus(){
@@ -908,14 +1056,15 @@ function renderFocus(){
   renderRings(s);
   const ht=$("#heroText"),areas=$("#areas"),nud=$("#nudges"),wins=$("#wins");
   if(!s){ht.innerHTML=`<div class="kicker">This week</div><div class="big">Nothing logged yet</div><p>Log today to see where your attention should go.</p>`;areas.innerHTML="";nud.innerHTML=`<li class="tip">Suggestions show up here after your first check-in.</li>`;wins.textContent="";return}
-  const ranked=AREAS.map(a=>({...a,v:s.scores[a.k]})).sort((a,b)=>a.v-b.v),low=ranked[0];
+  const ranked=AREAS.map(a=>({...a,v:s.scores[a.k]})).filter(a=>a.v!=null).sort((a,b)=>a.v-b.v),low=ranked[0];
   ht.style.setProperty("--areac",low.c);
   ht.innerHTML=low.v>=.8
     ?`<div class="kicker">${s.logged} of 7 days logged</div><div class="big">You're in <span>good balance</span></div><p>Every area is at 80 or above.</p>`
     :`<div class="kicker">${s.logged} of 7 days logged</div><div class="big">Focus on <span>${low.name}</span></div><p>Your lowest area this week, at ${Math.round(low.v*100)} out of 100.</p>`;
   const prev=weekSummary(1);
-  areas.innerHTML=AREAS.map((a,i)=>`<div class="area rise" style="--areac:${a.c};--i:${i+1}"><div class="top2"><span class="name">${a.name}</span><span class="score num" data-to="${Math.round(s.scores[a.k]*100)}">0</span></div><div class="bar"><i data-w="${Math.round(s.scores[a.k]*100)}"></i></div>${deltaHtml(s,prev,a.k)}</div>`).join("");
-  areas.querySelectorAll(".score").forEach(el=>countUp(el,+el.dataset.to));
+  areas.innerHTML=AREAS.map((a,i)=>{const v=s.scores[a.k];return `<div class="area rise" data-k="${a.k}" role="button" tabindex="0" style="--areac:${a.c};--i:${i+1}"><div class="top2"><span class="name">${a.name}</span><span class="score num" ${v==null?"":`data-to="${Math.round(v*100)}"`}>${v==null?"–":0}</span></div><div class="bar"><i data-w="${v==null?0:Math.round(v*100)}"></i></div>${v==null?`<div class="delta">Not tracked yet</div>`:deltaHtml(s,prev,a.k)}</div>`}).join("");
+  areas.querySelectorAll(".score[data-to]").forEach(el=>countUp(el,+el.dataset.to));
+  areas.querySelectorAll(".area").forEach(el=>el.onclick=()=>{show("life");showSection(el.dataset.k)});
   requestAnimationFrame(()=>requestAnimationFrame(()=>areas.querySelectorAll(".bar i").forEach(b=>b.style.width=b.dataset.w+"%")));
   const list=buildNudges(s).slice(0,3);nud.innerHTML="";
   list.forEach((x,i)=>{const a=AREA_C[x.area];const li=document.createElement("li");li.className="nudge rise";li.style.setProperty("--areac",a.c);li.style.setProperty("--i",i+6);
@@ -923,7 +1072,7 @@ function renderFocus(){
     li.querySelector("b").textContent=x.title;li.querySelector("p").textContent=x.body;nud.append(li)});
   if(!list.length)nud.innerHTML=`<li class="tip">Nothing is slipping right now.</li>`;
   const good=ranked.filter(a=>a.v>=.75).map(a=>a.name);
-  const ups=prev?AREAS.map(a=>({n:a.name,d:Math.round((s.scores[a.k]-prev.scores[a.k])*100)})).filter(x=>x.d>=5).sort((a,b)=>b.d-a.d):[];
+  const ups=prev?AREAS.filter(a=>s.scores[a.k]!=null&&prev.scores[a.k]!=null).map(a=>({n:a.name,d:Math.round((s.scores[a.k]-prev.scores[a.k])*100)})).filter(x=>x.d>=5).sort((a,b)=>b.d-a.d):[];
   wins.textContent=(ups.length?`Progress: ${ups.map(x=>`${x.n} up ${x.d}`).join(", ")} from last week. `:"")+(good.length?`Going well: ${good.join(", ")}.`:"");
 }
 
@@ -931,16 +1080,14 @@ function renderFocus(){
 function renderWeek(){
   const days=lastDays(7),t=todayStr();let i=0;
   let html=`<span></span>`+days.map(d=>{const dt=toDate(d);return `<span class="h${d===t?" today":""}">${dt.toLocaleDateString(undefined,{weekday:"short"}).slice(0,2)}<br>${dt.getDate()}</span>`}).join("");
-  AREAS.forEach(a=>{html+=`<span class="rl">${a.name}</span>`;
-    days.forEach(d=>{const sc=dayScores(entries[d]);i++;
-      if(!sc){html+=`<span class="cell empty" style="--i:${i}" title="Not logged"></span>`;return}
+  AREAS.forEach(a=>{html+=`<span class="rl">${a.short}</span>`;
+    days.forEach(d=>{const sc=dayScores(entries[d],d);i++;
+      if(!sc||sc[a.k]==null){html+=`<span class="cell empty" style="--i:${i}" title="Not logged"></span>`;return}
       const v=sc[a.k];html+=`<span class="cell" style="--i:${i};background:color-mix(in srgb, ${a.c} ${Math.round(12+v*88)}%, var(--sunken))" title="${a.name} ${Math.round(v*100)}"></span>`})});
   $("#grid").innerHTML=html;
-  const s=weekSummary(),st=$("#stats");
-  st.innerHTML=s?[[Math.round(s.avgSteps).toLocaleString(),"avg steps"],[`${s.exDays}/${goals.exDays}`,"workouts"],[`${s.studyMin}/${goals.study}`,"study min"],[`${s.outDays}/${goals.outs}`,"times out"],[s.avgEat!=null?s.avgEat.toFixed(1)+"/5":"–","avg eating"],[s.avgUnread.toFixed(1),"avg unread"]]
-    .map(([v,k],j)=>`<div class="stat rise" style="--i:${j%3}"><div class="v">${v}</div><div class="k">${k}</div></div>`).join(""):"";
-  const map={steps:"steps",exdays:"exDays",study:"study",plans:"plans",outs:"outs",sleep:"sleep",newpm:"newPerMonth"};
-  Object.keys(map).forEach(k=>{const el=$("#g-"+k);if(document.activeElement!==el)el.value=goals[map[k]]});
+  const map={steps:"steps",exdays:"exDays",study:"study",plans:"plans",sleep:"sleep",newpm:"newPerMonth",screen:"screen",workmax:"workMax"};
+  Object.keys(map).forEach(k=>{const el=$("#g-"+k);if(el&&document.activeElement!==el)el.value=goals[map[k]]??DEFAULT_GOALS[map[k]]});
+  const sm=$("#set-meds"),sf=$("#set-food");if(sm)sm.checked=goals.meds!==false;if(sf)sf.checked=goals.food!==false;
 }
 
 /* ---------- check-in form ---------- */
@@ -958,9 +1105,11 @@ function renderFormCauses(){const w=$("#f-causeWrap");if(!w)return;const on=stre
 function loadForm(animate){
   const e=(!isExample&&entries[cur])||{};
   $("#f-unread").value=n(e.unread);$("#f-missed").value=n(e.missed);
-  $("#f-replied").checked=!!e.replied;$("#f-plans").checked=!!e.plans;$("#f-out").checked=!!e.out;$("#formPlan").hidden=true;
+  $("#f-plans").checked=!!e.plans;$("#f-out").checked=contactDay(e);$("#formPlan").hidden=true;
   $("#f-steps").value=n(e.steps);$("#f-ex").value=n(e.ex);$("#f-study").value=n(e.study);
   $("#f-work").value=n(e.work);$("#f-sleep").value=e.sleep!=null?n(e.sleep):goals.sleep;
+  $("#f-screen").value=n(e.screen);$("#f-grat").value=e.grateful||"";$("#f-food").checked=!!e.food;$("#f-meds").checked=!!e.meds;
+  $("#row-food").hidden=goals.food===false;$("#row-meds").hidden=goals.meds===false;
   formCauses=Array.isArray(e.causes)?[...e.causes]:[];stressVal=n(e.stress)||3;syncStress();eatVal=n(e.eat);syncEat();wdVal=n(e.workday);syncWd();$("#f-note").value=e.note||"";
   const lab=$("#dayLabel");lab.textContent=cur===todayStr()?"Today":fmtDay(cur);
   if(animate){lab.classList.remove("swap");void lab.offsetWidth;lab.classList.add("swap")}
@@ -978,7 +1127,9 @@ $("#prevDay").onclick=()=>{cur=addDays(cur,-1);loadForm(true)};
 $("#nextDay").onclick=()=>{if(cur<todayStr()){cur=addDays(cur,1);loadForm(true)}};
 $("#form").addEventListener("submit",async ev=>{
   ev.preventDefault();
-  const e={...((!isExample&&entries[cur])||{}),date:cur,eat:eatVal||null,quiz:!!(!isExample&&entries[cur]&&entries[cur].quiz),unread:n($("#f-unread").value),missed:n($("#f-missed").value),replied:$("#f-replied").checked,plans:$("#f-plans").checked,out:$("#f-out").checked,
+  const prevE=(!isExample&&entries[cur])||{};
+  const e={...prevE,date:cur,eat:eatVal||null,quiz:!!prevE.quiz,unread:n($("#f-unread").value),missed:n($("#f-missed").value),plans:$("#f-plans").checked,out:$("#f-out").checked,
+    screen:n($("#f-screen").value),grateful:$("#f-grat").value.trim().slice(0,120),food:goals.food===false?prevE.food:$("#f-food").checked,meds:goals.meds===false?prevE.meds:$("#f-meds").checked,
     steps:n($("#f-steps").value),ex:n($("#f-ex").value),study:n($("#f-study").value),workday:wdVal||0,stress:stressVal,causes:stressVal>=4?formCauses:[],work:n($("#f-work").value),sleep:n($("#f-sleep").value),
     note:$("#f-note").value.slice(0,500),updatedAt:Date.now()};
   const btn=$("#saveBtn");btn.disabled=true;
@@ -991,49 +1142,51 @@ $("#form").addEventListener("submit",async ev=>{
   setTimeout(()=>{renderAll();show("focus")},reduce?200:750);
 });
 $("#saveGoals").onclick=async()=>{
-  goals={setup:true,steps:n($("#g-steps").value)||DEFAULT_GOALS.steps,exDays:n($("#g-exdays").value)||1,study:n($("#g-study").value)||30,plans:n($("#g-plans").value)||1,checkinTime:goals.checkinTime||DEFAULT_GOALS.checkinTime,outs:n($("#g-outs").value)||1,newPerMonth:n($("#g-newpm").value)||1,sleep:n($("#g-sleep").value)||7};
+  goals={...goals,setup:true,steps:n($("#g-steps").value)||DEFAULT_GOALS.steps,exDays:n($("#g-exdays").value)||1,study:n($("#g-study").value)||30,plans:n($("#g-plans").value)||1,newPerMonth:n($("#g-newpm").value)||1,sleep:n($("#g-sleep").value)||7,screen:n($("#g-screen").value)||3,workMax:n($("#g-workmax").value)||9};
   try{await store.saveGoals(goals);toast("Goals saved")}catch(e){toast("Couldn't save goals")}
   renderAll();
 };
 
+["meds","food"].forEach(k=>{const el=$("#set-"+k);el.addEventListener("change",async()=>{goals={...goals,[k]:el.checked};try{await store.saveGoals(goals);toast(el.checked?"Added to your check-in":"Removed from your check-in")}catch(e){toast("Couldn't save that")}renderAll()})});
+$("#f-causeAdd").onclick=async()=>{const ci=$("#f-causeNew"),c=ci.value.trim().replace(/\s+/g," ").slice(0,30);if(!c)return;
+  if(!allCauses().some(x=>x.toLowerCase()===c.toLowerCase())){goals={...goals,customCauses:[...(goals.customCauses||[]),c]};try{await store.saveGoals(goals)}catch(e){}}
+  const name=allCauses().find(x=>x.toLowerCase()===c.toLowerCase())||c;if(!formCauses.includes(name))formCauses.push(name);ci.value="";renderFormCauses()};
 /* ---------- daily quiz ---------- */
 const QKEY="life-ledger-quiz-skipped-v2";
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function shouldQuiz(){const t=todayStr();const e=!isExample&&entries[t];return !(e&&e.quiz)&&lsGet(QKEY)!==t}
 const QS=[
-  {k:"unread",area:"connect",type:"count",step:1,title:"How many unread texts?",hint:"Check the red badge on your Messages icon.",unit:"unread"},
-  {k:"missed",area:"connect",type:"count",step:1,title:"Any missed calls?",hint:"Check the red badge on your Phone icon.",unit:"missed calls"},
-  {k:"replied",area:"connect",type:"yesno",title:"Did you reply to your friends today?",yes:"Yes, I'm caught up",no:"Not yet"},
-  {k:"plans",area:"connect",type:"yesno",title:"Did you make or confirm plans with anyone?",yes:"Yes",no:"No"},
-  {k:"plan",area:"connect",type:"plan",cond:()=>qa.plans===true,title:"When are the plans?",hint:"They'll go in your calendar, under the Week tab."},
-  {k:"out",area:"connect",type:"yesno",title:"Did you go out with friends today?",yes:"Yes",no:"No"},
-  {k:"talked",area:"connect",type:"multi",src:"people",none:"No one today",cond:()=>people.length>0,title:"Who did you talk to or see today?",hint:"Calls, real conversations by text, or time together."},
   {k:"steps",area:"move",type:"count",step:500,title:"How many steps today?",hint:"Open the Health app and check Steps.",unit:"steps",chips:[3000,5000,8000,10000,12000]},
   {k:"ex",area:"move",type:"count",step:5,title:"How long did you exercise?",unit:"minutes",chips:[0,15,30,45,60,90]},
-  {k:"study",area:"learn",type:"count",step:15,title:"Time on your course or certification?",unit:"minutes",chips:[0,15,30,45,60,90]},
-  {k:"workday",area:"recover",type:"scale",title:"How was your day at work?",opts:[["5","Great","Got things done, felt good"],["4","Good","More good than bad"],["3","Fine","An ordinary day"],["2","Rough","Frustrating or draining"],["1","Awful","One to forget"],["0","Day off","Didn't work today"]]},
-  {k:"stress",area:"recover",type:"scale",title:"How stressful was your day overall?",hint:"Everything counts: work, money, family, all of it.",opts:[["1","Calm","Barely thought about it"],["2","Fine","Normal day"],["3","Busy","Some pressure"],["4","Stressful","Hard to switch off"],["5","Overwhelmed","Too much"]]},
-  {k:"causes",area:"recover",type:"multi",src:"causes",none:"Skip",cond:()=>qa.stress>=4,title:"What made today stressful?",hint:"Pick everything that applies. Over time you'll see what drives your hardest days."},
-  {k:"work",area:"recover",type:"count",step:.5,title:"How many hours did you work?",unit:"hours",chips:[0,6,7,8,9,10]},
-  {k:"sleep",area:"recover",type:"count",step:.5,title:"How much did you sleep last night?",unit:"hours",chips:[5,6,7,7.5,8,9]},
-  {k:"eat",area:"recover",type:"scale",title:"How was your eating today?",opts:[["1","Poor","Junk food or skipped meals"],["2","Not great","More takeout or snacks than I'd like"],["3","Okay","A mix of good and not so good"],["4","Good","Mostly balanced meals"],["5","Great","Balanced meals and enough water"]]},
-  {k:"care",area:"care",type:"multi",src:"care",none:"None today",cond:()=>care.length>0,title:"Any self-care today?",hint:"Tap everything you did. Items with a red dot are due."},
-  {k:"hobby",area:"fun",type:"multi",src:"hobbies",none:"Not today",cond:()=>hobbies.length>0,title:"Any time on your hobbies today?",hint:"Tap everything you made time for."},
-  {k:"tried",area:"fun",type:"yesno",title:"Did you try anything new today?",yes:"Yes",no:"No"},
-  {k:"triedWhat",area:"fun",type:"line",cond:()=>qa.tried===true,title:"What did you try?",hint:"A new recipe, place, activity, anything. It'll go in your Hobbies log.",ph:"Bouldering gym on Queen St"},
-  {k:"note",area:"recover",type:"text",title:"Anything on your mind?",hint:"Optional. A deadline, a win, why you skipped the gym."},
+  {k:"food",area:"move",type:"yesno",cond:()=>goals.food!==false,title:"Did you log all your food today?",yes:"Yes, everything",no:"Not all of it"},
+  {k:"eat",area:"move",type:"scale",title:"How was your eating today?",opts:[["5","Great","Balanced meals, barely snacked"],["4","Good","Mostly good, a snack or two"],["3","Okay","Some snacking or takeout"],["2","Not great","Lots of snacking or takeout"],["1","Poor","Junk food or skipped meals"]]},
+  {k:"meds",area:"move",type:"yesno",cond:()=>goals.meds!==false,title:"Did you take your medication today?",yes:"Yes",no:"Missed it"},
+  {k:"sleep",area:"move",type:"count",step:.5,title:"How much did you sleep last night?",unit:"hours",chips:[5,6,7,7.5,8,9]},
+  {k:"screen",area:"recover",type:"count",step:.5,title:"How much screen time today?",hint:"Settings → Screen Time on your iPhone shows today's total.",unit:"hours",chips:[1,2,3,4,5,6]},
+  {k:"work",area:"recover",type:"count",step:.5,title:"How many hours did you work today?",hint:"Enter 0 for a day off.",unit:"hours",chips:[0,6,7,8,9,10]},
+  {k:"workday",area:"recover",type:"scale",cond:()=>n(qa.work)>0,title:"How was your day at work?",opts:[["5","Great","Got things done, felt good"],["4","Good","More good than bad"],["3","Fine","An ordinary day"],["2","Rough","Frustrating or draining"],["1","Awful","One to forget"]]},
+  {k:"stress",area:"recover",type:"scale",title:"How stressful was your day?",hint:"Everything counts: work, money, family, all of it.",opts:[["1","Calm","Barely thought about it"],["2","Fine","Normal day"],["3","Busy","Some pressure"],["4","Stressful","Hard to switch off"],["5","Overwhelmed","Too much"]]},
+  {k:"causes",area:"recover",type:"multi",src:"causes",none:"Skip",cond:()=>qa.stress>=4,title:"What caused it?",hint:"Pick as many as apply, or add your own."},
+  {k:"hobby",area:"recover",type:"multi",src:"hobbies",none:"Not today",cond:()=>hobbies.length>0,title:"Any time on your hobbies today?",hint:"Tap everything you made time for."},
+  {k:"grateful",area:"recover",type:"line",title:"What's one thing you're grateful for today?",hint:"Big or small. It all counts.",ph:"A good chat with Sam",none:"Skip"},
+  {k:"talked",area:"connect",type:"multi",src:"people",none:"No one today",cond:()=>people.length>0,title:"Who did you talk to or see today?",hint:"Calls, real conversations by text, or time together."},
+  {k:"out",area:"connect",type:"yesno",cond:()=>people.length===0,title:"Did you talk to or see any friends today?",yes:"Yes",no:"Not today"},
+  {k:"plans",area:"connect",type:"yesno",title:"Did you make or confirm any plans?",yes:"Yes",no:"No"},
+  {k:"plan",area:"connect",type:"plan",cond:()=>qa.plans===true,title:"When are the plans?",hint:"They'll go in your calendar under Life → Connection."},
+  {k:"study",area:"learn",type:"count",step:15,title:"Time spent learning outside work?",hint:"Courses, your certification, reading. Anything that counts as learning.",unit:"minutes",chips:[0,15,30,45,60,90]},
+  {k:"care",area:"care",type:"multi",src:"duecare",none:"None of these",cond:()=>careSorted().some(isDue),title:"These are due. Done any?",hint:"Self-care and appointments that are due now. Everything else waits until it's due."},
   {k:"_review",type:"review",title:"Look right?"}
 ];
-const AREA_C=Object.fromEntries(AREAS.map(a=>[a.k,a]));AREA_C.care={k:"care",name:"Self-care",c:"var(--care)"};AREA_C.fun={k:"fun",name:"Hobbies",c:"var(--fun)"};
+const AREA_C=Object.fromEntries(AREAS.map(a=>[a.k,a]));AREA_C.fun={k:"fun",name:"Hobbies",c:"var(--fun)"};
 let qi=0,qa={},qBusy=false;
 const AQ=()=>QS.filter(q=>!q.cond||q.cond());
-function fmtVal(q,v){if(q.type==="line")return v?esc(v.length>18?v.slice(0,17)+"…":v):"Not noted";if(q.type==="multi"){if(!v||!v.length)return"None";if(q.src==="causes")return esc(v[0])+(v.length>1?" +"+(v.length-1):"");if(q.src==="people")return v.length+(v.length===1?" person":" people");if(q.src==="hobbies")return v.length+(v.length===1?" hobby":" hobbies");return v.length+" done"}if(q.type==="plan")return esc(fmtWhen({date:qa.planDate,time:qa.planTime}));if(q.type==="yesno")return v?"Yes":"No";if(q.type==="scale"){const o=q.opts.find(o=>+o[0]===v);return o?(v?v+" · ":"")+o[1]:""}if(q.type==="text")return v?"Added":"None";if(q.k==="steps")return n(v).toLocaleString();return v+(q.unit==="hours"?" h":q.unit==="minutes"?" min":"")}
+function fmtVal(q,v){if(q.type==="line")return v?esc(v.length>16?v.slice(0,15)+"…":v):"Skipped";if(q.type==="multi"){if(!v||!v.length)return"None";if(q.src==="causes")return esc(v[0])+(v.length>1?" +"+(v.length-1):"");if(q.src==="people")return v.length+(v.length===1?" person":" people");if(q.src==="hobbies")return v.length+(v.length===1?" hobby":" hobbies");if(q.src==="duecare")return v.length+" done";return v.length+" done"}if(q.type==="plan")return esc(fmtWhen({date:qa.planDate,time:qa.planTime}));if(q.type==="yesno")return v?"Yes":"No";if(q.type==="scale"){const o=q.opts.find(o=>+o[0]===v);return o?(v?v+" · ":"")+o[1]:""}if(q.type==="text")return v?"Added":"None";if(q.k==="steps")return n(v).toLocaleString();return v+(q.unit==="hours"?" h":q.unit==="minutes"?" min":"")}
 function openQuiz(){
   const t=todayStr();cur=t;
   const e=(!isExample&&entries[t])||{};
-  qa={unread:n(e.unread),missed:n(e.missed),replied:e.replied??null,plans:e.plans??null,out:e.out??null,planDate:addDays(t,1),planTime:"",planWhat:"",care:[],talked:[],hobby:[],workday:e.workday??null,tried:e.tried??null,triedWhat:"",eat:n(e.eat)||null,causes:Array.isArray(e.causes)?[...e.causes]:[],steps:n(e.steps),ex:n(e.ex),study:n(e.study),
-      stress:n(e.stress)||null,work:n(e.work),sleep:e.sleep!=null?n(e.sleep):goals.sleep,note:e.note||""};
+  qa={plans:e.plans??null,out:e.out??null,planDate:addDays(t,1),planTime:"",planWhat:"",care:[],talked:Array.isArray(e.talked)?[...e.talked]:[],hobby:Array.isArray(e.hobby)?[...e.hobby]:[],workday:n(e.workday)||null,eat:n(e.eat)||null,causes:Array.isArray(e.causes)?[...e.causes]:[],steps:n(e.steps),ex:n(e.ex),study:n(e.study),
+      food:e.food??null,meds:e.meds??null,screen:n(e.screen),grateful:e.grateful||"",stress:n(e.stress)||null,work:n(e.work),sleep:e.sleep!=null?n(e.sleep):goals.sleep};
   qi=0;const qz=$("#quiz");qz.hidden=false;qz.classList.remove("closing");qz.classList.add("open");
   document.body.style.overflow="hidden";renderQ(0);
 }
@@ -1048,7 +1201,7 @@ function renderQ(dir){
   $("#qprog").style.width=Math.round(qi/(L.length-1)*100)+"%";
   $("#qback").disabled=qi===0;
   const nx=$("#qnext");nx.classList.remove("done");nx.disabled=false;
-  nx.textContent=q.type==="review"?"Save check-in":((q.type==="text"&&!qa.note)||(q.type==="multi"&&!qa[q.k].length)?(q.none||"None today"):"Next");if(q.type==="text"&&!qa.note)nx.textContent="Skip";
+  nx.textContent=q.type==="review"?"Save check-in":((q.type==="multi"&&!qa[q.k].length)||(q.type==="line"&&!qa[q.k]))?(q.none||"None today"):"Next";
   let h=a?`<div class="qarea"><i></i>${a.name}</div>`:"";
   h+=`<h2 class="qtitle" id="qtitle">${q.title}</h2>`;
   if(q.hint)h+=`<p class="qhint">${q.hint}</p>`;
@@ -1062,13 +1215,13 @@ function renderQ(dir){
   }else if(q.type==="plan"){
     h+=`<div class="planform"><div class="row2"><div><label class="flabel" for="qp-date">Date</label><input class="inp" type="date" id="qp-date"></div><div><label class="flabel" for="qp-time">Time (optional)</label><input class="inp" type="time" id="qp-time"></div></div><div><label class="flabel" for="qp-what">What and who</label><input class="inp" id="qp-what" maxlength="80" placeholder="Dinner with Sam"></div></div>`;
   }else if(q.type==="multi"){
-    if(q.src==="causes")h+=`<div style="display:grid;gap:8px">${causeChips(qa.causes)}</div>`;else h+=`<div class="chips">${multiOpts(q).map(o=>`<button type="button" data-id="${esc(o.id)}" class="${o.due?"due":""}" aria-pressed="${qa[q.k].includes(o.id)}">${esc(o.label)}</button>`).join("")}</div>`;
+    if(q.src==="causes")h+=`<div style="display:grid;gap:8px">${causeChips(qa.causes)}</div><div class="addrow"><input class="inp" id="qcause" maxlength="30" placeholder="Add your own" aria-label="Add your own stressor" style="background:var(--surface);box-shadow:var(--shadow)"><button type="button" class="btn ghost" id="qcauseAdd">Add</button></div>`;else h+=`<div class="chips">${multiOpts(q).map(o=>`<button type="button" data-id="${esc(o.id)}" class="${o.due?"due":""}" aria-pressed="${qa[q.k].includes(o.id)}">${esc(o.label)}</button>`).join("")}</div>`;
   }else if(q.type==="line"){
-    h+=`<input class="inp qline" id="qin" maxlength="80" placeholder="${esc(q.ph||"")}" aria-label="${esc(q.title)}">`;
+    h+=`<input class="inp qline" id="qin" maxlength="120" placeholder="${esc(q.ph||"")}" aria-label="${esc(q.title)}">`;
   }else if(q.type==="text"){
     h+=`<textarea id="qin" aria-label="Note" placeholder="Type here…"></textarea>`;
   }else{
-    h+=`<div class="review">${L.filter(x=>x.type!=="review").map((x,i)=>{const v=x.type==="plan"?(qa.planDate||null):qa[x.k];const missing=v===null&&x.type!=="text";
+    h+=`<div class="review">${L.filter(x=>x.type!=="review").map((x,i)=>{const v=x.type==="plan"?(qa.planDate||null):qa[x.k];const missing=v==null&&(x.type==="yesno"||x.type==="scale");
       return `<button type="button" data-i="${i}" style="--rc:${missing?"var(--move)":AREA_C[x.area].c}"><span>${x.title}</span><span class="rv">${missing?"Answer":fmtVal(x,v)}</span></button>`}).join("")}</div>`;
   }
   body.innerHTML=h;
@@ -1091,9 +1244,11 @@ function renderQ(dir){
     const d=$("#qp-date"),tm=$("#qp-time"),w=$("#qp-what");d.min=todayStr();d.value=qa.planDate;tm.value=qa.planTime;w.value=qa.planWhat;
     d.oninput=()=>qa.planDate=d.value;tm.oninput=()=>qa.planTime=tm.value;w.oninput=()=>qa.planWhat=w.value.slice(0,80);
   }else if(q.type==="multi"){
+    if(q.src==="causes"){const ci=$("#qcause"),add=async()=>{const c=ci.value.trim().replace(/\s+/g," ").slice(0,30);if(!c)return;if(!allCauses().some(x=>x.toLowerCase()===c.toLowerCase())){goals={...goals,customCauses:[...(goals.customCauses||[]),c]};try{await store.saveGoals(goals)}catch(e){}}
+      const name=allCauses().find(x=>x.toLowerCase()===c.toLowerCase())||c;if(!qa.causes.includes(name))qa.causes.push(name);renderQ(0)};$("#qcauseAdd").onclick=add;ci.onkeydown=ev=>{if(ev.key==="Enter"){ev.preventDefault();ev.stopPropagation();add()}}}
     body.querySelectorAll(".chips button").forEach(b=>b.onclick=()=>{const id=b.dataset.id,k=q.k;qa[k]=qa[k].includes(id)?qa[k].filter(x=>x!==id):[...qa[k],id];b.setAttribute("aria-pressed",String(qa[k].includes(id)));nx.textContent=qa[k].length?"Next":(q.none||"None today")});
   }else if(q.type==="line"){
-    inp.value=qa[q.k]||"";inp.oninput=()=>{qa[q.k]=inp.value.slice(0,80)};
+    inp.value=qa[q.k]||"";inp.oninput=()=>{qa[q.k]=inp.value.slice(0,120);nx.textContent=qa[q.k]?"Next":(q.none||"Next")};
   }else if(q.type==="text"){
     inp.value=qa.note;inp.oninput=()=>{qa.note=inp.value.slice(0,500);nx.textContent=qa.note?"Next":"Skip"};
   }else{
@@ -1110,8 +1265,10 @@ function go(d){
 async function finishQuiz(){
   const firstMissing=AQ().findIndex(x=>(x.type==="yesno"||x.type==="scale")&&qa[x.k]==null);
   if(firstMissing>=0){qi=firstMissing;renderQ(-1);toast("One question still needs an answer");return}
-  const e={date:todayStr(),quiz:true,unread:n(qa.unread),missed:n(qa.missed),replied:!!qa.replied,plans:!!qa.plans,out:!!qa.out,steps:n(qa.steps),ex:n(qa.ex),
-    study:n(qa.study),workday:qa.workday,stress:qa.stress,causes:qa.stress>=4?qa.causes:[],eat:qa.eat,hobby:qa.hobby||[],tried:!!qa.tried,work:n(qa.work),sleep:n(qa.sleep),note:qa.note||"",updatedAt:Date.now()};
+  const prevE=entries[todayStr()]||{};
+  const e={...prevE,date:todayStr(),quiz:true,plans:!!qa.plans,out:people.length?(qa.talked||[]).length>0:!!qa.out,talked:qa.talked||[],steps:n(qa.steps),ex:n(qa.ex),
+    study:n(qa.study),workday:n(qa.work)>0?n(qa.workday):0,stress:qa.stress,causes:qa.stress>=4?qa.causes:[],eat:qa.eat,hobby:qa.hobby||[],work:n(qa.work),sleep:n(qa.sleep),
+    screen:n(qa.screen),grateful:(qa.grateful||"").trim(),food:goals.food===false?null:qa.food,meds:goals.meds===false?null:qa.meds,updatedAt:Date.now()};
   const nx=$("#qnext");nx.disabled=true;
   if(isExample){entries={};isExample=false}
   entries[e.date]=e;
@@ -1120,7 +1277,6 @@ async function finishQuiz(){
   for(const id of qa.care||[])await markCare(id,true);
   for(const id of qa.talked||[])await markPerson(id,true);
   for(const id of qa.hobby||[])await markHobby(id,true);
-  if(qa.tried&&!Object.values(newThings).some(x=>x.date===todayStr()&&x.fromQuiz))await addNew({date:todayStr(),what:(qa.triedWhat||"").trim()||"Something new",fromQuiz:true});
   if(qa.plans&&qa.planDate)await addPlan({date:qa.planDate,time:qa.planTime||"",what:(qa.planWhat||"").trim()});
   $("#qprog").style.width="100%";
   nx.classList.add("done");nx.innerHTML=`<svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Saved`;
@@ -1137,12 +1293,12 @@ const SETUP=[
   {type:"intro",title:"Let's set your goals"},
   {k:"steps",area:"move",title:"What's your daily step goal?",hint:"8,000 is a common target. Pick something realistic for now.",step:500,unit:"steps a day",chips:[5000,6000,8000,10000,12000]},
   {k:"exDays",area:"move",title:"How many workouts a week?",hint:"A workout counts as 20 minutes or more of exercise.",step:1,max:7,unit:"days a week",chips:[1,2,3,4,5]},
-  {k:"study",area:"learn",title:"How much study time a week?",hint:"Time on your course or certification.",step:30,unit:"minutes a week",chips:[60,120,180,240,300]},
+  {k:"study",area:"learn",title:"How much learning time a week?",hint:"Courses, your certification, reading. Anything outside work.",step:30,unit:"minutes a week",chips:[60,120,180,240,300]},
   {k:"plans",area:"connect",title:"How many plans do you want to make each week?",hint:"Calls, dinners, anything you set up with someone.",step:1,max:14,unit:"plans a week",chips:[1,2,3]},
-  {k:"outs",area:"connect",title:"How often do you want to go out with friends?",step:1,max:7,unit:"times a week",chips:[1,2,3]},
   {k:"sleep",area:"recover",title:"How much sleep do you need?",hint:"Most adults do best with 7 to 9 hours.",step:.5,max:12,unit:"hours a night",chips:[6.5,7,7.5,8,8.5]},
+  {k:"screen",area:"recover",title:"What's your daily screen time goal?",hint:"Your current average is in Settings → Screen Time. Aim a little below it.",step:.5,max:16,unit:"hours a day",chips:[2,3,4,5]},
   {k:"checkinTime",type:"time",title:"When should your daily check-in open?",hint:"Pick a time near the end of your day. It opens on its own after this, and you can change it in Settings."},
-  {type:"care",area:"care",title:"Which self-care do you want to track?",hint:"You can change how often each one is due, or add your own, in the Care tab."},
+  {type:"care",area:"care",title:"What do you want reminders for?",hint:"Self-care, appointments and refills. You'll only be asked about each one when it's due. Change them anytime in the Life tab."},
   {type:"done",title:"You're all set"}
 ];
 let si=0,sg={},sCare=new Set(),setupShown=false;
@@ -1161,14 +1317,14 @@ function renderS(dir){
   let h=a?`<div class="qarea"><i></i>${a.name}</div>`:"";
   h+=`<h2 class="qtitle" id="stitle">${q.title}</h2>`;
   if(q.type==="intro"){
-    h+=`<p class="qhint">Life Ledger keeps an eye on six parts of your life. Set a target for each so it knows what “on track” means for you.</p>`;
-    h+=`<ul class="alist">${[["Movement","Steps and workouts","var(--move)"],["Connection","Texts, calls, plans and time out","var(--connect)"],["Learning","Course and certification time","var(--learn)"],["Health","Sleep, eating, stress and work hours","var(--recover)"],["Self-care","Haircuts, nails, appointments","var(--care)"],["Hobbies","Making time for fun and new things","var(--fun)"]].map(([n,d,c],i)=>`<li class="rise" style="--c:${c};--i:${i+1}"><i></i><div><b>${n}</b><span>${d}</span></div></li>`).join("")}</ul>`;
+    h+=`<p class="qhint">Life Ledger keeps an eye on five parts of your life. Set a target for each so it knows what “on track” means for you.</p>`;
+    h+=`<ul class="alist">${[["Health","Steps, exercise, food, medication, sleep","var(--move)"],["Mental health","Stress, screen time, work hours, gratitude, hobbies","var(--recover)"],["Connection","Friends, family and plans","var(--connect)"],["Learning","Courses, reading, your certification","var(--learn)"],["Self-care","Haircuts, sheets, a tidy room, appointments","var(--care)"]].map(([n,d,c],i)=>`<li class="rise" style="--c:${c};--i:${i+1}"><i></i><div><b>${n}</b><span>${d}</span></div></li>`).join("")}</ul>`;
   }else if(q.type==="time"){
     h+=`<input class="inp" type="time" id="stime" value="${sg.checkinTime||"20:00"}" style="font-size:1.6rem;text-align:center;min-height:64px;background:var(--surface);box-shadow:var(--shadow)"><div class="chips">${["18:00","19:00","20:00","21:00"].map(t=>`<button type="button" data-v="${t}" aria-pressed="${(sg.checkinTime||"20:00")===t}">${fmtTime(t)}</button>`).join("")}</div>`;
   }else if(q.type==="care"){
     h+=`<div class="chips">${care.map(t=>`<button type="button" data-id="${esc(t.id)}" aria-pressed="${sCare.has(t.id)}">${esc(t.name)}</button>`).join("")}</div>`;
   }else if(q.type==="done"){
-    const sum=[["Steps",Number(sg.steps).toLocaleString()+" a day","move"],["Workouts",sg.exDays+" a week","move"],["Study",sg.study+" min a week","learn"],["Plans",sg.plans+" a week","connect"],["Time out",sg.outs+" a week","connect"],["Sleep",sg.sleep+" h a night","recover"],["Check-in",fmtTime(sg.checkinTime||"20:00"),"recover"],["Self-care",sCare.size+" item"+(sCare.size===1?"":"s"),"care"]];
+    const sum=[["Steps",Number(sg.steps).toLocaleString()+" a day","move"],["Workouts",sg.exDays+" a week","move"],["Learning",sg.study+" min a week","learn"],["Plans",sg.plans+" a week","connect"],["Screen time",sg.screen+" h a day","recover"],["Sleep",sg.sleep+" h a night","recover"],["Check-in",fmtTime(sg.checkinTime||"20:00"),"recover"],["Reminders",sCare.size+" item"+(sCare.size===1?"":"s"),"care"]];
     h+=`<p class="qhint">Change these anytime under Goals in the Week tab.</p><div class="review">${sum.map(([k,v,ar])=>`<button type="button" tabindex="-1" style="--rc:${AREA_C[ar].c};cursor:default"><span>${k}</span><span class="rv">${v}</span></button>`).join("")}</div>`;
   }else{
     const v=sg[q.k];
@@ -1215,7 +1371,7 @@ $("#resetCancel").onclick=()=>{$("#resetConfirm").hidden=true;$("#resetBtn").hid
 $("#resetGo").onclick=async()=>{
   const go=$("#resetGo");go.disabled=true;
   try{await store.resetAll()}catch(e){go.disabled=false;toast("Couldn't erase everything. Try again.");return}
-  entries={};plans={};people=[];reviews={};hobbies=[];newThings={};goals={...DEFAULT_GOALS};care=CARE_DEFAULTS.map(([name,every],i)=>({id:"def"+i,name,every,last:null,order:i}));careSaved=false;
+  entries={};plans={};people=[];reviews={};hobbies=[];newThings={};goals={...DEFAULT_GOALS};care=careDefaults();careSaved=false;
   try{localStorage.removeItem(QKEY)}catch(e){}
   go.disabled=false;$("#resetConfirm").hidden=true;$("#resetBtn").hidden=false;
   setupShown=false;renderAll();show("focus");toast("All data erased");maybeSetup();
@@ -1224,7 +1380,8 @@ $("#resetGo").onclick=async()=>{
 /* ---------- stress patterns ---------- */
 const CAUSE_GROUPS=[["Work",["Meetings","Deadlines","Workload","A person at work","Long hours","Unclear priorities","Interruptions"]],["Life",["Money","Family","Relationships","Health","Too much on","Poor sleep","Something else"]]];
 const CAUSES=CAUSE_GROUPS.flatMap(g=>g[1]);const WORK_CAUSES=new Set([...CAUSE_GROUPS[0][1],"A person"]);
-function causeChips(sel){return CAUSE_GROUPS.map(([g,l])=>`<span class="flabel" style="margin-top:4px">${g}</span><div class="chips left">${l.map(c=>`<button type="button" data-v="${c}" data-id="${c}" aria-pressed="${sel.includes(c)}">${c}</button>`).join("")}</div>`).join("")}
+function allCauses(){return [...CAUSES,...(goals.customCauses||[])]}
+function causeChips(sel){return [...CAUSE_GROUPS,...((goals.customCauses||[]).length?[["Yours",goals.customCauses]]:[])].map(([g,l])=>`<span class="flabel" style="margin-top:4px">${g}</span><div class="chips left">${l.map(c=>`<button type="button" data-v="${c}" data-id="${c}" aria-pressed="${sel.includes(c)}">${c}</button>`).join("")}</div>`).join("")}
 const CAUSE_TIPS={"Meetings":"Try blocking focus time in your calendar, or asking which meetings you can skip.","Deadlines":"Try flagging risks earlier, or asking for more lead time on the next one.","Workload":"Worth a conversation with your manager about priorities and what can wait.","A person":"Think about whether a direct conversation, or your manager's help, could change things.","Long hours":"Set a hard stop time and protect it at least three days this week.","Unclear priorities":"Ask your manager to rank your top three priorities for the week.","Interruptions":"Try a do-not-disturb block for your most important work each day.","Outside work":"Work may not be the main issue. Go easy on yourself and look after the basics.","A person at work":"Think about whether a direct conversation, or your manager's help, could change things.","Money":"Write down the one money worry that's loudest, and one small step you can take on it this week.","Family":"Family stress is real. Make sure you're also getting time that's just for you.","Relationships":"If something needs saying, a calm conversation usually beats carrying it around.","Health":"Don't sit on it. Book the appointment or make the call this week.","Too much on":"Look at the week ahead and drop or postpone one thing. Saying no counts.","Poor sleep":"Sleep feeds everything else. Try a fixed bedtime and no screens for the last 30 minutes.","Something else":"Try writing down what's on your mind for five minutes. Naming it often takes the edge off."};
 function stressPattern(daysBack){
   const from=addDays(todayStr(),-daysBack+1),hard=Object.values(entries).filter(e=>e&&e.date>=from&&n(e.stress)>=4);
@@ -1294,6 +1451,7 @@ function personStatus(p){
 const peopleSorted=()=>[...people].sort((a,b)=>personStatus(a).sort-personStatus(b).sort||a.name.localeCompare(b.name));
 function multiOpts(q){
   if(q.src==="care")return careSorted().map(t=>({id:t.id,label:t.name,due:isDue(t)}));
+  if(q.src==="duecare")return careSorted().filter(isDue).map(t=>({id:t.id,label:t.name,due:careStatus(t).st==="overdue"}));
   if(q.src==="hobbies")return hobbiesSorted().map(h=>({id:h.id,label:h.name,due:hobbyStatus(h).st==="overdue"}));
   if(q.src==="people")return peopleSorted().map(p=>({id:p.id,label:p.name,due:["overdue","soon"].includes(personStatus(p).st)}));
   return CAUSES.map(c=>({id:c,label:c,due:false}));
@@ -1553,8 +1711,7 @@ function show(v){
   if(v==="checkin"){loadForm(false);renderEarly()}
   if(v==="focus")renderFocus();
   if(v==="week"){renderWeek();renderProgress();renderInsights();renderStress();renderReviewBits()}
-  if(v==="people")renderPeople();
-  if(v==="care")showSub(careSub);
+  if(v==="life")renderSection();
   if(v==="focus")renderCareFocus();
   document.querySelectorAll("#view-"+v+" .rise").forEach(replay);
   window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});
@@ -1562,7 +1719,7 @@ function show(v){
 document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{if(b.dataset.view==="checkin"&&shouldQuiz()&&afterCheckinTime()){openQuiz();return}if(b.dataset.view!==view)show(b.dataset.view)});
 
 let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200)}
-function renderAll(){renderHobbies();renderPeople();renderInsights();renderStress();renderReviewBits();$("#todayCta").hidden=!!entries[todayStr()]||!afterCheckinTime();{const st=$("#set-time");if(st&&document.activeElement!==st)st.value=goals.checkinTime||"20:00"}renderEarly();renderProgress();renderFocus();renderCare();renderCareFocus();renderWeek();renderCalendar();if(view==="checkin"&&!$("#saveBtn").classList.contains("done"))loadForm(false)}
+function renderAll(){if(view==="life")renderSection();renderHobbies();renderPeople();renderInsights();renderStress();renderReviewBits();$("#todayCta").hidden=!!entries[todayStr()]||!afterCheckinTime();{const st=$("#set-time");if(st&&document.activeElement!==st)st.value=goals.checkinTime||"20:00"}renderEarly();renderProgress();renderFocus();renderCare();renderCareFocus();renderWeek();renderCalendar();if(view==="checkin"&&!$("#saveBtn").classList.contains("done"))loadForm(false)}
 
 /* ---------- Claude read ---------- */
 async function setupAI(){
@@ -1595,7 +1752,17 @@ function localStore(){
   const persist=()=>{try{localStorage.setItem(K,JSON.stringify({entries:isExample?{}:entries,goals,plans,people,reviews,hobbies,newThings,care:careSaved?care:undefined}))}catch(e){}};
   return {saveDay:async()=>persist(),saveGoals:async()=>persist(),savePlan:async()=>persist(),deletePlan:async()=>persist(),saveCare:async()=>persist(),deleteCare:async()=>persist(),savePerson:async()=>persist(),deletePerson:async()=>persist(),saveReview:async()=>persist(),saveHobby:async()=>persist(),deleteHobby:async()=>persist(),saveNew:async()=>persist(),deleteNew:async()=>persist(),resetAll:async()=>{try{localStorage.removeItem(K)}catch(e){}}};
 }
-function applyLoaded(){isExample=false;renderAll();maybeSetup();maybeAutoQuiz()}
+let migrated=false;
+async function migrateV2(){
+  if(migrated||!goals.setup||goals.v2)return;migrated=true;
+  const add=[["Shave",3,"self",/shav/i],["Clean room",7,"self",/clean.*room|tidy/i],["Prescription refill",30,"health",/refill|prescription/i]];
+  for(const [name,every,cat,re] of add)if(!care.some(t=>re.test(t.name)))care.push({id:"m"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),name,every,cat,last:null,log:[],order:care.length});
+  care.forEach(t=>{t.cat=catOf(t);if(!t.log)t.log=t.last?[t.last]:[]});
+  goals={...DEFAULT_GOALS,...goals,v2:true};
+  careSaved=false;try{await ensureCareSaved();await store.saveGoals(goals)}catch(e){}
+  renderAll();
+}
+function applyLoaded(){isExample=false;renderAll();maybeSetup();maybeAutoQuiz();migrateV2()}
 function setStatus(t,on){$("#status").textContent=t;$("#sync").classList.toggle("on",!!on)}
 async function init(){
   isExample=false;entries={};renderAll();movePill();
