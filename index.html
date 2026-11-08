@@ -24,8 +24,8 @@
   --fg:#0E0F14; --muted:#6C6F7B; --faint:#A3A6B1;
   --accent:#0E0F14; --accent-fg:#FFFFFF;
   --glass:rgba(255,255,255,.72); --shadow:0 1px 2px rgba(15,15,30,.04),0 8px 24px rgba(15,15,30,.06);
-  --move:#FF7A1A; --connect:#2E7BFF; --learn:#9B5CFF; --recover:#12B886;
-  --ok:#12B886; --care:#F0458A; --bad:#E5484D; --fun:#E0A100;
+  --move:#E5322D; --connect:#1D5BFF; --learn:#14A44D; --recover:#E3A400;
+  --ok:#14A44D; --care:#7B3FF2; --bad:#E5322D; --fun:#F26B1D;
   --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --round:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
@@ -35,12 +35,12 @@
   --bg:#000000; --surface:#15161B; --surface-2:#1C1D23; --sunken:#24252D; --line:rgba(255,255,255,.07);
   --fg:#F4F5F8; --muted:#8E909C; --faint:#5C5E69; --accent:#F4F5F8; --accent-fg:#000000;
   --glass:rgba(28,29,35,.72); --shadow:0 0 0 1px rgba(255,255,255,.04);
-  --move:#FF8A33; --connect:#4C8DFF; --learn:#AE7BFF; --recover:#2FD39E; --ok:#2FD39E; --care:#FF6BA6; --bad:#FF6369; --fun:#FFC93C; color-scheme:dark}}
+  --move:#FF4B44; --connect:#4D86FF; --learn:#35D07A; --recover:#FFCC1A; --ok:#35D07A; --care:#A47BFF; --bad:#FF5A52; --fun:#FF8A3D; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#000000; --surface:#15161B; --surface-2:#1C1D23; --sunken:#24252D; --line:rgba(255,255,255,.07);
   --fg:#F4F5F8; --muted:#8E909C; --faint:#5C5E69; --accent:#F4F5F8; --accent-fg:#000000;
   --glass:rgba(28,29,35,.72); --shadow:0 0 0 1px rgba(255,255,255,.04);
-  --move:#FF8A33; --connect:#4C8DFF; --learn:#AE7BFF; --recover:#2FD39E; --ok:#2FD39E; --care:#FF6BA6; --bad:#FF6369; --fun:#FFC93C; color-scheme:dark}
+  --move:#FF4B44; --connect:#4D86FF; --learn:#35D07A; --recover:#FFCC1A; --ok:#35D07A; --care:#A47BFF; --bad:#FF5A52; --fun:#FF8A3D; color-scheme:dark}
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%}
@@ -268,6 +268,57 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
 .coming{display:flex;align-items:center;gap:10px;font-size:.9rem;padding-top:10px;border-top:.5px solid var(--line)}
 .coming .pdate{width:44px;flex-shrink:0}
 .reveal{animation:rise .35s var(--ease) both}
+.cxlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.cxlist li{display:grid;grid-template-columns:12px minmax(0,1fr) auto 32px;gap:12px;align-items:center;padding:10px 0;border-top:.5px solid var(--line)}
+.cxlist li:first-child{border-top:0}
+.cxlist .dt{width:12px;height:12px;border-radius:50%;background:var(--c)}
+.cxlist .nm{font-weight:600;font-size:.95rem;overflow-wrap:anywhere}
+.cxlist .sub{font-size:.8rem;color:var(--muted)}
+.gb{font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:10px;white-space:nowrap}
+.gb.good{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.gb.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.areapick{display:flex;flex-wrap:wrap;gap:8px}
+.areapick button{border:0;border-radius:18px;padding:9px 13px;background:var(--surface-2);font:600 .88rem var(--font);display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--fg);transition:background .2s,color .2s,transform .2s var(--spring)}
+.areapick button i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.areapick button[aria-pressed="true"]{background:var(--c);color:#fff}
+.areapick button[aria-pressed="true"] i{background:#fff}
+.areapick button:active{transform:scale(.95)}
+.gbpick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gbpick button{border:0;border-radius:14px;padding:12px;background:var(--surface-2);font:600 .92rem var(--font);cursor:pointer;color:var(--fg);text-align:left;transition:background .2s,color .2s}
+.gbpick button small{display:block;font-weight:500;font-size:.78rem;color:var(--muted);margin-top:2px}
+.gbpick button[data-v="good"][aria-pressed="true"]{background:var(--ok);color:#fff}
+.gbpick button[data-v="bad"][aria-pressed="true"]{background:var(--bad);color:#fff}
+.gbpick button[aria-pressed="true"] small{color:rgba(255,255,255,.85)}
+.insgrp{display:flex;flex-direction:column;gap:10px}
+.insgrp+.insgrp{margin-top:6px;padding-top:14px;border-top:.5px solid var(--line)}
+.fix{display:grid;gap:6px;padding:12px 14px;border-radius:16px;background:var(--surface-2);position:relative;overflow:hidden}
+.fix::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--c)}
+.fx-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.fx-h b{font-weight:700;font-size:.97rem;line-height:1.3}
+.fx-h .tag{flex-shrink:0;font-size:.72rem;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);padding:3px 8px;border-radius:10px;white-space:nowrap}
+.fix p{margin:0;font-size:.88rem;color:var(--muted);line-height:1.45}
+.fx-s{font-size:.9rem;line-height:1.45}
+.fx-s span{display:inline-block;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--c);margin-right:6px}
+.mini{justify-self:start;border:0;border-radius:12px;background:var(--surface);box-shadow:var(--shadow);font:600 .82rem var(--font);padding:8px 12px;cursor:pointer;color:var(--fg);transition:transform .2s var(--spring)}
+.mini:active{transform:scale(.95)}
+.mini[disabled]{opacity:.6;cursor:default}
+.link{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;font-size:.93rem;line-height:1.45}
+.link .ar{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.7rem;font-weight:800;color:#fff;background:var(--c);margin-top:1px}
+.link small{display:block;color:var(--muted);font-size:.84rem;margin-top:2px}
+.hright{display:flex;align-items:center;gap:10px;padding-bottom:2px}
+.hright .sync{padding-bottom:0}
+.gear{width:38px;height:38px;border-radius:50%;border:0;background:var(--sunken);color:var(--fg);display:grid;place-items:center;cursor:pointer;transition:transform .3s var(--spring),background .2s}
+.gear svg{width:20px;height:20px}
+.gear:active{transform:rotate(45deg) scale(.9)}
+.gear[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.quizbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-direction:row}
+.quizbar b{display:block;font-family:var(--display);font-size:1.05rem;letter-spacing:-.01em}
+.quizbar span{font-size:.85rem;color:var(--muted)}
+.quizbar .btn{width:auto;flex-shrink:0;padding:12px 18px}
+.navlinks{display:flex;flex-direction:column}
+.navlinks a{display:flex;justify-content:space-between;align-items:center;padding:12px 2px;border-top:.5px solid var(--line);color:var(--fg);text-decoration:none;font-weight:600;font-size:.95rem;cursor:pointer}
+.navlinks a:first-child{border-top:0}
+.navlinks a::after{content:"›";color:var(--faint);font-size:1.3rem;line-height:1}
 .secnav{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px;-webkit-overflow-scrolling:touch}
 .secnav::-webkit-scrollbar{display:none}
 .secnav button{flex-shrink:0;border:0;border-radius:18px;padding:9px 14px;background:var(--surface);box-shadow:var(--shadow);font:600 .9rem var(--font);display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);transition:background .25s,color .25s,transform .2s var(--spring)}
@@ -395,7 +446,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
 
 <header class="top"><div class="in">
   <div><div class="date" id="todayLine"></div><h1 id="viewTitle">Focus</h1></div>
-  <div class="sync" id="sync"><i></i><span id="status">Connecting</span></div>
+  <div class="hright"><div class="sync" id="sync"><i></i><span id="status">Connecting</span></div><button type="button" class="gear" id="gearBtn" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
 </div></header>
 
 <main class="stage">
@@ -416,8 +467,8 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       <ul class="clist" id="careDue"></ul>
     </div>
     <div class="card rise" id="insightFocus" style="--i:5" hidden>
-      <h2>From your data</h2>
-      <ul class="ins" id="insightTop"></ul>
+      <div class="calhead"><h2>From your data</h2><button type="button" class="mini" id="insMore">All insights</button></div>
+      <div id="insightTop" class="insgrp"></div>
     </div>
     <div class="card rise" style="--i:5">
       <h2>Pay attention to</h2>
@@ -429,7 +480,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
 
   <!-- CHECK-IN -->
   <section id="view-checkin" class="view" hidden>
-    <div class="banner reveal" id="earlyNote" hidden style="justify-content:space-between"><span id="earlyTxt"></span><button type="button" class="skip" id="earlyBtn" style="flex-shrink:0">Start now</button></div>
+    <div class="card quizbar rise" id="quizBar"><div><b id="qbTitle">Daily check-in</b><span id="qbSub"></span></div><button type="button" class="btn" id="qbBtn">Start quiz</button></div>
     <div class="daynav">
       <button type="button" class="icon-btn" id="prevDay" aria-label="Previous day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
       <div class="daylabel"><span id="dayLabel"></span></div>
@@ -485,6 +536,10 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
           <div class="field"><label for="f-study">Learning outside work<small>Minutes · courses, reading</small></label><div class="stepper" data-step="15"><button type="button" data-d="-1" aria-label="Fewer">−</button><input id="f-study" inputmode="numeric" value="0"><button type="button" data-d="1" aria-label="More">+</button></div></div>
         </div>
       </div>
+      <div class="card" id="cxFormCard" hidden>
+        <div class="sec"><span class="chip" style="background:var(--fg)"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--bg)"><path d="M12 5v14M5 12h14"/></svg></span><h2>Your own items</h2></div>
+        <div class="rows" id="cxFormRows"></div>
+      </div>
       <p class="tip" style="padding-inline:4px">Self-care, appointments and refills are tracked in the Life tab. Your check-in only asks about them when they're due.</p>
       <button class="btn" type="submit" id="saveBtn">Save check-in</button>
     </form>
@@ -503,7 +558,7 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
     <div class="pane" id="pane-move">
       <div class="card rise" style="--i:1;--areac:var(--move);--qc:var(--move)">
         <h2>Appointments &amp; refills</h2>
-        <div class="caresum" id="apptSum" style="--care:var(--move)"></div>
+        <div class="caresum" id="apptSum"></div>
         <ul class="clist" id="alistCare"></ul>
         <button type="button" class="btn ghost" id="apAddBtn">Add an appointment or refill</button>
         <div class="planform reveal" id="apAdd" hidden>
@@ -608,8 +663,8 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       <button type="button" class="btn ghost" id="reviewBtn">Start weekly review</button>
     </div>
     <div class="card rise" style="--i:1">
-      <h2>Insights</h2>
-      <ul class="ins" id="insightList"></ul>
+      <div class="calhead"><h2>Insights</h2><span class="tip" id="insBasis"></span></div>
+      <div id="insightList"></div>
     </div>
     <div class="card rise" style="--i:1">
       <div class="calhead"><h2>Progress</h2><span class="streak" id="streak" hidden></span></div>
@@ -621,24 +676,37 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       <div class="label">Daily balance</div>
       <div class="gridwrap"><div class="grid" id="grid"></div></div>
     </div>
-    <div class="card rise" style="--i:4">
-      <h2>Daily reminder</h2>
-      <p class="tip">Web pages can't send lock-screen notifications on iPhone, so let Reminders do it:</p>
-      <ol class="steps">
-        <li>Open <b>Reminders</b> and add “Life Ledger check-in”.</li>
-        <li>Tap <b>ⓘ</b>, turn on <b>Date</b> and <b>Time</b> (e.g. 9:00 PM), and set <b>Repeat</b> to Daily.</li>
-        <li>When it pops up, open Life Ledger from your Home Screen.</li>
-      </ol>
-      <p class="tip">Always open the app from its Home Screen icon. Safari keeps a separate copy of your data.</p>
+  </section>
+  <section id="view-settings" class="view" hidden>
+    <div class="card rise" style="--i:0">
+      <div class="navlinks">
+        <a data-jump="setCard">Check-in &amp; questions</a>
+        <a data-jump="customCard">Your own items</a>
+        <a data-jump="goalCard">Goals</a>
+        <a data-jump="remCard">Lock-screen reminder</a>
+        <a data-jump="backupCard">Your data</a>
+      </div>
     </div>
-    <div class="card rise" style="--i:5">
-      <h2>Settings</h2>
+    <div class="card rise" style="--i:1" id="setCard">
+      <h2>Check-in &amp; questions</h2>
       <div class="field" style="border-top:0"><label for="set-time">Daily check-in time<small>The check-in opens on its own after this time</small></label><input class="inp" type="time" id="set-time" style="width:auto;min-width:130px;flex-shrink:0"></div>
       <p class="tip">Set your Reminders alert for the same time so you get a nudge on your lock screen.</p>
       <div class="field"><label for="set-meds">Ask about medication<small>Daily "Did you take your medication?"</small></label><span class="toggle"><input type="checkbox" id="set-meds"><span></span></span></div>
       <div class="field"><label for="set-food">Ask about food logging<small>Daily "Did you log all your food?"</small></label><span class="toggle"><input type="checkbox" id="set-food"><span></span></span></div>
     </div>
-    <div class="card rise" style="--i:5">
+    <div class="card rise" style="--i:2" id="customCard">
+      <h2>Your own items</h2>
+      <p class="tip">Add anything else you want to track, like meditating, drinking alcohol or getting outside. Each one becomes a yes/no question in your daily check-in, in the section you choose.</p>
+      <ul class="cxlist" id="cxList"></ul>
+      <button type="button" class="btn ghost" id="cxAddBtn">Add an item</button>
+      <div class="planform reveal" id="cxAdd" hidden>
+        <div><label class="flabel" for="cx-name">What is it?</label><input class="inp" id="cx-name" maxlength="40" placeholder="Meditated, Had a drink, Got outside…"></div>
+        <div><span class="flabel">Which part of life?</span><div class="areapick" id="cx-area"></div></div>
+        <div><span class="flabel">Is it a good or bad thing?</span><div class="gbpick" id="cx-gb"><button type="button" data-v="good" aria-pressed="true">Good<small>Adds points to the ring</small></button><button type="button" data-v="bad" aria-pressed="false">Bad<small>Takes points away</small></button></div></div>
+        <div class="btnrow"><button type="button" class="btn ghost" id="cx-cancel">Cancel</button><button type="button" class="btn" id="cx-save">Add</button></div>
+      </div>
+    </div>
+    <div class="card rise" style="--i:2" id="goalCard">
       <h2>Goals</h2>
       <div class="rows" style="--areac:var(--fg)">
         <div class="field"><label for="g-steps">Daily steps</label><div class="stepper" data-step="500"><button type="button" data-d="-1" aria-label="Lower">−</button><input id="g-steps" inputmode="numeric"><button type="button" data-d="1" aria-label="Higher">+</button></div></div>
@@ -652,14 +720,24 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
       </div>
       <button class="btn ghost" type="button" id="saveGoals">Save goals</button>
     </div>
-    <div class="card rise" style="--i:6">
+    <div class="card rise" style="--i:3" id="remCard">
+      <h2>Lock-screen reminder</h2>
+      <p class="tip">Web pages can't send lock-screen notifications on iPhone, so let Reminders do it:</p>
+      <ol class="steps">
+        <li>Open <b>Reminders</b> and add “Life Ledger check-in”.</li>
+        <li>Tap <b>ⓘ</b>, turn on <b>Date</b> and <b>Time</b> (e.g. 9:00 PM), and set <b>Repeat</b> to Daily.</li>
+        <li>When it pops up, open Life Ledger from your Home Screen.</li>
+      </ol>
+      <p class="tip">Always open the app from its Home Screen icon. Safari keeps a separate copy of your data.</p>
+    </div>
+    <div class="card rise" style="--i:6" id="backupCard">
       <h2>Backup</h2>
       <p class="tip">Your data lives only on this phone. Save a backup now and then, in Files or iCloud Drive, so you can restore it if you reinstall the app.</p>
       <div class="btnrow"><button type="button" class="btn ghost" id="exportBtn">Save backup</button><button type="button" class="btn ghost" id="importBtn">Restore</button></div>
       <input type="file" id="importFile" accept="application/json,.json" hidden>
       <div id="importConfirm" class="planform reveal" hidden><p class="tip" id="importMsg"></p><div class="btnrow"><button type="button" class="btn ghost" id="importCancel">Cancel</button><button type="button" class="btn" id="importGo">Replace my data</button></div></div>
     </div>
-    <div class="card rise" style="--i:7">
+    <div class="card rise" style="--i:5" id="dataCard">
       <h2>Start over</h2>
       <p class="tip">Erase every check-in, plan, self-care item and goal, and set up the app from scratch.</p>
       <button type="button" class="btn warn" id="resetBtn">Erase all my data</button>
@@ -668,15 +746,15 @@ textarea:focus{outline:2px solid var(--fg);outline-offset:-2px}
         <div class="btnrow"><button type="button" class="btn ghost" id="resetCancel">Cancel</button><button type="button" class="btn warn-solid" id="resetGo">Erase everything</button></div>
       </div>
     </div>
-    <p class="tip" style="text-align:center;padding-block:4px">Life Ledger · version 1.8</p>
+    <p class="tip" style="text-align:center;padding-block:4px">Life Ledger · version 2.1</p>
   </section>
 </main>
 
 <div class="tabbar"><nav role="tablist" id="tabs">
   <span class="pill" id="pill"></span>
   <button role="tab" data-view="focus" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>Focus</button>
-  <button role="tab" data-view="checkin" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Check in</button>
   <button role="tab" data-view="life" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4"/></svg>Life</button>
+  <button role="tab" data-view="checkin" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Check in</button>
   <button role="tab" data-view="week" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Week</button>
 </nav></div>
 <div class="toast" id="toast" role="status"></div>
@@ -747,8 +825,8 @@ const AREAS=[
   {k:"connect",name:"Connection",short:"Connect",c:"var(--connect)"},
   {k:"learn",name:"Learning",short:"Learning",c:"var(--learn)"},
   {k:"care",name:"Self-care",short:"Self-care",c:"var(--care)"}];
-const VIEWS=["focus","checkin","life","week"];
-const TITLES={focus:"Focus",checkin:"Check in",life:"Life",week:"Week"};
+const VIEWS=["focus","life","checkin","week"];
+const TITLES={focus:"Focus",checkin:"Check in",life:"Life",week:"Week",settings:"Settings"};
 const DEFAULT_GOALS={steps:8000,exDays:3,study:180,plans:1,outs:1,sleep:7.5,newPerMonth:2,checkinTime:"20:00",screen:3,workMax:9,meds:true,food:true,customCauses:[]};
 let plans={},people=[],reviews={};
 const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -773,13 +851,17 @@ function screenScore(h){const g=goals.screen||3;return h<=g?1:clamp(1-(h-g)/g)}
 function workScore(h){const g=goals.workMax||9;return h<=g?1:clamp(1-(h-g)/4)}
 function dayScores(e,date){
   if(!e)return null;
-  return {
+  const o={
     move:partsAvg([clamp(n(e.steps)/goals.steps),n(e.ex)>=20?1:n(e.ex)/20,goals.food!==false&&hasVal(e.food)?(e.food?1:0):null,n(e.eat)?(n(e.eat)-1)/4:null,goals.meds!==false&&hasVal(e.meds)?(e.meds?1:0):null,n(e.sleep)?clamp(n(e.sleep)/goals.sleep):null]),
     recover:partsAvg([n(e.stress)?(5-n(e.stress))/4:null,hasVal(e.screen)?screenScore(n(e.screen)):null,n(e.work)>0?workScore(n(e.work)):null,hasVal(e.grateful)?(e.grateful?1:0):null]),
     connect:partsAvg([e.plans?1:0,contactDay(e)?1:0]),
     learn:n(e.study)>0?clamp(n(e.study)/(goals.study/4)):0,
     care:careScoreAt(date||e.date,"self")};
+  for(const c of customItems()){const v=e.custom&&e.custom[c.id];if(v==null)continue;if(o[c.area]==null)o[c.area]=.5;o[c.area]=clamp(o[c.area]+(v?(c.good?CX_W:-CX_W):0))}
+  return o;
 }
+const CX_W=.15;
+function customItems(){return Array.isArray(goals.custom)?goals.custom:[]}
 function windowDays(off){const t=todayStr(),a=[];for(let i=6;i>=0;i--)a.push(addDays(t,-i-7*off));return a}
 function weekSummary(off=0){
   const win=windowDays(off),logged=win.map(d=>entries[d]).filter(Boolean),end=win[6];
@@ -798,6 +880,9 @@ function weekSummary(off=0){
     connect:partsAvg([clamp(s.plans/goals.plans),s.contactDays/s.logged,off===0?peopleOnTrack():null]),
     learn:clamp(s.studyMin/goals.study),
     care:careScoreAt(end,"self")};
+  s.custom={};
+  for(const c of customItems()){const asked=logged.filter(e=>e.custom&&hasVal(e.custom[c.id])),yes=asked.filter(e=>e.custom[c.id]).length;s.custom[c.id]={yes,asked:asked.length};
+    if(!asked.length)continue;if(s.scores[c.area]==null)s.scores[c.area]=.5;s.scores[c.area]=clamp(s.scores[c.area]+(c.good?1:-1)*CX_W*(yes/asked.length))}
   return s;
 }
 function daysSince(pred){const t=todayStr();for(let i=0;i<60;i++){const d=addDays(t,-i);if(entries[d]&&pred(entries[d]))return i}return null}
@@ -922,10 +1007,10 @@ async function ensureCareSaved(){if(careSaved)return;careSaved=true;try{await Pr
 async function saveCareItem(t){await ensureCareSaved();try{await store.saveCare(t)}catch(e){toast("Couldn't save that change")}}
 async function markCare(id,quiet){const t=care.find(x=>x.id===id);if(!t)return;t.last=todayStr();t.log=[...new Set([...(t.log||[]),t.last])].slice(-40);if(!quiet){renderCare();renderCareFocus()}await saveCareItem(t);if(!quiet)toast(`${t.name}: done`)}
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-function ringColor(st,cat){return st==="overdue"?"var(--bad)":st==="soon"?"var(--fun)":st==="new"?"var(--faint)":cat==="health"?"var(--move)":"var(--care)"}
+function ringColor(st,cat){return st==="overdue"?"var(--bad)":st==="soon"?"var(--fun)":st==="new"?"var(--faint)":"var(--ok)"}
 function careItem(t,editable,i){
   const s=careStatus(t),C=2*Math.PI*16,li=document.createElement("li");li.className="citem rise";li.style.setProperty("--i",i);
-  li.innerHTML=`<button type="button" class="crow" aria-expanded="false"><svg class="cring" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="var(--sunken)"/><circle class="arc" cx="20" cy="20" r="16" stroke="${ringColor(s.st,catOf(t))}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><div style="min-width:0"><div class="cn"></div><div class="cs ${s.st}"></div></div></button><button type="button" class="cdone" aria-label="Mark done today" ${catOf(t)==="health"?'style="background:color-mix(in srgb,var(--move) 14%,transparent);color:var(--move)"':""}>${CHECK}</button>`;
+  li.innerHTML=`<button type="button" class="crow" aria-expanded="false"><svg class="cring" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" stroke="var(--sunken)"/><circle class="arc" cx="20" cy="20" r="16" stroke="${ringColor(s.st,catOf(t))}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg><div style="min-width:0"><div class="cn"></div><div class="cs ${s.st}"></div></div></button><button type="button" class="cdone" aria-label="Mark done today">${CHECK}</button>`;
   li.querySelector(".cn").textContent=t.name;li.querySelector(".cs").textContent=s.txt;
   const arc=li.querySelector(".arc");requestAnimationFrame(()=>requestAnimationFrame(()=>arc.setAttribute("stroke-dashoffset",String(C*(1-Math.max(.001,s.frac))))));
   li.querySelector(".cdone").onclick=e=>{e.currentTarget.classList.add("hit");arc.setAttribute("stroke-dashoffset",String(C*.999));setTimeout(()=>markCare(t.id),reduce?0:420)};
@@ -994,6 +1079,7 @@ function renderSection(){
   document.querySelectorAll("#secnav button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.sec===k)));
   const head=$("#secHead");head.style.setProperty("--areac",a.c);
   const stats=secStats(k,s);
+  if(s)for(const c of customItems().filter(c=>c.area===k)){const st=s.custom[c.id];if(st&&st.asked)stats.push([`${st.yes}/${st.asked}`,c.name+(c.good?"":" (cut back)")])}
   head.innerHTML=`<div class="row"><div><div class="label">This week</div><h2 style="font-size:1.5rem">${a.name}</h2></div><div class="num2">${v==null?"–":Math.round(v*100)}</div></div>
     <div class="bar"><i style="width:0" data-w="${v==null?0:Math.round(v*100)}"></i></div>${s&&v!=null?deltaHtml(s,prev,k):""}
     <p class="tip">${v==null&&k==="care"?"Tap an item below and set when you last did it to start tracking.":SEC_DESC[k]}</p>
@@ -1109,6 +1195,9 @@ function loadForm(animate){
   $("#f-steps").value=n(e.steps);$("#f-ex").value=n(e.ex);$("#f-study").value=n(e.study);
   $("#f-work").value=n(e.work);$("#f-sleep").value=e.sleep!=null?n(e.sleep):goals.sleep;
   $("#f-screen").value=n(e.screen);$("#f-grat").value=e.grateful||"";$("#f-food").checked=!!e.food;$("#f-meds").checked=!!e.meds;
+  {const items=customItems(),box=$("#cxFormRows");$("#cxFormCard").hidden=!items.length;box.innerHTML="";
+    items.forEach(c=>{const d=document.createElement("div");d.className="field";const id="fc-"+c.id;d.innerHTML=`<label for="${id}"><span class="dtl" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${AREA_C[c.area].c};margin-right:8px"></span><span class="nm"></span><small></small></label><span class="toggle"><input type="checkbox" id="${id}"><span></span></span>`;
+      d.querySelector(".nm").textContent=c.name;d.querySelector("small").textContent=`${AREA_C[c.area].name} · ${c.good?"good":"bad"}`;d.querySelector("input").checked=!!(e.custom&&e.custom[c.id]);box.append(d)})}
   $("#row-food").hidden=goals.food===false;$("#row-meds").hidden=goals.meds===false;
   formCauses=Array.isArray(e.causes)?[...e.causes]:[];stressVal=n(e.stress)||3;syncStress();eatVal=n(e.eat);syncEat();wdVal=n(e.workday);syncWd();$("#f-note").value=e.note||"";
   const lab=$("#dayLabel");lab.textContent=cur===todayStr()?"Today":fmtDay(cur);
@@ -1129,6 +1218,7 @@ $("#form").addEventListener("submit",async ev=>{
   ev.preventDefault();
   const prevE=(!isExample&&entries[cur])||{};
   const e={...prevE,date:cur,eat:eatVal||null,quiz:!!prevE.quiz,unread:n($("#f-unread").value),missed:n($("#f-missed").value),plans:$("#f-plans").checked,out:$("#f-out").checked,
+    custom:{...(prevE.custom||{}),...Object.fromEntries(customItems().map(c=>[c.id,!!($("#fc-"+c.id)&&$("#fc-"+c.id).checked)]))},
     screen:n($("#f-screen").value),grateful:$("#f-grat").value.trim().slice(0,120),food:goals.food===false?prevE.food:$("#f-food").checked,meds:goals.meds===false?prevE.meds:$("#f-meds").checked,
     steps:n($("#f-steps").value),ex:n($("#f-ex").value),study:n($("#f-study").value),workday:wdVal||0,stress:stressVal,causes:stressVal>=4?formCauses:[],work:n($("#f-work").value),sleep:n($("#f-sleep").value),
     note:$("#f-note").value.slice(0,500),updatedAt:Date.now()};
@@ -1180,13 +1270,21 @@ const QS=[
 ];
 const AREA_C=Object.fromEntries(AREAS.map(a=>[a.k,a]));AREA_C.fun={k:"fun",name:"Hobbies",c:"var(--fun)"};
 let qi=0,qa={},qBusy=false;
-const AQ=()=>QS.filter(q=>!q.cond||q.cond());
+const cxQ={};
+function customQ(c){const k="cx_"+c.id;const t=c.name.trim();const title=/\?$/.test(t)?t:`${t} today?`;
+  if(!cxQ[c.id]||cxQ[c.id].title!==title||cxQ[c.id].area!==c.area)cxQ[c.id]={k,cid:c.id,area:c.area,type:"yesno",title,hint:c.good?"Something you want more of.":"Something you want less of.",yes:"Yes",no:"No"};
+  return cxQ[c.id]}
+const AQ=()=>{const L=QS.filter(q=>!q.cond||q.cond());
+  for(const c of customItems()){const q=customQ(c);let at=-1;L.forEach((x,i)=>{if(x.area===c.area&&x.type!=="review"&&x.k!=="care")at=i});
+    if(at<0)at=L.findIndex(x=>x.k==="care"||x.type==="review")-1;L.splice(at+1,0,q)}
+  return L};
 function fmtVal(q,v){if(q.type==="line")return v?esc(v.length>16?v.slice(0,15)+"…":v):"Skipped";if(q.type==="multi"){if(!v||!v.length)return"None";if(q.src==="causes")return esc(v[0])+(v.length>1?" +"+(v.length-1):"");if(q.src==="people")return v.length+(v.length===1?" person":" people");if(q.src==="hobbies")return v.length+(v.length===1?" hobby":" hobbies");if(q.src==="duecare")return v.length+" done";return v.length+" done"}if(q.type==="plan")return esc(fmtWhen({date:qa.planDate,time:qa.planTime}));if(q.type==="yesno")return v?"Yes":"No";if(q.type==="scale"){const o=q.opts.find(o=>+o[0]===v);return o?(v?v+" · ":"")+o[1]:""}if(q.type==="text")return v?"Added":"None";if(q.k==="steps")return n(v).toLocaleString();return v+(q.unit==="hours"?" h":q.unit==="minutes"?" min":"")}
 function openQuiz(){
   const t=todayStr();cur=t;
   const e=(!isExample&&entries[t])||{};
   qa={plans:e.plans??null,out:e.out??null,planDate:addDays(t,1),planTime:"",planWhat:"",care:[],talked:Array.isArray(e.talked)?[...e.talked]:[],hobby:Array.isArray(e.hobby)?[...e.hobby]:[],workday:n(e.workday)||null,eat:n(e.eat)||null,causes:Array.isArray(e.causes)?[...e.causes]:[],steps:n(e.steps),ex:n(e.ex),study:n(e.study),
       food:e.food??null,meds:e.meds??null,screen:n(e.screen),grateful:e.grateful||"",stress:n(e.stress)||null,work:n(e.work),sleep:e.sleep!=null?n(e.sleep):goals.sleep};
+  for(const c of customItems())qa["cx_"+c.id]=e.custom&&hasVal(e.custom[c.id])?!!e.custom[c.id]:null;
   qi=0;const qz=$("#quiz");qz.hidden=false;qz.classList.remove("closing");qz.classList.add("open");
   document.body.style.overflow="hidden";renderQ(0);
 }
@@ -1268,7 +1366,7 @@ async function finishQuiz(){
   const prevE=entries[todayStr()]||{};
   const e={...prevE,date:todayStr(),quiz:true,plans:!!qa.plans,out:people.length?(qa.talked||[]).length>0:!!qa.out,talked:qa.talked||[],steps:n(qa.steps),ex:n(qa.ex),
     study:n(qa.study),workday:n(qa.work)>0?n(qa.workday):0,stress:qa.stress,causes:qa.stress>=4?qa.causes:[],eat:qa.eat,hobby:qa.hobby||[],work:n(qa.work),sleep:n(qa.sleep),
-    screen:n(qa.screen),grateful:(qa.grateful||"").trim(),food:goals.food===false?null:qa.food,meds:goals.meds===false?null:qa.meds,updatedAt:Date.now()};
+    screen:n(qa.screen),grateful:(qa.grateful||"").trim(),food:goals.food===false?null:qa.food,meds:goals.meds===false?null:qa.meds,custom:{...(prevE.custom||{}),...Object.fromEntries(customItems().map(c=>[c.id,qa["cx_"+c.id]]).filter(([,v])=>v!=null))},updatedAt:Date.now()};
   const nx=$("#qnext");nx.disabled=true;
   if(isExample){entries={};isExample=false}
   entries[e.date]=e;
@@ -1277,7 +1375,7 @@ async function finishQuiz(){
   for(const id of qa.care||[])await markCare(id,true);
   for(const id of qa.talked||[])await markPerson(id,true);
   for(const id of qa.hobby||[])await markHobby(id,true);
-  if(qa.plans&&qa.planDate)await addPlan({date:qa.planDate,time:qa.planTime||"",what:(qa.planWhat||"").trim()});
+  if(qa.plans&&qa.planDate){const w=(qa.planWhat||"").trim();if(!Object.values(plans).some(p=>p.date===qa.planDate&&(p.what||"")===w&&(p.time||"")===(qa.planTime||"")))await addPlan({date:qa.planDate,time:qa.planTime||"",what:w})}
   $("#qprog").style.width="100%";
   nx.classList.add("done");nx.innerHTML=`<svg class="chk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Saved`;
   setTimeout(()=>closeQuiz(()=>{renderAll();show("checkin");toast("Saved. Adjust anything below.")}),reduce?200:700);
@@ -1297,7 +1395,7 @@ const SETUP=[
   {k:"plans",area:"connect",title:"How many plans do you want to make each week?",hint:"Calls, dinners, anything you set up with someone.",step:1,max:14,unit:"plans a week",chips:[1,2,3]},
   {k:"sleep",area:"recover",title:"How much sleep do you need?",hint:"Most adults do best with 7 to 9 hours.",step:.5,max:12,unit:"hours a night",chips:[6.5,7,7.5,8,8.5]},
   {k:"screen",area:"recover",title:"What's your daily screen time goal?",hint:"Your current average is in Settings → Screen Time. Aim a little below it.",step:.5,max:16,unit:"hours a day",chips:[2,3,4,5]},
-  {k:"checkinTime",type:"time",title:"When should your daily check-in open?",hint:"Pick a time near the end of your day. It opens on its own after this, and you can change it in Settings."},
+  {k:"checkinTime",type:"time",title:"When should your daily check-in open?",hint:"Pick a time near the end of your day. It opens on its own after this, and you can change it in Settings (the gear at the top)."},
   {type:"care",area:"care",title:"What do you want reminders for?",hint:"Self-care, appointments and refills. You'll only be asked about each one when it's due. Change them anytime in the Life tab."},
   {type:"done",title:"You're all set"}
 ];
@@ -1325,7 +1423,7 @@ function renderS(dir){
     h+=`<div class="chips">${care.map(t=>`<button type="button" data-id="${esc(t.id)}" aria-pressed="${sCare.has(t.id)}">${esc(t.name)}</button>`).join("")}</div>`;
   }else if(q.type==="done"){
     const sum=[["Steps",Number(sg.steps).toLocaleString()+" a day","move"],["Workouts",sg.exDays+" a week","move"],["Learning",sg.study+" min a week","learn"],["Plans",sg.plans+" a week","connect"],["Screen time",sg.screen+" h a day","recover"],["Sleep",sg.sleep+" h a night","recover"],["Check-in",fmtTime(sg.checkinTime||"20:00"),"recover"],["Reminders",sCare.size+" item"+(sCare.size===1?"":"s"),"care"]];
-    h+=`<p class="qhint">Change these anytime under Goals in the Week tab.</p><div class="review">${sum.map(([k,v,ar])=>`<button type="button" tabindex="-1" style="--rc:${AREA_C[ar].c};cursor:default"><span>${k}</span><span class="rv">${v}</span></button>`).join("")}</div>`;
+    h+=`<p class="qhint">Change these anytime in Settings (the gear at the top).</p><div class="review">${sum.map(([k,v,ar])=>`<button type="button" tabindex="-1" style="--rc:${AREA_C[ar].c};cursor:default"><span>${k}</span><span class="rv">${v}</span></button>`).join("")}</div>`;
   }else{
     const v=sg[q.k];
     h+=`<div class="qbig"><button type="button" data-d="-1" aria-label="Less">−</button><input id="sin" inputmode="${q.step%1?"decimal":"numeric"}" value="${v}" aria-label="${q.title}"><button type="button" data-d="1" aria-label="More">+</button></div><div class="qunit">${q.unit}</div>`;
@@ -1399,43 +1497,163 @@ function renderStress(){
 }
 
 /* ---------- insights ---------- */
-function fmtMins(m){return m>=60?`${Math.floor(m/60)} h ${m%60?m%60+" min":""}`.trim():`${m} minutes`}
-function insights(){
-  const days=Object.values(entries).filter(e=>e&&e.date>=addDays(todayStr(),-59));if(days.length<7)return[];
-  const avg=a=>a.reduce((x,y)=>x+y,0)/a.length,out=[];
-  const cmp=(A,B,f)=>A.length>=3&&B.length>=3?[avg(A.map(f)),avg(B.map(f))]:null;
-  const st=e=>n(e.stress)||3;let r;
-  r=cmp(days.filter(e=>n(e.ex)>=20),days.filter(e=>n(e.ex)<20),st);
-  if(r&&Math.abs(r[0]-r[1])>=.4)out.push({w:Math.abs(r[0]-r[1])/2,area:"move",t:r[0]<r[1]?`Your stress is ${(r[1]-r[0]).toFixed(1)} points lower on days you exercise.`:`Your stress runs ${(r[0]-r[1]).toFixed(1)} points higher on days you exercise. Workouts may be falling on your hardest days.`});
-  const pairs=days.map(e=>({e,nx:entries[addDays(e.date,1)]})).filter(x=>x.nx&&n(x.e.work)>0&&n(x.nx.sleep)>0);
-  const lg=pairs.filter(x=>n(x.e.work)>=9.5),nm=pairs.filter(x=>n(x.e.work)<9.5);
-  if(lg.length>=3&&nm.length>=3){const d=Math.round((avg(nm.map(x=>n(x.nx.sleep)))-avg(lg.map(x=>n(x.nx.sleep))))*60);if(d>=20)out.push({w:d/60,area:"recover",t:`You sleep ${fmtMins(d)} less after workdays of 9.5 hours or more.`})}
-  r=cmp(days.filter(e=>n(e.sleep)>0&&n(e.sleep)<7),days.filter(e=>n(e.sleep)>=7),st);
-  if(r&&r[0]-r[1]>=.4)out.push({w:(r[0]-r[1])/2,area:"recover",t:`Days feel more stressful after short nights: ${r[0].toFixed(1)} out of 5 under 7 hours of sleep, ${r[1].toFixed(1)} with 7 or more.`});
-  r=cmp(days.filter(e=>n(e.stress)>=4),days.filter(e=>n(e.stress)>0&&n(e.stress)<=2),e=>n(e.study));
-  if(r&&r[1]-r[0]>=10)out.push({w:(r[1]-r[0])/40,area:"learn",t:`You study about ${Math.round(r[1]-r[0])} more minutes on calm days than on stressful ones. Plan study for your easier days.`});
-  r=cmp(days.filter(e=>n(e.eat)>=4),days.filter(e=>n(e.eat)&&n(e.eat)<=2),st);
-  if(r&&r[1]-r[0]>=.4)out.push({w:(r[1]-r[0])/2,area:"recover",t:`Your stress is ${(r[1]-r[0]).toFixed(1)} points lower on days you eat well.`});
-  r=cmp(days.filter(e=>n(e.sleep)>=7&&n(e.eat)),days.filter(e=>n(e.sleep)>0&&n(e.sleep)<7&&n(e.eat)),e=>n(e.eat));
-  if(r&&r[0]-r[1]>=.5)out.push({w:(r[0]-r[1])/2,area:"recover",t:`You eat better after a good night's sleep: ${r[0].toFixed(1)} out of 5, compared with ${r[1].toFixed(1)} after short nights.`});
-  r=cmp(days.filter(e=>(e.hobby||[]).length),days.filter(e=>!(e.hobby||[]).length),st);
-  if(r&&r[1]-r[0]>=.4)out.push({w:(r[1]-r[0])/2,area:"fun",t:`Your stress is ${(r[1]-r[0]).toFixed(1)} points lower on days you make time for a hobby.`});
-  {const wk=days.filter(e=>n(e.workday)>0);r=cmp(wk.filter(e=>n(e.workday)<=2),wk.filter(e=>n(e.workday)>=4),st);
-  if(r&&r[0]-r[1]>=.6)out.push({w:(r[0]-r[1])/2,area:"recover",t:`A rough day at work carries over: your overall stress is ${r[0].toFixed(1)} on bad work days and ${r[1].toFixed(1)} on good ones.`});
-  r=cmp(wk.filter(e=>n(e.sleep)>=7),wk.filter(e=>n(e.sleep)>0&&n(e.sleep)<7),e=>n(e.workday));
-  if(r&&r[0]-r[1]>=.5)out.push({w:(r[0]-r[1])/2,area:"recover",t:`Your work days go better after a good night's sleep: ${r[0].toFixed(1)} out of 5, compared with ${r[1].toFixed(1)}.`});}
-  r=cmp(days.filter(e=>e.out),days.filter(e=>!e.out),st);
-  if(r&&r[1]-r[0]>=.4)out.push({w:(r[1]-r[0])/2,area:"connect",t:`Your stress averages ${(r[1]-r[0]).toFixed(1)} points lower on days you see friends.`});
-  r=cmp(days.filter(e=>n(e.work)>=9.5),days.filter(e=>n(e.work)>0&&n(e.work)<9.5),e=>n(e.steps));
-  if(r&&r[1]-r[0]>=1500)out.push({w:(r[1]-r[0])/4000,area:"move",t:`You walk about ${(Math.round((r[1]-r[0])/100)*100).toLocaleString()} fewer steps on long workdays.`});
+function fmtMins(m){m=Math.round(m);return m>=60?`${Math.floor(m/60)} h ${m%60?m%60+" min":""}`.trim():`${m} minutes`}
+const pl=(k,w)=>`${k} ${w}${k===1?"":"s"}`;
+function recentEntries(days){const from=addDays(todayStr(),-(days-1));return Object.values(entries).filter(e=>e&&e.date>=from).sort((a,b)=>a.date<b.date?-1:1)}
+
+/* -- what helps, what hurts: compares your own days -- */
+const DRIVERS=[
+  {k:"ex",on:"you exercise",test:e=>hasVal(e.ex)?n(e.ex)>=20:null,good:true,fix:"Two 20-minute workouts this week is enough to start."},
+  {k:"sleepGood",on:"you've slept 7+ hours",test:e=>n(e.sleep)?n(e.sleep)>=7:null,good:true,fix:"Get to bed 30 minutes earlier on two nights this week."},
+  {k:"ateWell",on:"you eat well",test:e=>n(e.eat)?n(e.eat)>=4:null,good:true,fix:"Plan tomorrow's lunch tonight so the good option is the easy one."},
+  {k:"grateful",on:"you write down something you're grateful for",test:e=>hasVal(e.grateful)?!!e.grateful:null,good:true,fix:"Keep answering the gratitude question. One word counts."},
+  {k:"hobby",on:"you make time for a hobby",test:e=>hobbies.length&&Array.isArray(e.hobby)?e.hobby.length>0:null,good:true,fix:"Block one hour for a hobby this week like an appointment."},
+  {k:"social",on:"you talk to or see friends",test:e=>contactDay(e),good:true,fix:"Set up one call or coffee this week."},
+  {k:"learned",on:"you do some learning",test:e=>n(e.study)>0,good:true,fix:"Fifteen minutes counts. Try it right after dinner."},
+  {k:"longWork",on:"you work long hours",test:e=>n(e.work)>0?n(e.work)>(goals.workMax||9):null,good:false,fix:"Pick a hard stop time on two days this week and protect it."},
+  {k:"screenHigh",on:"you go over your screen time goal",test:e=>hasVal(e.screen)&&n(e.screen)>0?n(e.screen)>(goals.screen||3):null,good:false,fix:"Leave your phone in another room for the first hour after work."},
+  {k:"roughWork",on:"work is rough",test:e=>n(e.workday)>0?n(e.workday)<=2:null,good:false,fix:"After a rough day, do one thing that resets you before the evening: a walk, the gym or a call."}
+];
+const OUTCOMES=[
+  {k:"stress",get:e=>n(e.stress)||null,better:-1,scale:1,fmt:d=>`your stress is ${Math.abs(d).toFixed(1)} points ${d<0?"lower":"higher"}`,skip:[]},
+  {k:"sleep",lag:1,get:e=>n(e.sleep)||null,better:1,scale:.5,fmt:d=>`you sleep ${fmtMins(Math.abs(d)*60)} ${d>0?"more":"less"} that night`,skip:["sleepGood"]},
+  {k:"eat",get:e=>n(e.eat)||null,better:1,scale:.6,fmt:d=>`your eating rates ${Math.abs(d).toFixed(1)} points ${d>0?"better":"worse"}`,skip:["ateWell"]},
+  {k:"study",get:e=>hasVal(e.study)?n(e.study):null,better:1,scale:15,fmt:d=>`you learn about ${Math.round(Math.abs(d))} minutes ${d>0?"more":"less"}`,skip:["learned"]},
+  {k:"screen",get:e=>hasVal(e.screen)&&n(e.screen)>0?n(e.screen):null,better:-1,scale:.75,fmt:d=>`your screen time is ${fmtMins(Math.abs(d)*60)} ${d<0?"lower":"higher"}`,skip:["screenHigh"]},
+  {k:"steps",get:e=>hasVal(e.steps)&&n(e.steps)>0?n(e.steps):null,better:1,scale:1500,fmt:d=>`you walk about ${(Math.round(Math.abs(d)/100)*100).toLocaleString()} ${d>0?"more":"fewer"} steps`,skip:[]},
+  {k:"workday",get:e=>n(e.workday)||null,better:1,scale:.6,fmt:d=>`your work day rates ${Math.abs(d).toFixed(1)} points ${d>0?"better":"worse"}`,skip:["roughWork"]}
+];
+function allDrivers(){return [...DRIVERS,...customItems().map(c=>({k:"cx"+c.id,on:`with “${c.name}”`,test:e=>e.custom&&hasVal(e.custom[c.id])?!!e.custom[c.id]:null,good:c.good,fix:c.good?`Keep making room for “${c.name}”.`:`Try cutting back on “${c.name}” this week.`}))]}
+function findLinks(){
+  const days=recentEntries(60);if(days.length<10)return[];
+  const out=[];const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+  for(const dr of allDrivers())for(const oc of OUTCOMES){
+    if(oc.skip.includes(dr.k))continue;
+    const A=[],B=[];
+    for(const e of days){const t=dr.test(e);if(t==null)continue;const tgt=oc.lag?entries[addDays(e.date,oc.lag)]:e;if(!tgt)continue;const v=oc.get(tgt);if(v==null)continue;(t?A:B).push(v)}
+    if(A.length<3||B.length<3)continue;
+    const d=avg(A)-avg(B),z=Math.abs(d)/oc.scale;if(z<.4)continue;
+    const goodOutcome=Math.sign(d)===oc.better,helps=dr.good?goodOutcome:!goodOutcome;
+    const w=z*Math.sqrt(Math.min(A.length,B.length));
+    const lead=oc.lag?`After days ${dr.on}, `:`On days ${dr.on}, `;
+    const text=lead+oc.fmt(d)+".";
+    const area=oc.k==="stress"||oc.k==="screen"||oc.k==="workday"?"recover":oc.k==="study"?"learn":"move";
+    out.push({w,area,t:text,good:goodOutcome,fix:(dr.good===goodOutcome)?dr.fix:"",n:A.length+B.length,drv:dr.k});
+  }
+  // keep the strongest finding per driver so the list stays varied
+  const best={};out.sort((a,b)=>b.w-a.w).forEach(x=>{if(!best[x.drv])best[x.drv]=x});
+  return Object.values(best).sort((a,b)=>b.w-a.w);
+}
+function insights(){return findLinks()}   // used by weekly review
+
+/* -- stress patterns -- */
+function stressInsights(){
+  const out=[],days=recentEntries(60).filter(e=>n(e.stress));if(days.length<4)return out;
+  const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+  // streak
+  let streak=0,d=entries[todayStr()]?todayStr():addDays(todayStr(),-1);while(entries[d]&&n(entries[d].stress)>=4){streak++;d=addDays(d,-1)}
+  if(streak>=2)out.push({w:5+streak,area:"recover",title:`${streak} stressful days in a row`,ev:"Your stress has been 4 or higher every day since "+toDate(addDays(d,1)).toLocaleDateString(undefined,{weekday:"long"})+".",fix:"Plan one thing tonight that recharges you, like a walk, a call or an early night, and say no to one thing tomorrow.",tag:"Right now"});
+  // trend
+  const last7=recentEntries(7).filter(e=>n(e.stress)).map(e=>n(e.stress)),prior=recentEntries(28).filter(e=>n(e.stress)&&e.date<addDays(todayStr(),-6)).map(e=>n(e.stress));
+  if(last7.length>=3&&prior.length>=5){const df=avg(last7)-avg(prior);if(Math.abs(df)>=.5)out.push({w:3+Math.abs(df)*2,area:"recover",title:df>0?"Stress is rising":"Stress is easing",ev:`Averaging ${avg(last7).toFixed(1)} this week, compared with ${avg(prior).toFixed(1)} over the three weeks before.`,fix:df>0?"Look at what changed this week. Name it in your weekly review and pick one thing to push back on.":"Whatever you changed is working. Note it in your weekly review so you keep doing it.",tag:df>0?"Trend ↑":"Trend ↓",good:df<0})}
+  // weekday
+  if(days.length>=14){const by={};days.forEach(e=>{const w=toDate(e.date).getDay();(by[w]=by[w]||[]).push(n(e.stress))});
+    const all=avg(days.map(e=>n(e.stress)));let worst=null;
+    for(const w in by)if(by[w].length>=2){const a=avg(by[w]);if(!worst||a>worst.a)worst={w:+w,a}}
+    if(worst&&worst.a-all>=.6){const name=new Date(2026,1,1+worst.w).toLocaleDateString(undefined,{weekday:"long"});
+      out.push({w:3+(worst.a-all)*2,area:"recover",title:`${name}s are your hardest day`,ev:`Stress averages ${worst.a.toFixed(1)} on ${name}s, compared with ${all.toFixed(1)} overall.`,fix:`Set up ${name} the evening before: write your top three tasks and get anything you need ready, so the day starts calmer.`,tag:"Weekly pattern"})}}
+  // top cause and rising causes
+  const hard=e=>n(e.stress)>=4,cnt=(list)=>{const c={};list.forEach(e=>(e.causes||[]).forEach(x=>c[x]=(c[x]||0)+1));return c};
+  const r30=recentEntries(30).filter(hard),c30=cnt(r30),top=Object.entries(c30).sort((a,b)=>b[1]-a[1])[0];
+  if(top&&r30.length>=3&&top[1]/r30.length>=.4)out.push({w:4+top[1]/r30.length*3,area:"recover",title:`${top[0]} is behind ${Math.round(top[1]/r30.length*100)}% of your stressful days`,ev:`${pl(top[1],"day")} out of ${r30.length} stressful days in the last month.`,fix:CAUSE_TIPS[top[0]]||"Write down one small step you could take on it this week, and do just that one.",tag:"Top cause"});
+  const rec=cnt(recentEntries(14).filter(hard)),old=cnt(recentEntries(28).filter(e=>hard(e)&&e.date<addDays(todayStr(),-13)));
+  Object.entries(rec).filter(([c,k])=>k>=3&&k>=2*(old[c]||0)+1&&(!top||c!==top[0])).sort((a,b)=>b[1]-a[1]).slice(0,1).forEach(([c,k])=>out.push({w:3.5,area:"recover",title:`${c} is coming up more`,ev:`${pl(k,"time")} in the last two weeks, up from ${old[c]||0} the two weeks before.`,fix:CAUSE_TIPS[c]||"Catch it early: write down one small step you can take this week.",tag:"New pattern"}));
+  // work vs life
+  const wN=r30.reduce((a,e)=>a+(e.causes||[]).filter(x=>WORK_CAUSES.has(x)).length,0),lN=r30.reduce((a,e)=>a+(e.causes||[]).filter(x=>!WORK_CAUSES.has(x)).length,0);
+  if(wN+lN>=5){const wp=Math.round(wN/(wN+lN)*100);if(wp>=70||wp<=30)out.push({w:2.5,area:"recover",title:wp>=70?"Most of your stress comes from work":"Most of your stress comes from outside work",ev:`${wp>=70?wp:100-wp}% of the causes you picked in the last month were ${wp>=70?"work":"life"} stressors.`,fix:wp>=70?"Bring the top work cause to your manager with one specific ask, like a deadline moved or a meeting dropped.":"Work isn't the main driver. Talk to someone you trust about what's going on, and protect your sleep.",tag:"Work vs life"})}
   return out.sort((a,b)=>b.w-a.w);
+}
+
+/* -- areas you keep neglecting -- */
+function neglectInsights(){
+  const weeks=[0,1,2,3].map(o=>weekSummary(o)).filter(w=>w&&w.logged>=3),N=weeks.length;if(!N)return[];
+  const out=[];
+  const check=(area,title,failFn,evFn,fix,base=3)=>{const fails=weeks.map(failFn);const k=fails.filter(Boolean).length;
+    if(!k||(N>=2&&k<2))return;
+    const tag=N===1?"This week":k===N?(N>=3?"Every week":"Both weeks"):`${k} of ${N} weeks`;
+    const trend=N>=2?(fails[0]&&!fails[1]?" It slipped again this week.":(!fails[0]&&fails[1]?" This week was better. Keep it going.":"")):"";
+    out.push({w:base+k/N*3+(fails[0]?1:0),area,title,ev:evFn(weeks[0])+trend,fix,tag,good:!fails[0]&&N>=2})};
+  const g=goals;
+  check("learn","Learning keeps slipping",w=>w.studyMin<g.study*.5,w=>`${w.studyMin} of ${g.study} minutes this week.`,"Do 15 minutes right after dinner, four nights a week. Set it as a repeating calendar event so it isn't a decision.",3.2);
+  check("move","Workouts aren't happening",w=>w.exDays<g.exDays,w=>`${w.exDays} of ${g.exDays} workouts this week.`,"Pick two fixed slots, like Tuesday and Thursday mornings, and lay out your clothes the night before.",3);
+  check("move","Steps are low",w=>w.avgSteps<g.steps*.75,w=>`Averaging ${Math.round(w.avgSteps).toLocaleString()} steps against a goal of ${g.steps.toLocaleString()}.`,"Take a 10-minute walk after lunch every workday. That alone adds about 1,000 steps a day.",2.4);
+  check("move","Not enough sleep",w=>w.avgSleep!=null&&w.avgSleep<g.sleep-.5,w=>`Averaging ${w.avgSleep!=null?w.avgSleep.toFixed(1):"–"} hours against your ${g.sleep}-hour goal.`,"Set a bedtime alarm for 30 minutes before you want to be asleep. When it goes off, screens go away.",3.1);
+  if(g.meds!==false)check("move","Medication is being missed",w=>w.medsAsked&&w.medsDays<w.medsAsked,w=>w.medsAsked?`Taken on ${w.medsDays} of ${w.medsAsked} days this week.`:"No answers this week.","Keep it next to your toothbrush and take it at the same moment every day. A daily phone alarm helps too.",3.6);
+  if(g.food!==false)check("move","Food logging is patchy",w=>w.foodAsked>=2&&w.foodDays/w.foodAsked<.6,w=>`All food logged on ${w.foodDays} of ${w.foodAsked} days.`,"Log each meal right after you eat, before you get up from the table. It takes seconds when it's fresh.",2.2);
+  check("move","Eating could be better",w=>w.avgEat!=null&&w.avgEat<3,w=>`Eating averaged ${w.avgEat!=null?w.avgEat.toFixed(1):"–"} / 5.`,"Prep tomorrow's lunch the night before, and swap the snacks at your desk for fruit or nuts.",2.6);
+  check("recover","Screen time is over your goal",w=>w.avgScreen!=null&&w.avgScreen>(g.screen||3)+.25,w=>`Averaging ${w.avgScreen!=null?w.avgScreen.toFixed(1):"–"} hours a day against a ${g.screen||3}-hour goal.`,"Set a Screen Time limit on your most-used app, 30 minutes under what you use now, and charge your phone outside the bedroom.",2.7);
+  check("recover","Working past your limit",w=>w.avgWork!=null&&w.avgWork>(g.workMax||9),w=>`Averaging ${w.avgWork!=null?w.avgWork.toFixed(1):"–"} hours on work days.`,"Choose a hard stop time, put it in your calendar, and close the laptop when it comes up. Start with two days a week.",3.3);
+  check("recover","Stress has stayed high",w=>w.avgStress>=3.5,w=>`Stress averaged ${w.avgStress.toFixed(1)} / 5 this week.`,"Look at Stress patterns below for the main cause. Pick one small step on that cause, not on everything at once.",3.4);
+  check("recover","Gratitude keeps getting skipped",w=>w.gratAsked>=3&&w.gratDays/w.gratAsked<.5,w=>`Answered on ${w.gratDays} of ${w.gratAsked} days.`,"Answer it the moment the check-in asks. One word is enough.",1.6);
+  check("connect","Not much time with friends",w=>w.contactDays/w.logged<.3,w=>`In touch on ${w.contactDays} of ${w.logged} days logged.`,"Every Sunday, text one friend to set something up for the week. It takes two minutes.",3);
+  check("connect","Plans aren't getting made",w=>w.plans<g.plans,w=>`${w.plans} of ${g.plans} plans this week.`,"Put a repeating \"make a plan\" reminder on Mondays and act on it before lunch.",2.4);
+  for(const c of customItems())check(c.area,c.good?`Not much “${c.name}” lately`:`“${c.name}” is happening a lot`,
+    w=>{const st=w.custom&&w.custom[c.id];if(!st||st.asked<3)return false;return c.good?st.yes/st.asked<.3:st.yes/st.asked>.5},
+    w=>{const st=w.custom&&w.custom[c.id];return st&&st.asked?`${st.yes} of ${st.asked} days this week.`:"No answers this week."},
+    c.good?`Pick two specific days this week for “${c.name}” and put them in your calendar.`:`Pick one day this week to skip “${c.name}” on purpose, and notice how you feel.`,2.5);
+  // people overdue
+  const od=people.filter(p=>personStatus(p).st==="overdue");
+  if(od.length>=2)out.push({w:3.2,area:"connect",title:`${od.length} people you haven't talked to in a while`,ev:od.slice(0,3).map(p=>p.name).join(", ")+(od.length>3?` and ${od.length-3} more`:"")+".",fix:"Send one short \"thinking of you\" text a day to someone on this list until you're caught up.",tag:"Overdue"});
+  // self-care that keeps running late
+  for(const t of care){const lg=[...new Set([...(t.log||[]),...(t.last?[t.last]:[])])].sort();let late=0;for(let i=1;i<lg.length;i++)if(daysBetween(lg[i-1],lg[i])>t.every*1.25)late++;
+    const now=t.last&&careStatus(t).st==="overdue";if(late+(now?1:0)>=2||(now&&daysBetween(t.last,todayStr())>t.every*2)){
+      const health=catOf(t)==="health";out.push({w:health?3.3:2.3,area:health?"move":"care",title:`${t.name} keeps running late`,ev:now?`${careStatus(t).txt}.`+(late?` Late ${pl(late,"other time")} too.`:""):`Late ${pl(late,"time")} recently.`,fix:health?"Book the next one before you leave this one, or set a calendar reminder a week before it's due.":"Pair it with something you already do every week, like Sunday laundry or your weekly review.",tag:"Repeat"})}}
+  // hobbies
+  const ho=hobbies.filter(h=>hobbyStatus(h).st==="overdue");
+  if(ho.length)out.push({w:2.6,area:"recover",title:ho.length===1?`No time for ${ho[0].name} lately`:`${ho.length} hobbies are being squeezed out`,ev:ho.map(h=>`${h.name}: ${hobbyStatus(h).since} days`).join(" · "),fix:`Book one hour for ${ho[0].name} this week, like an appointment you can't move.`,tag:"Overdue"});
+  return out.sort((a,b)=>b.w-a.w);
+}
+
+/* -- focus from an insight -- */
+async function makeFocus(text,btn){
+  const lr=latestReview(),recent=lr&&daysBetween(lr.date,todayStr())<5;
+  const r=recent?{...lr,change:text}:{id:todayStr(),date:todayStr(),worked:"",slipped:"",change:text,created:Date.now()};
+  reviews[r.id]=r;try{await store.saveReview(r);toast("Pinned as this week's focus")}catch(e){toast("Couldn't save that");return}
+  if(btn){btn.textContent="This week's focus ✓";btn.disabled=true}
+  renderReviewBits();setTimeout(renderInsights,600);
+}
+function fixCard(x,i){
+  const c=AREA_C[x.area]?AREA_C[x.area].c:"var(--fg)";
+  const el=document.createElement("div");el.className="fix rise";el.style.setProperty("--c",c);el.style.setProperty("--i",i);
+  el.innerHTML=`<div class="fx-h"><b></b>${x.tag?`<span class="tag"></span>`:""}</div><p></p>${x.fix?`<div class="fx-s"><span>Small fix</span><em></em></div><button type="button" class="mini">Make this my focus</button>`:""}`;
+  el.querySelector("b").textContent=x.title;if(x.tag)el.querySelector(".tag").textContent=x.tag;el.querySelector("p").textContent=x.ev;
+  if(x.fix){const em=el.querySelector("em");em.style.fontStyle="normal";em.textContent=x.fix;
+    const lr=latestReview(),cur=lr&&daysBetween(lr.date,todayStr())<8&&lr.change===x.fix,b=el.querySelector(".mini");
+    if(cur){b.textContent="This week's focus ✓";b.disabled=true}else b.onclick=()=>makeFocus(x.fix,b)}
+  return el;
+}
+function linkRow(x){
+  const el=document.createElement("div");el.className="link";el.style.setProperty("--c",x.good?"var(--ok)":"var(--bad)");
+  el.innerHTML=`<span class="ar">${x.good?"↑":"↓"}</span><div><span class="lt"></span>${x.fix?"<small></small>":""}</div>`;
+  el.querySelector(".lt").textContent=x.t;if(x.fix)el.querySelector("small").textContent="Try: "+x.fix;return el;
 }
 function insightHtml(list){return list.map(x=>`<li style="--c:${AREA_C[x.area].c}">${esc(x.t)}</li>`).join("")}
 function renderInsights(){
-  const list=insights(),box=$("#insightList");if(!box)return;
-  const logged=Object.values(entries).filter(e=>e&&e.date>=addDays(todayStr(),-59)).length;
-  box.innerHTML=list.length?insightHtml(list.slice(0,5)):`<li style="--c:var(--faint)">${logged<7?`Insights appear after a week or two of check-ins. ${logged} day${logged===1?"":"s"} logged so far.`:"No clear patterns yet. Keep checking in and they'll show up."}</li>`;
-  $("#insightFocus").hidden=!list.length;$("#insightTop").innerHTML=insightHtml(list.slice(0,1));
+  const box=$("#insightList");if(!box)return;box.innerHTML="";
+  const logged=recentEntries(60).length,neg=neglectInsights(),str=stressInsights(),links=findLinks();
+  $("#insBasis").textContent=logged?`Based on ${pl(logged,"check-in")}`:"";
+  const grp=(label,sub)=>{const g=document.createElement("div");g.className="insgrp";g.innerHTML=`<div><div class="label"></div>${sub?`<p class="tip" style="margin-top:2px"></p>`:""}</div>`;g.querySelector(".label").textContent=label;if(sub)g.querySelector(".tip").textContent=sub;box.append(g);return g};
+  const g1=grp("Needs attention","Areas that keep slipping, with one small fix for each.");
+  if(neg.length){neg.slice(0,4).forEach((x,i)=>g1.append(fixCard(x,i)));if(neg.length>4){const more=document.createElement("button");more.type="button";more.className="mini";more.textContent=`Show ${neg.length-4} more`;more.onclick=()=>{neg.slice(4).forEach((x,i)=>g1.insertBefore(fixCard(x,i),more));more.remove()};g1.append(more)}}else g1.insertAdjacentHTML("beforeend",`<p class="tip">${logged<3?"Check in for a few days and this fills in.":"Nothing is consistently slipping. Nice."}</p>`);
+  const g2=grp("Stress patterns","");
+  if(str.length){str.slice(0,3).forEach((x,i)=>g2.append(fixCard(x,i)));if(str.length>3){const more=document.createElement("button");more.type="button";more.className="mini";more.textContent=`Show ${str.length-3} more`;more.onclick=()=>{str.slice(3).forEach((x,i)=>g2.insertBefore(fixCard(x,i),more));more.remove()};g2.append(more)}}else g2.insertAdjacentHTML("beforeend",`<p class="tip">${recentEntries(60).filter(e=>n(e.stress)).length<4?"Stress patterns show up after a few more check-ins.":"No clear stress patterns right now."}</p>`);
+  const g3=grp("What helps, what hurts","Found by comparing your own days.");
+  if(links.length)links.slice(0,6).forEach(x=>g3.append(linkRow(x)));else g3.insertAdjacentHTML("beforeend",`<p class="tip">${logged<10?`These need about 10 check-ins. ${logged} so far.`:"No clear links yet. They'll show up as patterns form."}</p>`);
+  // Focus screen: top neglect + top stress pattern + strongest link
+  const top=$("#insightTop"),fc=$("#insightFocus");top.innerHTML="";
+  const picks=[neg[0],str[0]].filter(Boolean);picks.forEach((x,i)=>top.append(fixCard(x,i)));
+  if(links[0])top.append(linkRow(links[0]));
+  fc.hidden=!top.children.length;
 }
 
 /* ---------- people ---------- */
@@ -1628,6 +1846,7 @@ function reviewDue(){const lr=latestReview();const d=new Date().getDay();return 
 let ri=0,ra={};
 const RSTEPS=[{type:"glance",title:"Your week"},{k:"worked",title:"What worked this week?",hint:"Anything you're glad you did, big or small."},{k:"slipped",title:"What slipped?",hint:"No judgment. Just name it."},{k:"change",title:"One thing to change next week?",hint:"Keep it small and specific. This becomes your focus, pinned to the top of the Focus screen."},{type:"done",title:"Review saved"}];
 function openReview(){const lr=latestReview();const recent=lr&&daysBetween(lr.date,todayStr())<5;ra=recent?{worked:lr.worked||"",slipped:lr.slipped||"",change:lr.change||"",date:lr.date}:{worked:"",slipped:"",change:"",date:todayStr()};
+  if(!ra.change){const ng=neglectInsights()[0];if(ng)ra.change=ng.fix}
   ri=0;const el=$("#rv");el.hidden=false;el.classList.remove("closing");el.classList.add("open");document.body.style.overflow="hidden";renderR(0)}
 function closeReview(then){const el=$("#rv");el.classList.remove("open");el.classList.add("closing");setTimeout(()=>{el.hidden=true;el.classList.remove("closing");document.body.style.overflow="";then&&then()},reduce?0:360)}
 function renderR(dir){
@@ -1646,6 +1865,7 @@ function renderR(dir){
     h+=`<p class="qhint">${s?`${s.logged} of 7 days logged.`:"No check-ins this week."}${sp.days?` ${sp.days} stressful day${sp.days===1?"":"s"}${sp.rows[0]?`, mostly ${esc(sp.rows[0].c.toLowerCase())}`:""}.`:""}${people.length?` Talked to ${contacted} of ${people.length} people on your list.`:""}</p>`;
     if(s)h+=`<div class="glance">${AREAS.map((a,i)=>`<div class="area rise" style="--areac:${a.c};--i:${i}"><div class="top2"><span class="name">${a.name}</span><span class="score num">${Math.round(s.scores[a.k]*100)}</span></div><div class="bar"><i style="width:${Math.round(s.scores[a.k]*100)}%"></i></div>${deltaHtml(s,prev,a.k)}</div>`).join("")}</div>`;
     if(ins)h+=`<ul class="ins">${insightHtml([ins])}</ul>`;
+    const ng=neglectInsights()[0];if(ng)h+=`<div class="fix" style="--c:${AREA_C[ng.area].c}"><div class="fx-h"><b>${esc(ng.title)}</b></div><div class="fx-s"><span>Small fix</span>${esc(ng.fix)}</div></div>`;
   }else if(q.type==="done"){
     h+=`<p class="qhint">Your focus for this week is pinned to the top of the Focus screen.</p>${ra.change?`<div class="pin"><span class="label">This week's focus</span><p></p></div>`:""}`;
   }else{
@@ -1689,18 +1909,50 @@ function fmtCheckinTime(){return fmtTime(goals.checkinTime||"20:00")}
 let autoQuizDay=null;
 function anyOverlayOpen(){return ["#quiz","#setup","#rv","#imp"].some(id=>{const el=$(id);return el&&!el.hidden})}
 function maybeAutoQuiz(){const t=todayStr();if(autoQuizDay===t||anyOverlayOpen()||!goals.setup)return;if(afterCheckinTime()&&shouldQuiz()){autoQuizDay=t;openQuiz()}}
-function renderEarly(){const el=$("#earlyNote");const early=shouldQuiz()&&!afterCheckinTime()&&cur===todayStr();el.hidden=!early;if(early)$("#earlyTxt").textContent=`Your check-in opens at ${fmtCheckinTime()}.`}
-$("#earlyBtn").onclick=()=>openQuiz();
+function renderEarly(){renderQuizBar();return;const el=$("#earlyNote");const early=shouldQuiz()&&!afterCheckinTime()&&cur===todayStr();el.hidden=!early;if(early)$("#earlyTxt").textContent=`Your check-in opens at ${fmtCheckinTime()}.`}
+function renderQuizBar(){
+  const t=todayStr(),e=entries[t],done=!!(e&&e.quiz);
+  $("#qbTitle").textContent=done?"Today's check-in is done":"Daily check-in";
+  $("#qbSub").textContent=done?"Retake the quiz anytime to update your answers.":afterCheckinTime()?"Takes about a minute.":`Opens on its own at ${fmtCheckinTime()}.`;
+  $("#qbBtn").textContent=done?"Retake quiz":afterCheckinTime()?"Start quiz":"Start now";
+}
+$("#qbBtn").onclick=()=>openQuiz();
 $("#set-time").addEventListener("change",async e=>{const v=e.target.value;if(!v)return;goals={...goals,checkinTime:v};try{await store.saveGoals(goals);toast(`Check-in time set to ${fmtCheckinTime()}`)}catch(err){toast("Couldn't save that")}renderAll()});
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="visible")return;
   $("#todayLine").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
   if(view!=="checkin")cur=todayStr();renderAll();maybeAutoQuiz()});
 setInterval(()=>{if(document.visibilityState==="visible")maybeAutoQuiz()},60000);
 
+$("#gearBtn").onclick=()=>{if(view==="settings")show("focus");else show("settings")};
+document.querySelectorAll(".navlinks a").forEach(a=>a.onclick=()=>{const el=document.getElementById(a.dataset.jump);if(el){const y=el.getBoundingClientRect().top+window.scrollY-110;window.scrollTo({top:y,behavior:reduce?"auto":"smooth"})}});
+$("#insMore").onclick=()=>{show("week");setTimeout(()=>{const el=$("#insightList");if(el){const y=el.getBoundingClientRect().top+window.scrollY-150;window.scrollTo({top:y,behavior:reduce?"auto":"smooth"})}},50)};
+/* ---------- your own items ---------- */
+let cxArea="recover",cxGood=true;
+function renderCustom(){
+  const ul=$("#cxList");if(!ul)return;ul.innerHTML="";const items=customItems();
+  if(!items.length){ul.innerHTML=`<li style="display:block" class="tip">Nothing added yet.</li>`}
+  items.forEach(c=>{const li=document.createElement("li");li.style.setProperty("--c",AREA_C[c.area].c);
+    li.innerHTML=`<span class="dt"></span><div><div class="nm"></div><div class="sub"></div></div><span class="gb ${c.good?"good":"bad"}">${c.good?"Good":"Bad"}</span><button type="button" class="del" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
+    li.querySelector(".nm").textContent=c.name;li.querySelector(".sub").textContent=AREA_C[c.area].name;
+    li.querySelector(".del").onclick=async()=>{goals={...goals,custom:customItems().filter(x=>x.id!==c.id)};try{await store.saveGoals(goals)}catch(e){}renderAll();renderCustom();toast(`Removed ${c.name}`)};ul.append(li)});
+}
+function renderCxPickers(){
+  const ap=$("#cx-area");ap.innerHTML=AREAS.map(a=>`<button type="button" data-k="${a.k}" style="--c:${a.c}" aria-pressed="${a.k===cxArea}"><i></i>${a.name}</button>`).join("");
+  ap.querySelectorAll("button").forEach(b=>b.onclick=()=>{cxArea=b.dataset.k;ap.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))});
+  $("#cx-gb").querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed",String((b.dataset.v==="good")===cxGood));b.onclick=()=>{cxGood=b.dataset.v==="good";$("#cx-gb").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))}});
+}
+$("#cxAddBtn").onclick=()=>{cxArea="recover";cxGood=true;renderCxPickers();$("#cxAdd").hidden=false;$("#cxAddBtn").hidden=true;$("#cx-name").value="";$("#cx-name").focus()};
+$("#cx-cancel").onclick=()=>{$("#cxAdd").hidden=true;$("#cxAddBtn").hidden=false};
+$("#cx-save").onclick=async()=>{const name=$("#cx-name").value.trim().replace(/\s+/g," ").slice(0,40);if(!name){toast("Give it a name first");return}
+  if(customItems().some(c=>c.name.toLowerCase()===name.toLowerCase())){toast("You already have that one");return}
+  const c={id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),name,area:cxArea,good:cxGood};
+  goals={...goals,custom:[...customItems(),c]};try{await store.saveGoals(goals);toast(`Added ${name} to your check-in`)}catch(e){toast("Couldn't save that")}
+  $("#cxAdd").hidden=true;$("#cxAddBtn").hidden=false;renderCustom();renderAll()};
+
 /* ---------- tabs ---------- */
-function movePill(){const idx=VIEWS.indexOf(view);$("#pill").style.transform=`translateX(${idx*100}%)`}
+function movePill(){const idx=VIEWS.indexOf(view),pill=$("#pill");pill.style.opacity=idx<0?0:1;if(idx>=0)pill.style.transform=`translateX(${idx*100}%)`;const g=$("#gearBtn");if(g)g.setAttribute("aria-pressed",String(view==="settings"))}
 function show(v){
-  const from=VIEWS.indexOf(view),to=VIEWS.indexOf(v);
+  const from=VIEWS.indexOf(view),to=v==="settings"?99:VIEWS.indexOf(v);
   view=v;
   document.querySelectorAll(".view[id^=view-]").forEach(s=>{
     const on=s.id==="view-"+v;s.hidden=!on;s.classList.remove("in-r","in-l");
@@ -1712,6 +1964,7 @@ function show(v){
   if(v==="focus")renderFocus();
   if(v==="week"){renderWeek();renderProgress();renderInsights();renderStress();renderReviewBits()}
   if(v==="life")renderSection();
+  if(v==="settings"){renderWeek();renderCustom()}
   if(v==="focus")renderCareFocus();
   document.querySelectorAll("#view-"+v+" .rise").forEach(replay);
   window.scrollTo({top:0,behavior:reduce?"auto":"smooth"});
